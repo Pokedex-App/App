@@ -12,7 +12,7 @@ fun main() {
     val possibleResponse = retrofitObject.createNetworkService<pokemonEndpoint>()
     val anotherPossibleResponse = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
 
-    val Idpokemon = "1"
+    val Idpokemon = "2"
 
     runBlocking {
 
