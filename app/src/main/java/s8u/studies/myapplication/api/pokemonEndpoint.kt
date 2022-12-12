@@ -6,5 +6,5 @@ import s8u.studies.myapplication.model.Pokemon
 
 interface pokemonEndpoint {
     @GET("pokemon/{id}")
-    suspend fun getPokemon(@Path("id")id:String): List<Pokemon>
+    suspend fun getPokemon(@Path("id")id:String): Pokemon
 }

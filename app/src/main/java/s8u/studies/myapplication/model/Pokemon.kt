@@ -6,11 +6,13 @@ data class Pokemon(
     @SerializedName("id")
     var id: Int,
     @SerializedName("name")
-    var name: String,
+    var name:String,
     @SerializedName("height")
     var height: String,
     @SerializedName("weight")
     var weight: String,
-    @SerializedName("type")
-    var type: String
+    @SerializedName("types")
+    var typeList: ArrayList<PokemonTypes>,
+    @SerializedName("sprites")
+    var imgList: PokemonImgList
 )
