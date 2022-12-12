@@ -39,7 +39,8 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     override fun onClickPokedex(pokedexEntries: Pokedex_entries) {
         // Colocar a intent da tela de descrição pokemon
         // Passar em um intentExtra o id do pokemon clicado
-        val intent = Intent()
+        val intent = Intent(this, DescriptionActivity::class.java)
+        intent.putExtra("id", pokedexEntries.id.toString())
         startActivity(intent)
     }
 }

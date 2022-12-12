@@ -21,9 +21,5 @@ fun main() {
 
             println(pokemon)
         println(pokemonDescription)
-
-        for(i in 0 .. pokemon.entriesList.size - 1){
-            println(pokemon.entriesList)
-        }
     }
 }
