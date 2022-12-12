@@ -5,6 +5,6 @@ import retrofit2.http.Path
 import s8u.studies.myapplication.model.Pokemon
 
 interface pokemonEndpoint {
-    @GET("/pokemon/{id}")
+    @GET("pokemon/{id}")
     suspend fun getPokemon(@Path("id")id:String): List<Pokemon>
 }

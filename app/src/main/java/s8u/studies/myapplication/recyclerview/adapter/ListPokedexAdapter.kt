@@ -21,7 +21,7 @@ class ListPokedexAdapter(
             val id = itemView.findViewById<TextView>(R.id.pokedex_id)
             id.text = pokedex.id
             val name = itemView.findViewById<TextView>(R.id.pokedex_name)
-            name.text = pokedex.name
+//            name.text = pokedex.name
         }
     }
 
