@@ -8,25 +8,26 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import s8u.studies.myapplication.R
-import s8u.studies.myapplication.model.Pokedex
+import s8u.studies.myapplication.model.Pokedex_entries
 
 class ListPokedexAdapter(
     private val context: Context,
-    private val pokedex: List<Pokedex>,
-    private val onListenerPokedex: OnListenerPokedex
+    private val pokedexEntries: ArrayList<Pokedex_entries>,
+    private val onListenerPokedex: OnListenerPokedex,
 ) : RecyclerView.Adapter<ListPokedexAdapter.ViewHolder>() {
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: ConstraintLayout = itemView.findViewById(R.id.container_view)
-        fun bind(pokedex: Pokedex) {
+        fun bind(pokedexEntries: Pokedex_entries) {
             val id = itemView.findViewById<TextView>(R.id.pokedex_id)
-            id.text = pokedex.id
+            id.text = pokedexEntries.id.toString()
             val name = itemView.findViewById<TextView>(R.id.pokedex_name)
-//            name.text = pokedex.name
+            name.text = pokedexEntries.pokedexSpecies.pokemonName
         }
     }
 
     interface OnListenerPokedex {
-        fun onClickPokedex(pokedex: Pokedex)
+        fun onClickPokedex(pokedexEntries: Pokedex_entries)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,13 +37,13 @@ class ListPokedexAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pokedex = pokedex[position]
-        holder.bind(pokedex)
+        val pokedexEntries = pokedexEntries[position]
+        holder.bind(pokedexEntries)
         holder.cardView.setOnClickListener {
-            onListenerPokedex.onClickPokedex(pokedex)
+            onListenerPokedex.onClickPokedex(pokedexEntries)
         }
     }
 
-    override fun getItemCount(): Int = pokedex.size
+    override fun getItemCount(): Int = pokedexEntries.size
 
 }
