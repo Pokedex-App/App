@@ -2,7 +2,7 @@ package s8u.studies.myapplication.model
 
 import com.google.gson.annotations.SerializedName
 
-class Pokemon_entries (
+data class Pokemon_entries (
     @SerializedName("entry_number")
     var id:Int,
     @SerializedName("pokemon_species")

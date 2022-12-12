@@ -17,8 +17,7 @@ fun main() {
         val pokemon = possibleResponse.getPokedex()
 
         for(i in 0 .. pokemon.entriesList.size - 1){
-            println(pokemon.entriesList.get(i).id)
-            println(pokemon.entriesList.get(i).pokemonSpecies.pokemonName)
+            println(pokemon.entriesList)
         }
     }
 }
