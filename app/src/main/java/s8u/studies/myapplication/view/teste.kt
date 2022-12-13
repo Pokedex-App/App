@@ -21,6 +21,5 @@ fun main() {
 
             println(pokemon)
         println(pokemonDescription)
-
     }
 }

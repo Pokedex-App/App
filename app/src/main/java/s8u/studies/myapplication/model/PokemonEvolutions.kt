@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class PokemonEvolutions (
     @SerializedName("name")
-    var nomeEvolucao:String
+    var evolutionName:String
         )
