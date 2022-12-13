@@ -10,17 +10,17 @@ import s8u.studies.myapplication.api.pokemonDescriptionEndpoint
 import s8u.studies.myapplication.api.pokemonEndpoint
 import s8u.studies.myapplication.di.retrofitObject
 import s8u.studies.myapplication.model.PokemonData
+import s8u.studies.myapplication.model.PokemonTypeList
+import s8u.studies.myapplication.model.PokemonTypes
 
 class DescriptionViewModel() : ViewModel() {
-
     private val _apiData = MutableLiveData<PokemonData>()
     val apiData: LiveData<PokemonData> = _apiData
+    val pokemonLiveData1 = MutableLiveData<Unit>()
+    val pokemonLiveData2 = MutableLiveData<Unit>()
+    val pokemonLiveData3 = MutableLiveData<Unit>()
 
-    private val _apiData2 = MutableLiveData<String>()
-    val apiData2: LiveData<String> = _apiData2
-
-    fun GetPokemonsDescription(id: String){
-
+    fun getPokemonDescription(id: String){
         val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
         val pokemonDescEndpoint = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
 
@@ -28,16 +28,26 @@ class DescriptionViewModel() : ViewModel() {
             val poke = pokemonEndpoint.getPokemon(id)
             val pokeDesc = pokemonDescEndpoint.getPokemon(id)
 
-            _apiData.postValue(PokemonData(poke.id,
-                poke.name,
-                poke.height,
-                poke.weight,
-                poke.typeList,
-                poke.imgList,
-                pokeDesc.pastEvolution,
-                pokeDesc.DescriptionList))
-            _apiData2.postValue(poke.name)
-            Log.i("Retrofit", "teste ${poke.name}")
+            _apiData.postValue(
+                PokemonData(
+                    poke.id,
+                    poke.name,
+                    poke.height,
+                    poke.weight,
+                    poke.typeList,
+                    poke.imgList,
+                    pokeDesc.pastEvolution,
+                    pokeDesc.DescriptionList
+                )
+            )
+        }
+    }
+
+    fun test(typeList: ArrayList<PokemonTypes>) {
+        when (typeList.size) {
+            1 -> pokemonLiveData1.postValue(Unit)
+            2 -> pokemonLiveData2.postValue(Unit)
+            else -> pokemonLiveData3.postValue(Unit)
         }
     }
 }
