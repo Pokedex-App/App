@@ -1,6 +1,5 @@
 package s8u.studies.myapplication.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import s8u.studies.myapplication.api.pokemonDescriptionEndpoint
 import s8u.studies.myapplication.api.pokemonEndpoint
 import s8u.studies.myapplication.di.retrofitObject
 import s8u.studies.myapplication.model.PokemonData
-import s8u.studies.myapplication.model.PokemonTypeList
 import s8u.studies.myapplication.model.PokemonTypes
 
 class DescriptionViewModel() : ViewModel() {
@@ -18,7 +16,6 @@ class DescriptionViewModel() : ViewModel() {
     val apiData: LiveData<PokemonData> = _apiData
     val pokemonLiveData1 = MutableLiveData<Unit>()
     val pokemonLiveData2 = MutableLiveData<Unit>()
-    val pokemonLiveData3 = MutableLiveData<Unit>()
 
     fun getPokemonDescription(id: String){
         val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
@@ -43,11 +40,10 @@ class DescriptionViewModel() : ViewModel() {
         }
     }
 
-    fun test(typeList: ArrayList<PokemonTypes>) {
+    fun changeBasedOnTypes(typeList: ArrayList<PokemonTypes>) {
         when (typeList.size) {
             1 -> pokemonLiveData1.postValue(Unit)
-            2 -> pokemonLiveData2.postValue(Unit)
-            else -> pokemonLiveData3.postValue(Unit)
+            else -> pokemonLiveData2.postValue(Unit)
         }
     }
 }

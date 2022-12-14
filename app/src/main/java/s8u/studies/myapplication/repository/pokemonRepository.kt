@@ -5,5 +5,5 @@ import s8u.studies.myapplication.api.pokemonEndpoint
 
 open class pokemonRepository (val pokemonEndpoint: pokemonEndpoint) {
 
-       // open suspend fun getPokedex() = pokemonEndpoint.getPokemon()
+      // open suspend fun getPokedex() = pokemonEndpoint.getPokemon()
 }
