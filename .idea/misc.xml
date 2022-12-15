@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/activity_description.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/drawable/button_toolbar.xml" value="0.1" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/activity_description.xml" value="0.1" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/activity_home.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/pokedex_item.xml" value="0.22" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/test.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/toolbar.xml" value="0.22" />
       </map>
     </option>
   </component>
