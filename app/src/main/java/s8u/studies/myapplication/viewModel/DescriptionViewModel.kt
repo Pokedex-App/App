@@ -46,4 +46,12 @@ class DescriptionViewModel() : ViewModel() {
             else -> pokemonLiveData2.postValue(Unit)
         }
     }
+
+    fun nextButton() {
+
+    }
+
+    fun previousButton() {
+
+    }
 }

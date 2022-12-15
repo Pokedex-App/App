@@ -1,17 +1,21 @@
 package s8u.studies.myapplication.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet.GONE
+import androidx.appcompat.app.AppCompatActivity
 import coil.load
+import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
 class DescriptionActivity : AppCompatActivity() {
     private val viewModel = DescriptionViewModel()
+    private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_description)
+    private val nextButton: Button get() = findViewById(R.id.button_next)
+    private val previousButton: Button get() = findViewById(R.id.button_previous)
     private val pokeImg: ImageView get() = findViewById(R.id.imageView)
     private val pokeName: TextView get() = findViewById(R.id.textView_name_pokemon)
     private val pokeHeight: TextView get() = findViewById(R.id.textView_height)
@@ -23,9 +27,24 @@ class DescriptionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
+
+        onClick()
         viewModel.getPokemonDescription(intent.getStringExtra("id").toString())
         viewModel.apiData.observe(this) {
             printOnScreenInformation()
+        }
+    }
+
+    private fun onClick() {
+        toolbar.setNavigationOnClickListener {
+            stopKoin()
+            onBackPressed()
+        }
+        nextButton.setOnClickListener {
+            nextPokemon(viewModel.apiData.value!!.id)
+        }
+        previousButton.setOnClickListener {
+            previousPokemon(viewModel.apiData.value!!.id)
         }
     }
 
@@ -47,5 +66,13 @@ class DescriptionActivity : AppCompatActivity() {
             pokeTypePrimary.text = api.typeList[0].type.name
             pokeTypeSecondary.text = api.typeList[1].type.name
         }
+    }
+
+    private fun nextPokemon(id : Int) {
+        viewModel.getPokemonDescription((id + 1).toString())
+    }
+
+    private fun previousPokemon(id : Int) {
+        viewModel.getPokemonDescription((id - 1).toString())
     }
 }
