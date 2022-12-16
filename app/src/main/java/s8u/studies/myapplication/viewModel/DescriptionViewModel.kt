@@ -16,11 +16,14 @@ class DescriptionViewModel() : ViewModel() {
     val apiData: LiveData<PokemonData> = _apiData
     val pokemonLiveData1 = MutableLiveData<Unit>()
     val pokemonLiveData2 = MutableLiveData<Unit>()
+    val pokemonLiveData3 = MutableLiveData<Unit>()
 
-    fun getPokemonDescription(id: String){
+    fun getPokemonDescription(id: String,PrimeiroPokemon:String,UltimoPokemon:String){
         val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
         val pokemonDescEndpoint = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
 
+        hideButtons(id,PrimeiroPokemon,UltimoPokemon)
+        
         viewModelScope.launch {
             val poke = pokemonEndpoint.getPokemon(id)
             val pokeDesc = pokemonDescEndpoint.getPokemon(id)
@@ -40,18 +43,14 @@ class DescriptionViewModel() : ViewModel() {
         }
     }
 
-    fun changeBasedOnTypes(typeList: ArrayList<PokemonTypes>) {
-        when (typeList.size) {
-            1 -> pokemonLiveData1.postValue(Unit)
-            else -> pokemonLiveData2.postValue(Unit)
+    fun hideButtons(id: String,PrimeiroPokemon:String,UltimoPokemon:String){
+
+        if(id.toInt() == PrimeiroPokemon.toInt()){
+         pokemonLiveData1.postValue(Unit)
+        } else if(id.toInt() == UltimoPokemon.toInt()){
+            pokemonLiveData2.postValue(Unit)
+        }else{
+            pokemonLiveData3.postValue(Unit)
         }
-    }
-
-    fun nextButton() {
-
-    }
-
-    fun previousButton() {
-
     }
 }

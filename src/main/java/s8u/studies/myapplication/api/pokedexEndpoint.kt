@@ -5,6 +5,6 @@ import s8u.studies.myapplication.model.Pokedex
 import s8u.studies.myapplication.model.Pokedex_entries
 
 interface pokedexEndpoint {
-    @GET("pokedex/2")
+    @GET("pokedex/1")
     suspend fun getPokedex(): Pokedex
 }
