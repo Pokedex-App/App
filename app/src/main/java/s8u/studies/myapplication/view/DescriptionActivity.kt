@@ -23,8 +23,10 @@ class DescriptionActivity : AppCompatActivity() {
     private val pokeDesc: TextView get() = findViewById(R.id.textView_description)
     private val pokeTypePrimary: TextView get() = findViewById(R.id.textView_primary_type_pokemon)
     private val pokeTypeSecondary: TextView get() = findViewById(R.id.textView_secondary_type_pokemon)
+    
     private lateinit var PrimeiroPokemon:String
     private lateinit var UltimoPokemon :String
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
@@ -43,10 +45,6 @@ class DescriptionActivity : AppCompatActivity() {
           nextButton.visibility = View.VISIBLE
           previousButton.visibility = View.VISIBLE
         }
-        viewModel.apiData.observe(this) {
-            printOnScreenInformation()
-        }
-    }
 
     private fun onClick() {
         toolbar.setNavigationOnClickListener {
@@ -54,7 +52,7 @@ class DescriptionActivity : AppCompatActivity() {
             onBackPressed()
         }
         nextButton.setOnClickListener {
-            nextPokemon(viewModel.apiData.value!!.id,)
+            nextPokemon(viewModel.apiData.value!!.id)
         }
         previousButton.setOnClickListener {
             previousPokemon(viewModel.apiData.value!!.id)
@@ -69,6 +67,7 @@ class DescriptionActivity : AppCompatActivity() {
         pokeWeight.text = "Weight " + api.weight
         pokeDesc.text = api.descriptionList[0].descricao
         pokeImg.load(api.imgList.imgList.type.urlImg)
+        
         pokeTypePrimary.text = api.typeList[0].type.name
         pokeTypeSecondary.visibility = View.GONE
         if (api.typeList.size > 1) {

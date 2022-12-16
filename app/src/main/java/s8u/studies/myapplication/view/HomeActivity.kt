@@ -52,6 +52,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         Log.i("INTENT","${listPokedex[0].id.toString()}")
         intent.putExtra("b",listPokedex[listPokedex.size - 1].id.toString())
         Log.i("INTENT","${listPokedex[listPokedex.size - 1].id.toString()}")
+        
         startActivity(intent)
     }
 }

@@ -18,13 +18,12 @@ class DescriptionViewModel() : ViewModel() {
     val pokemonLiveData2 = MutableLiveData<Unit>()
     val pokemonLiveData3 = MutableLiveData<Unit>()
 
-
-
     fun getPokemonDescription(id: String,PrimeiroPokemon:String,UltimoPokemon:String){
         val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
         val pokemonDescEndpoint = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
 
         hideButtons(id,PrimeiroPokemon,UltimoPokemon)
+        
         viewModelScope.launch {
             val poke = pokemonEndpoint.getPokemon(id)
             val pokeDesc = pokemonDescEndpoint.getPokemon(id)
@@ -53,6 +52,5 @@ class DescriptionViewModel() : ViewModel() {
         }else{
             pokemonLiveData3.postValue(Unit)
         }
-
     }
 }
