@@ -3,48 +3,34 @@ package s8u.studies.myapplication.view
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
+import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
 import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
 class DescriptionActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDescriptionBinding
     private val viewModel = DescriptionViewModel()
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_description)
     private val nextButton: Button get() = findViewById(R.id.button_next)
     private val previousButton: Button get() = findViewById(R.id.button_previous)
-    private val pokeImg: ImageView get() = findViewById(R.id.imageView)
-    private val pokeName: TextView get() = findViewById(R.id.textView_name_pokemon)
-    private val pokeHeight: TextView get() = findViewById(R.id.textView_height)
-    private val pokeWeight: TextView get() = findViewById(R.id.textView_weight)
-    private val pokeDesc: TextView get() = findViewById(R.id.textView_description)
-    private val pokeTypePrimary: TextView get() = findViewById(R.id.textView_primary_type_pokemon)
-    private val pokeTypeSecondary: TextView get() = findViewById(R.id.textView_secondary_type_pokemon)
-    
-    private lateinit var PrimeiroPokemon:String
-    private lateinit var UltimoPokemon :String
-    
+    private lateinit var idPokemon:String
+    private lateinit var firstPokemon:String
+    private lateinit var lastPokemon :String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_description)
-        val id = intent.getStringExtra("id").toString()
-        PrimeiroPokemon = intent.getStringExtra("a").toString()
-        UltimoPokemon = intent.getStringExtra("b").toString()
+        binding = ActivityDescriptionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        idPokemon = intent.getStringExtra("id").toString()
+        firstPokemon = intent.getStringExtra("a").toString()
+        lastPokemon = intent.getStringExtra("b").toString()
         onClick()
-        viewModel.getPokemonDescription(id,PrimeiroPokemon,UltimoPokemon)
-        viewModel.pokemonLiveData1.observe(this){
-            previousButton.visibility = View.GONE
-        }
-        viewModel.pokemonLiveData2.observe(this){
-            nextButton.visibility = View.GONE
-        }
-        viewModel.pokemonLiveData3.observe(this){
-          nextButton.visibility = View.VISIBLE
-          previousButton.visibility = View.VISIBLE
-        }
+        buttonVisibility(idPokemon)
+    }
 
     private fun onClick() {
         toolbar.setNavigationOnClickListener {
@@ -62,25 +48,41 @@ class DescriptionActivity : AppCompatActivity() {
     private fun printOnScreenInformation() {
         val api = viewModel.apiData.value
 
-        pokeName.text = api!!.name
-        pokeHeight.text = "Height " + api.height
-        pokeWeight.text = "Weight " + api.weight
-        pokeDesc.text = api.descriptionList[0].descricao
-        pokeImg.load(api.imgList.imgList.type.urlImg)
-        
-        pokeTypePrimary.text = api.typeList[0].type.name
-        pokeTypeSecondary.visibility = View.GONE
-        if (api.typeList.size > 1) {
-            pokeTypeSecondary.visibility = View.VISIBLE
-            pokeTypeSecondary.text = api.typeList[1].type.name
+        binding.textViewNamePokemon.text = api!!.name
+        binding.textViewHeight.text = "Height: " + api.height
+        binding.textViewWeight.text = "Weight: " + api.weight
+        binding.textViewDescription.text = api.descriptionList[0].descricao
+        binding.imageView.load(api.imgList.imgList.type.urlImg)
+
+        binding.textViewPrimaryTypePokemon.text = api.typeList[0].type.name
+        binding.textViewSecondaryTypePokemon.visibility = viewModel.visibilitySecondaryType(api.typeList.size)
+        viewModel.test(api.typeList.size) {
+            binding.textViewSecondaryTypePokemon.text = api.typeList[1].type.name
+        }
+    }
+
+    private fun buttonVisibility(id: String) {
+        viewModel.getPokemonDescription(id, firstPokemon, lastPokemon)
+        viewModel.pokemonLiveData1.observe(this) {
+            previousButton.visibility = View.GONE
+        }
+        viewModel.pokemonLiveData2.observe(this) {
+            nextButton.visibility = View.GONE
+        }
+        viewModel.pokemonLiveData3.observe(this) {
+            nextButton.visibility = View.VISIBLE
+            previousButton.visibility = View.VISIBLE
+        }
+        viewModel.apiData.observe(this) {
+            printOnScreenInformation()
         }
     }
 
     private fun nextPokemon(id: Int) {
-        viewModel.getPokemonDescription((id + 1).toString(),PrimeiroPokemon,UltimoPokemon)
+        viewModel.getPokemonDescription((id + 1).toString(),firstPokemon,lastPokemon)
     }
 
     private fun previousPokemon(id: Int) {
-        viewModel.getPokemonDescription((id - 1).toString(),PrimeiroPokemon,UltimoPokemon)
+        viewModel.getPokemonDescription((id - 1).toString(),firstPokemon,lastPokemon)
     }
 }
