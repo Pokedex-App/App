@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import s8u.studies.myapplication.network.LoggingInterceptor
 
-object retrofitObject {
+object RetrofitObject {
     inline fun <reified T> createNetworkService(): T {
 
         val log = LoggingInterceptor().getInterceptor()

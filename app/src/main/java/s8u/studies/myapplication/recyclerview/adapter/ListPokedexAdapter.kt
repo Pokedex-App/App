@@ -8,17 +8,17 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import s8u.studies.myapplication.R
-import s8u.studies.myapplication.model.Pokedex_entries
+import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 
 class ListPokedexAdapter(
     private val context: Context,
-    private val pokedexEntries: ArrayList<Pokedex_entries>,
+    private val pokedexEntries: ArrayList<PokedexEntries>,
     private val onListenerPokedex: OnListenerPokedex,
 ) : RecyclerView.Adapter<ListPokedexAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: ConstraintLayout = itemView.findViewById(R.id.container_view)
-        fun bind(pokedexEntries: Pokedex_entries) {
+        fun bind(pokedexEntries: PokedexEntries) {
             val id = itemView.findViewById<TextView>(R.id.pokedex_id)
             id.text = pokedexEntries.id.toString()
             val name = itemView.findViewById<TextView>(R.id.pokedex_name)
@@ -27,7 +27,7 @@ class ListPokedexAdapter(
     }
 
     interface OnListenerPokedex {
-        fun onClickPokedex(pokedexEntries: Pokedex_entries)
+        fun onClickPokedex(pokedexEntries: PokedexEntries)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

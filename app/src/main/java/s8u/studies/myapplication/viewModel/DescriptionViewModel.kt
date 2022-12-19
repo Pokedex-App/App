@@ -1,28 +1,28 @@
 package s8u.studies.myapplication.viewModel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import s8u.studies.myapplication.api.pokemonDescriptionEndpoint
-import s8u.studies.myapplication.api.pokemonEndpoint
-import s8u.studies.myapplication.di.retrofitObject
+import s8u.studies.myapplication.api.PokemonDescriptionEndpoint
+import s8u.studies.myapplication.api.PokemonEndpoint
+import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.PokemonData
-import s8u.studies.myapplication.model.PokemonTypes
 
-class DescriptionViewModel() : ViewModel() {
+class DescriptionViewModel : ViewModel() {
     private val _apiData = MutableLiveData<PokemonData>()
     val apiData: LiveData<PokemonData> = _apiData
     val pokemonLiveData1 = MutableLiveData<Unit>()
     val pokemonLiveData2 = MutableLiveData<Unit>()
     val pokemonLiveData3 = MutableLiveData<Unit>()
 
-    fun getPokemonDescription(id: String,PrimeiroPokemon:String,UltimoPokemon:String){
-        val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
-        val pokemonDescEndpoint = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
+    fun getPokemonDescription(id: String,firstPokemon:String,lastPokemon:String){
+        val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()
+        val pokemonDescEndpoint = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
 
-        hideButtons(id,PrimeiroPokemon,UltimoPokemon)
+        hideButtons(id,firstPokemon,lastPokemon)
         
         viewModelScope.launch {
             val poke = pokemonEndpoint.getPokemon(id)
@@ -36,6 +36,7 @@ class DescriptionViewModel() : ViewModel() {
                     poke.weight,
                     poke.typeList,
                     poke.imgList,
+                    poke.movesList,
                     pokeDesc.pastEvolution,
                     pokeDesc.DescriptionList
                 )
@@ -43,14 +44,22 @@ class DescriptionViewModel() : ViewModel() {
         }
     }
 
-    fun hideButtons(id: String,PrimeiroPokemon:String,UltimoPokemon:String){
-
-        if(id.toInt() == PrimeiroPokemon.toInt()){
-         pokemonLiveData1.postValue(Unit)
-        } else if(id.toInt() == UltimoPokemon.toInt()){
-            pokemonLiveData2.postValue(Unit)
-        }else{
-            pokemonLiveData3.postValue(Unit)
+    private fun hideButtons(id: String, firstPokemon:String, lastPokemon:String){
+        when (id.toInt()) {
+            firstPokemon.toInt() -> pokemonLiveData1.postValue(Unit)
+            lastPokemon.toInt() -> pokemonLiveData2.postValue(Unit)
+            else -> pokemonLiveData3.postValue(Unit)
         }
+    }
+
+    fun visibilitySecondaryType(size: Int) : Int {
+        return when (size) {
+            1 -> View.GONE
+            else -> View.VISIBLE
+        }
+    }
+
+    fun test(size: Int, behavior: () -> Unit)  {
+        if (size == 2) behavior()
     }
 }
