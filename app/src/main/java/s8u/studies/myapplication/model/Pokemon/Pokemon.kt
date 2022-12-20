@@ -1,4 +1,4 @@
-package s8u.studies.myapplication.model
+package s8u.studies.myapplication.model.Pokemon
 
 import com.google.gson.annotations.SerializedName
 
@@ -14,5 +14,7 @@ open class Pokemon(
     @SerializedName("types")
     var typeList: ArrayList<PokemonTypes>,
     @SerializedName("sprites")
-    var imgList: PokemonImgList
+    var imgList: PokemonImgList,
+    @SerializedName("moves")
+    var movesList: ArrayList<PokemonMoves>
 )

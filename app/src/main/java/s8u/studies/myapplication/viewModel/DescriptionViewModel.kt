@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import s8u.studies.myapplication.api.pokemonDescriptionEndpoint
-import s8u.studies.myapplication.api.pokemonEndpoint
-import s8u.studies.myapplication.di.retrofitObject
+import s8u.studies.myapplication.api.PokemonDescriptionEndpoint
+import s8u.studies.myapplication.api.PokemonEndpoint
+import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.PokemonData
 
 class DescriptionViewModel : ViewModel() {
@@ -19,8 +19,8 @@ class DescriptionViewModel : ViewModel() {
     val pokemonLiveData3 = MutableLiveData<Unit>()
 
     fun getPokemonDescription(id: String,firstPokemon:String,lastPokemon:String){
-        val pokemonEndpoint = retrofitObject.createNetworkService<pokemonEndpoint>()
-        val pokemonDescEndpoint = retrofitObject.createNetworkService<pokemonDescriptionEndpoint>()
+        val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()
+        val pokemonDescEndpoint = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
 
         hideButtons(id,firstPokemon,lastPokemon)
         
@@ -36,6 +36,7 @@ class DescriptionViewModel : ViewModel() {
                     poke.weight,
                     poke.typeList,
                     poke.imgList,
+                    poke.movesList,
                     pokeDesc.pastEvolution,
                     pokeDesc.DescriptionList
                 )
@@ -44,12 +45,10 @@ class DescriptionViewModel : ViewModel() {
     }
 
     private fun hideButtons(id: String, firstPokemon:String, lastPokemon:String){
-        if (id.toInt() == firstPokemon.toInt()){
-            pokemonLiveData1.postValue(Unit)
-        } else if(id.toInt() == lastPokemon.toInt()) {
-            pokemonLiveData2.postValue(Unit)
-        } else {
-            pokemonLiveData3.postValue(Unit)
+        when (id.toInt()) {
+            firstPokemon.toInt() -> pokemonLiveData1.postValue(Unit)
+            lastPokemon.toInt() -> pokemonLiveData2.postValue(Unit)
+            else -> pokemonLiveData3.postValue(Unit)
         }
     }
 

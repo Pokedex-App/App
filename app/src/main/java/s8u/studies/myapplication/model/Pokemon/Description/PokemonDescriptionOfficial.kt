@@ -1,4 +1,4 @@
-package s8u.studies.myapplication.model
+package s8u.studies.myapplication.model.Pokemon.Description
 
 import com.google.gson.annotations.SerializedName
 

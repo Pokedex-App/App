@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 import s8u.studies.myapplication.R
-import s8u.studies.myapplication.model.Pokedex_entries
+import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.modules.networkModule
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         }
     }
 
-    override fun onClickPokedex(pokedexEntries: Pokedex_entries) {
+    override fun onClickPokedex(pokedexEntries: PokedexEntries) {
         val listPokedex = viewModel.listPokedexEntriesLiveData.value!!
 
         val intent = Intent(this, DescriptionActivity::class.java)
