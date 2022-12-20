@@ -11,15 +11,16 @@
         android:id="@+id/toolbar_description"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/image_pokemon"
+        android:layout_height="@dimen/image_pokemon"
+        android:layout_margin="@dimen/margin"
         android:contentDescription="@string/pokemon_image"
         android:scaleType="center"
+        android:background="@drawable/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_description"
@@ -29,75 +30,95 @@
         android:id="@+id/textView_name_pokemon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="32sp"
+        android:textSize="@dimen/text_size_title"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:text="Name Pokemon" />
 
-    <TextView
-        android:id="@+id/textView_primary_type_pokemon"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/view_types"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon"
-        tools:ignore="MissingConstraints"
-        tools:text="type" />
-
-    <TextView
-        android:id="@+id/textView_secondary_type_pokemon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_primary_type_pokemon"
-        tools:ignore="MissingConstraints"
-        tools:text="type" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/textView_height"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_secondary_type_pokemon"
-        tools:ignore="MissingConstraints"
-        tools:text="Height: 19" />
+        <TextView
+            android:id="@+id/textView_primary_type_pokemon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/background"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            tools:text="type" />
 
-    <TextView
-        android:id="@+id/textView_weight"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textView_secondary_type_pokemon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/background"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            tools:text="type" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_height_weight"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/black"
+        android:layout_margin="@dimen/margin"
+        app:layout_constraintTop_toBottomOf="@+id/view_types"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_height"
-        tools:ignore="MissingConstraints"
-        tools:text="Height: 19" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/textView_height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:layout_marginEnd="8dp"
+            tools:text="Height 19 m"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:layout_marginStart="8dp"
+            tools:text="Weight 1000 kg"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="24sp"
-        android:textColor="@color/black"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/background"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_weight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_height_weight"
         tools:text="LiveData considers that an observer, which is represented by the class Observer, is in an active state if its lifecycle is in the state or RESUMED. LiveData only notifies active watchers of updates. Inactive observers registered to observe objects Live Data are not notified of changes." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

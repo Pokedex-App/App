@@ -59,7 +59,7 @@ class DescriptionViewModel : ViewModel() {
         }
     }
 
-    fun test(size: Int, behavior: () -> Unit)  {
+    fun existsSecondaryType(size: Int, behavior: () -> Unit)  {
         if (size == 2) behavior()
     }
 }
