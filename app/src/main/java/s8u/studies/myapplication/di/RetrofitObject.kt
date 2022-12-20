@@ -16,7 +16,6 @@ object RetrofitObject {
             .addInterceptor(log)
             .build()
 
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .client(client)

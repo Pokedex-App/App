@@ -1,6 +1,7 @@
 package s8u.studies.myapplication.view
 
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -49,14 +50,14 @@ class DescriptionActivity : AppCompatActivity() {
         val api = viewModel.apiData.value
 
         binding.textViewNamePokemon.text = api!!.name
-        binding.textViewHeight.text = "Height: " + api.height
-        binding.textViewWeight.text = "Weight: " + api.weight
+        binding.textViewHeight.text = Html.fromHtml("<b>Height</b> ${api.height} cm")
+        binding.textViewWeight.text = Html.fromHtml("<b>Weight</b> ${api.weight} kg")
         binding.textViewDescription.text = api.descriptionList[0].descricao
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
         binding.textViewPrimaryTypePokemon.text = api.typeList[0].type.name
         binding.textViewSecondaryTypePokemon.visibility = viewModel.visibilitySecondaryType(api.typeList.size)
-        viewModel.test(api.typeList.size) {
+        viewModel.existsSecondaryType(api.typeList.size) {
             binding.textViewSecondaryTypePokemon.text = api.typeList[1].type.name
         }
     }
