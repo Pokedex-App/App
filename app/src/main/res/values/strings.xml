@@ -4,9 +4,14 @@
     <string name="pokemon_image">
         Picture of a Pokemon.
     </string>
+
     <string name="toolbar_title">
         Pokémon
     </string>
+    <string name="title_abilities">
+        Abilities
+    </string>
+
     <string name="toolbar_button_next">
         Next
     </string>
