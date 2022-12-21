@@ -26,4 +26,7 @@
     <dimen name="text_size">
         16sp
     </dimen>
+    <dimen name="text_size_min">
+        14sp
+    </dimen>
 </resources>
