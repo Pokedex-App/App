@@ -20,8 +20,15 @@
         8dp
     </dimen>
 
+    <dimen name="padding_input">
+        16dp
+    </dimen>
+
     <dimen name="text_size_title">
         32sp
+    </dimen>
+    <dimen name="text_size_medium">
+        24sp
     </dimen>
     <dimen name="text_size">
         16sp

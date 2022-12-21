@@ -1,11 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HomeActivity">
+    tools:context=".view.HomeActivity"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/textView_title_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_title_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/filter_type"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title_app" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title_filter">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/type_bug"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bug" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dark" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_dragon"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dragon" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_electric"
+                android:scaleType="fitCenter"
+                android:src="@drawable/electric" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_fairy"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fairy" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_fighting"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fighting" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_fire"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fire" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_flying"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flying" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_ghost"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ghost" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_grass"
+                android:scaleType="fitCenter"
+                android:src="@drawable/grass" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_ground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ground" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_ice"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ice" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_normal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/normal" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_poison"
+                android:scaleType="fitCenter"
+                android:src="@drawable/poison" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_psychic"
+                android:scaleType="fitCenter"
+                android:src="@drawable/psychic" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_rock"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rock" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_steel"
+                android:scaleType="fitCenter"
+                android:src="@drawable/steel" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin"
+                android:contentDescription="@string/type_water"
+                android:scaleType="fitCenter"
+                android:src="@drawable/water" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:autofillHints=""
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="@drawable/background_input"
+        android:hint="@string/filter_input"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_filter" />
+
+    <TextView
+        android:id="@+id/title_List_Pokemon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/title_list"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
@@ -14,9 +223,9 @@
         android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_List_Pokemon"
         tools:listitem="@layout/pokedex_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
