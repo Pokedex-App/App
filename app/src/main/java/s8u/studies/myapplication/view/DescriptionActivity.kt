@@ -50,7 +50,7 @@ class DescriptionActivity : AppCompatActivity() {
         val api = viewModel.apiData.value
 
         binding.textViewNamePokemon.text = api!!.name
-        binding.textViewHeight.text = Html.fromHtml("<b>Height</b> ${((api.height.toDouble() * 10)/100 )} m")
+        binding.textViewHeight.text = Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m")
         binding.textViewWeight.text = Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg")
         binding.textViewDescription.text = api.descriptionList[0].descricao
         binding.imageView.load(api.imgList.imgList.type.urlImg)
