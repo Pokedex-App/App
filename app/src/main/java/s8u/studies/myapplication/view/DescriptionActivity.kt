@@ -60,6 +60,11 @@ class DescriptionActivity : AppCompatActivity() {
         viewModel.existsSecondaryType(api.typeList.size) {
             binding.textViewSecondaryTypePokemon.text = api.typeList[1].type.name
         }
+
+        binding.textViewAbility1.text = api.movesList[0].move.moveName
+        binding.textViewAbility2.text = api.movesList[1].move.moveName
+        binding.textViewAbility3.text = api.movesList[2].move.moveName
+        binding.textViewAbility4.text = api.movesList[3].move.moveName
     }
 
     private fun buttonVisibility(id: String) {
