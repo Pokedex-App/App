@@ -60,7 +60,7 @@
                 android:background="@drawable/background"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="type" />
+                tools:text="type primary" />
 
             <TextView
                 android:id="@+id/textView_secondary_type_pokemon"
@@ -70,7 +70,7 @@
                 android:background="@drawable/background"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="type" />
+                tools:text="type secondary" />
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="Height 19 m" />
+                tools:text="Height ** m" />
 
             <TextView
                 android:id="@+id/textView_weight"
@@ -106,7 +106,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="Weight 1000 kg" />
+                tools:text="Weight *** kg" />
 
         </LinearLayout>
 
@@ -160,18 +160,20 @@
                     android:id="@+id/textView_ability_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
                     android:background="@drawable/background"
-                    tools:text="Testd usandsau"
-                    android:textSize="@dimen/text_size" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size"
+                    tools:text="Ability 1" />
 
                 <TextView
                     android:id="@+id/textView_ability_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background"
-                    tools:text="Test aaaaaaaaaaaa"
-                    android:textSize="@dimen/text_size" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size"
+                    tools:text="Ability 2" />
 
             </LinearLayout>
 
@@ -189,18 +191,20 @@
                     android:id="@+id/textView_ability_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
                     android:background="@drawable/background"
-                    tools:text="Testd usandsau"
-                    android:textSize="@dimen/text_size" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size"
+                    tools:text="Ability 3" />
 
                 <TextView
                     android:id="@+id/textView_ability_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background"
-                    tools:text="Test aaaaaaaaaaaa"
-                    android:textSize="@dimen/text_size" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size"
+                    tools:text="Ability 4" />
 
             </LinearLayout>
 

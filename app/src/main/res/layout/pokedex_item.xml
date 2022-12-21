@@ -6,38 +6,84 @@
     android:id="@+id/container_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginStart="@dimen/margin"
+    android:layout_marginEnd="@dimen/margin"
+    android:layout_marginBottom="@dimen/margin"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:weightSum="2">
 
-    <TextView
-        android:id="@+id/pokedex_id"
+    <LinearLayout
+        android:id="@+id/view_name_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:gravity="center_vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:text="000"/>
-
-    <TextView
-        android:id="@+id/pokedex_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:gravity="center_vertical"
+        android:layout_marginEnd="@dimen/margin_min"
+        android:layout_weight="1"
+        android:background="@drawable/background_name"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/pokedex_id"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:text="Pokemon name"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/pokedex_name"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            tools:text="Pokemon name" />
+
+        <TextView
+            android:id="@+id/pokedex_id"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            android:gravity="center"
+            tools:text="#0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_types"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_min"
+        android:layout_weight="1"
+        android:foregroundGravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toEndOf="@+id/view_name_id"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/pokedex_type1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_min"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            tools:text="Type 1" />
+
+        <TextView
+            android:id="@+id/pokedex_type2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_min"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            tools:text="Type 2" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
