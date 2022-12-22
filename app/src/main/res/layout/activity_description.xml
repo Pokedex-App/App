@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,7 +22,6 @@
             android:layout_width="@dimen/image_pokemon"
             android:layout_height="@dimen/image_pokemon"
             android:layout_margin="@dimen/margin"
-            android:background="@drawable/background"
             android:contentDescription="@string/pokemon_image"
             android:scaleType="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_title"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +46,6 @@
             android:id="@+id/view_types"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon">
@@ -79,32 +77,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_types">
 
             <TextView
                 android:id="@+id/textView_height"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/background"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size"
                 tools:text="Height ** m" />
 
             <TextView
                 android:id="@+id/textView_weight"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/background"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size"
                 tools:text="Weight *** kg" />
 
@@ -115,9 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:background="@drawable/background"
-            android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,14 +126,14 @@
 
             <TextView
                 android:id="@+id/textView_title_abilities"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginEnd="@dimen/margin"
                 android:gravity="center"
                 android:text="@string/title_abilities"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -153,7 +144,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -184,7 +174,6 @@
                 android:layout_marginLeft="@dimen/margin"
                 android:layout_marginRight="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
