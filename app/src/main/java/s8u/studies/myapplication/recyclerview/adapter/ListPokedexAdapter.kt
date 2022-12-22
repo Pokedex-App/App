@@ -31,10 +31,10 @@ class ListPokedexAdapter(
             primaryType.text = typeList.typeList[0].type.name
             val secondaryType = itemView.findViewById<TextView>(R.id.pokedex_type2)
 
-            if (typeList.typeList.size > 1) {
+            if (typeList.typeList.size == 2) {
                 secondaryType.text = typeList.typeList[1].type.name
             } else {
-                secondaryType.visibility = View.GONE
+                secondaryType.visibility = View.INVISIBLE
             }
         }
     }
