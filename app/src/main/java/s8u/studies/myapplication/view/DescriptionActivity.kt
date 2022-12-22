@@ -1,10 +1,18 @@
 package s8u.studies.myapplication.view
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.ColorSpace
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
+import android.text.style.BackgroundColorSpan
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.DrawableCompat
 import coil.load
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
@@ -55,10 +63,20 @@ class DescriptionActivity : AppCompatActivity() {
         binding.textViewDescription.text = api.descriptionList[0].descricao
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
-        binding.textViewPrimaryTypePokemon.text = api.typeList[0].type.name
+        val primaryType = api.typeList[0].type.name
+        binding.textViewPrimaryTypePokemon.text = primaryType
+        binding.textViewPrimaryTypePokemon.setBackgroundColor(
+           // viewModel.colorBackgroundType(primaryType)
+            Color.pack(R.color.grass).toInt()
+        )
         binding.textViewSecondaryTypePokemon.visibility = viewModel.visibilitySecondaryType(api.typeList.size)
         viewModel.existsSecondaryType(api.typeList.size) {
-            binding.textViewSecondaryTypePokemon.text = api.typeList[1].type.name
+            val secondaryType = api.typeList[1].type.name
+            binding.textViewSecondaryTypePokemon.text = secondaryType
+            binding.textViewSecondaryTypePokemon.setBackgroundColor(
+                //Color.parseColor(R.color.grass.toString())
+            Color.BLUE
+            )
         }
 
         binding.textViewAbility1.text = api.movesList[0].move.moveName

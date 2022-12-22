@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import s8u.studies.myapplication.api.PokemonTypeEndpoint
 import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
@@ -22,18 +21,16 @@ class HomeViewModel(private val pokedex : PokedexRepository) : ViewModel() {
 
 
     fun getPokedexEntriesList () {
-        Log.i("Retrofit", "Entrei no método.")
         viewModelScope.launch {
             _listPokedexEntriesLiveData.postValue(pokedex.getPokedex().entriesList)
-            Log.i("Retrofit", "Foi chamado")
         }
     }
     fun getPokedexTypesList () {
-        var typeList = arrayListOf<PokemonTypeEnd>()
+        val typeList = arrayListOf<PokemonTypeEnd>()
         val api = RetrofitObject.createNetworkService<PokemonTypeEndpoint>()
-        Log.i("Retrofit", "Entrei no método.")
         viewModelScope.launch {
-                for(i in 0..listPokedexEntriesLiveData.value!!.size - 1){
+                for(i in 0 until listPokedexEntriesLiveData.value!!.size){
+                    Log.i("DST", i.toString())
                     typeList.add(api.getPokemon(listPokedexEntriesLiveData.value!![i].id.toString()))
 
                     if(i == listPokedexEntriesLiveData.value!!.size - 1){
