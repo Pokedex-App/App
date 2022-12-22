@@ -16,8 +16,8 @@ class DescriptionViewModel : ViewModel() {
     private val _apiData = MutableLiveData<PokemonData>()
     val apiData: LiveData<PokemonData> = _apiData
     val pokemonLiveData1 = MutableLiveData<Unit>()
-    val pokemonLiveData2 = MutableLiveData<Unit>()
     val pokemonLiveData3 = MutableLiveData<Unit>()
+    val pokemonLiveData2 = MutableLiveData<Unit>()
 
     fun getPokemonDescription(id: String,firstPokemon:String,lastPokemon:String){
         val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()

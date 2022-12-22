@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HomeActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".view.HomeActivity">
 
     <TextView
         android:id="@+id/textView_title_app"
@@ -196,12 +196,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
         android:autofillHints=""
-        android:textColor="@color/black"
-        android:backgroundTint="@color/gray"
-        android:textStyle="bold"
         android:background="@drawable/background_input"
+        android:backgroundTint="@color/gray"
         android:hint="@string/filter_input"
         android:inputType="text"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/scrollView_filter" />
 
     <TextView
@@ -217,17 +217,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_layout" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="@dimen/image_loading"
+        android:layout_height="@dimen/image_loading"
+        android:contentDescription="@string/loading_image"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/green_check_terminal"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_List_Pokemon"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/pokedex_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
