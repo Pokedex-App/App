@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 import s8u.studies.myapplication.R
+import s8u.studies.myapplication.api.PokemonTypeEndpoint
+import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
+import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.modules.networkModule
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
@@ -32,10 +36,16 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     private fun pokedexItemObjects() {
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
         viewModel.getPokedexEntriesList()
-        viewModel.listPokedexEntriesLiveData.observe(this) {
+
+        viewModel.listPokedexEntriesLiveData.observe(this){
+            viewModel.getPokedexTypesList()
+        }
+
+        viewModel.listPokedexTypesLiveData.observe(this) {
             val listPokedexEntries = viewModel.listPokedexEntriesLiveData.value
+            val typeList = viewModel.listPokedexTypesLiveData.value
             recyclerView.adapter = ListPokedexAdapter(
-                this, pokedexEntries = listPokedexEntries!!, this
+                this, pokedexEntries = listPokedexEntries!!, typeList!!,this
             )
         }
     }
