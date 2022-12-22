@@ -29,4 +29,5 @@
     <color name="rock">#C8B686</color>
     <color name="steel">#5A8EA2</color>
     <color name="water">#3692DC</color>
+    <color name="gray">#F0F0F0</color>
 </resources>
