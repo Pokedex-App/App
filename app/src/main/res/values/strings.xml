@@ -8,6 +8,9 @@
     <string name="pokemon_image">
         Picture of a Pokemon.
     </string>
+    <string name="loading_image">
+        Spinning Pokeball
+    </string>
 
     <string name="toolbar_title">
         Pokémon
