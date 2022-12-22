@@ -2,7 +2,7 @@
     <string name="app_name">Pokédex</string>
     <string name="title_list">Pokémons</string>
     
-    <string name="filter_type">Filter by Pokemon type</string>
+    <string name="filter_type">Filter by pokémon type</string>
     <string name="filter_input">Search for name or #code</string>
 
     <string name="pokemon_image">
