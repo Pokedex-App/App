@@ -33,6 +33,17 @@ class DescriptionActivity : AppCompatActivity() {
         lastPokemon = intent.getStringExtra("b").toString()
         onClick()
         buttonVisibility(idPokemon)
+        setObserversLoading()
+    }
+
+    private fun setObserversLoading() {
+        viewModel.setLoadingState(true)
+        viewModel.loadingPokeballTrue.observe(this) {
+            visibilityLayout(View.VISIBLE, View.INVISIBLE)
+        }
+        viewModel.loadingPokeballFalse.observe(this) {
+            visibilityLayout(View.INVISIBLE, View.VISIBLE)
+        }
     }
 
     private fun onClick() {
@@ -42,9 +53,30 @@ class DescriptionActivity : AppCompatActivity() {
         }
         nextButton.setOnClickListener {
             nextPokemon(viewModel.apiData.value!!.id)
+            isClickableButtonToolbar(false)
         }
         previousButton.setOnClickListener {
             previousPokemon(viewModel.apiData.value!!.id)
+            isClickableButtonToolbar(false)
+        }
+    }
+
+    private fun buttonVisibility(id: String) {
+        viewModel.getPokemonDescription(id, firstPokemon, lastPokemon)
+        viewModel.pokemonLiveData1.observe(this) {
+            previousButton.visibility = View.GONE
+        }
+        viewModel.pokemonLiveData2.observe(this) {
+            nextButton.visibility = View.GONE
+        }
+        viewModel.pokemonLiveData3.observe(this) {
+            nextButton.visibility = View.VISIBLE
+            previousButton.visibility = View.VISIBLE
+        }
+        viewModel.apiData.observe(this) {
+            viewModel.setLoadingState(false)
+            isClickableButtonToolbar(true)
+            printOnScreenInformation()
         }
     }
 
@@ -83,21 +115,22 @@ class DescriptionActivity : AppCompatActivity() {
         binding.textViewAbility4.text = api.movesList[3].move.moveName
     }
 
-    private fun buttonVisibility(id: String) {
-        viewModel.getPokemonDescription(id, firstPokemon, lastPokemon)
-        viewModel.pokemonLiveData1.observe(this) {
-            previousButton.visibility = View.GONE
-        }
-        viewModel.pokemonLiveData2.observe(this) {
-            nextButton.visibility = View.GONE
-        }
-        viewModel.pokemonLiveData3.observe(this) {
-            nextButton.visibility = View.VISIBLE
-            previousButton.visibility = View.VISIBLE
-        }
-        viewModel.apiData.observe(this) {
-            printOnScreenInformation()
-        }
+    private fun visibilityLayout(loading: Int, information: Int) {
+        binding.toolbarDescription.toolbar.visibility = information
+        binding.imageView.visibility = information
+        binding.textViewNamePokemon.visibility = information
+        binding.viewTypes.visibility = information
+        binding.viewHeightWeight.visibility = information
+        binding.textViewDescription.visibility = information
+        binding.textViewTitleAbilities.visibility = information
+        binding.viewAbilities.visibility = information
+        binding.loadingText.visibility = loading
+        binding.loading.visibility = loading
+    }
+
+    private fun isClickableButtonToolbar(state: Boolean) {
+        findViewById<Button>(R.id.button_next).isClickable = state
+        findViewById<Button>(R.id.button_previous).isClickable = state
     }
 
     private fun nextPokemon(id: Int) {

@@ -19,6 +19,12 @@ class DescriptionViewModel : ViewModel() {
     val pokemonLiveData3 = MutableLiveData<Unit>()
     val pokemonLiveData2 = MutableLiveData<Unit>()
 
+    private var _loadingPokeballTrue = MutableLiveData<Unit>()
+    val loadingPokeballTrue: LiveData<Unit> = _loadingPokeballTrue
+
+    private var _loadingPokeballFalse = MutableLiveData<Unit>()
+    val loadingPokeballFalse: LiveData<Unit> = _loadingPokeballFalse
+
     fun getPokemonDescription(id: String,firstPokemon:String,lastPokemon:String){
         val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()
         val pokemonDescEndpoint = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
@@ -86,5 +92,10 @@ class DescriptionViewModel : ViewModel() {
             "water" -> R.color.water
             else -> R.color.light_gray_2
         }
+    }
+
+    fun setLoadingState(isVisible: Boolean) {
+        if (isVisible) _loadingPokeballTrue.postValue(Unit)
+        else _loadingPokeballFalse.postValue(Unit)
     }
 }

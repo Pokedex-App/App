@@ -11,7 +11,7 @@
     </dimen>
 
     <dimen name="image_loading">
-        200dp
+        120dp
     </dimen>
 
     <dimen name="margin_medium">
