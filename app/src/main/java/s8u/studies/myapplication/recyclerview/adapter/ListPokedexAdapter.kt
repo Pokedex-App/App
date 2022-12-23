@@ -14,8 +14,7 @@ import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 
 class ListPokedexAdapter(
     private val context: Context,
-    private val pokedexEntries: ArrayList<PokedexEntries>,
-    private val typeList: ArrayList<PokemonTypeEnd>,
+    private val pokedexEntriesAndType: Pair<ArrayList<PokedexEntries>?, ArrayList<PokemonTypeEnd>?>,
     private val onListenerPokedex: OnListenerPokedex,
 ) : RecyclerView.Adapter<ListPokedexAdapter.ViewHolder>() {
 
@@ -33,6 +32,7 @@ class ListPokedexAdapter(
 
             if (typeList.typeList.size == 2) {
                 secondaryType.text = typeList.typeList[1].type.name
+                secondaryType.visibility = View.VISIBLE
             } else {
                 secondaryType.visibility = View.INVISIBLE
             }
@@ -50,14 +50,14 @@ class ListPokedexAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pokedexEntries = pokedexEntries[position]
-        val typeList = typeList[position]
-        holder.bind(pokedexEntries, typeList)
+        val pokedexEntries = pokedexEntriesAndType.first!![position]
+        val pokedexTypes = pokedexEntriesAndType.second!![position]
+        holder.bind(pokedexEntries, pokedexTypes)
         holder.cardView.setOnClickListener {
             onListenerPokedex.onClickPokedex(pokedexEntries)
         }
     }
 
-    override fun getItemCount(): Int = pokedexEntries.size
+    override fun getItemCount(): Int = pokedexEntriesAndType.first!!.size
 
 }

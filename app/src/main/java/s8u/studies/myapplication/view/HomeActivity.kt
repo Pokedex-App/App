@@ -1,10 +1,11 @@
 package s8u.studies.myapplication.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
@@ -25,7 +26,8 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
 
         setKoinUp()
         pokedexItemObjects()
-        setObservers()
+        setObserversLoading()
+        listener()
     }
 
     private fun setKoinUp() {
@@ -34,7 +36,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         }
     }
 
-    private fun setObservers() {
+    private fun setObserversLoading() {
         viewModel.setLoadingState(true)
         viewModel.loadingPokeballTrue.observe(this) {
             visibilityLayout(View.VISIBLE, View.INVISIBLE)
@@ -58,17 +60,47 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
         viewModel.getPokedexEntriesList()
 
-        viewModel.listPokedexEntriesLiveData.observe(this){
+        viewModel.listPokedexEntriesLiveData.observe(this) {
             viewModel.getPokedexTypesList()
         }
 
         viewModel.listPokedexTypesLiveData.observe(this) {
             val listPokedexEntries = viewModel.listPokedexEntriesLiveData.value
             val typeList = viewModel.listPokedexTypesLiveData.value
+            val EntriesAndTypeList = Pair(listPokedexEntries,typeList)
             recyclerView.adapter = ListPokedexAdapter(
-                this, pokedexEntries = listPokedexEntries!!, typeList!!,this
+                this,EntriesAndTypeList!! , this
             )
             viewModel.setLoadingState(false)
+        }
+    }
+
+    private fun teste() {
+        var t: ArrayList<PokedexEntries> = arrayListOf()
+        val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
+
+        for (i in 0..viewModel.listPokedexEntriesLiveData.value!!.size - 1) {
+
+            if (viewModel.listPokedexEntriesLiveData.value!![i].id > 50) {
+                t.add(viewModel.listPokedexEntriesLiveData.value!![i])
+            }
+        }
+
+        viewModel.getTList(t)
+        viewModel.listPokedexEntriesLiveData.observe(this) {
+            viewModel.getPokedexTypesList()
+        }
+
+        viewModel.listPokedexTypesLiveData.observe(this) {
+            recyclerView.adapter!!.notifyDataSetChanged()
+        }
+    }
+
+    private fun listener(){
+        val bug = findViewById<ImageView>(R.id.bugImg)
+
+        bug.setOnClickListener{
+            teste()
         }
     }
 
@@ -77,11 +109,11 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
 
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexEntries.id.toString())
-        intent.putExtra("a",listPokedex[0].id.toString())
-        Log.i("INTENT","${listPokedex[0].id}")
-        intent.putExtra("b",listPokedex[listPokedex.size - 1].id.toString())
-        Log.i("INTENT","${listPokedex[listPokedex.size - 1].id}")
-        
+        intent.putExtra("a", listPokedex[0].id.toString())
+        Log.i("INTENT", "${listPokedex[0].id}")
+        intent.putExtra("b", listPokedex[listPokedex.size - 1].id.toString())
+        Log.i("INTENT", "${listPokedex[listPokedex.size - 1].id}")
+
         startActivity(intent)
     }
 }
