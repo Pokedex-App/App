@@ -182,11 +182,11 @@
 
         <Button
             android:id="@+id/button_see_more"
-            android:layout_width="@dimen/button_toolbar_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/button_toolbar_height"
-            android:layout_margin="@dimen/margin"
             android:gravity="center"
             android:background="@drawable/background_button"
+            android:textAllCaps="false"
             android:text="@string/button_see_more"
             app:layout_constraintTop_toBottomOf="@+id/view_abilities"
             app:layout_constraintStart_toStartOf="parent"
