@@ -28,6 +28,9 @@
     <string name="toolbar_button_previous">
         Previous
     </string>
+    <string name="button_see_more">
+        See more
+    </string>
 
     <string name="type_bug">
         Bug
