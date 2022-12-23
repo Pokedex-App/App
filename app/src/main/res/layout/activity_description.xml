@@ -47,29 +47,34 @@
             android:id="@+id/view_types"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon">
 
             <TextView
                 android:id="@+id/textView_primary_type_pokemon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
+                android:layout_weight="1"
                 android:background="@drawable/background"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="type primary" />
+                tools:text="primary" />
 
             <TextView
                 android:id="@+id/textView_secondary_type_pokemon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
+                android:layout_weight="1"
                 android:background="@drawable/background"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
-                tools:text="type secondary" />
+                tools:text="secondary" />
 
         </LinearLayout>
 
@@ -141,7 +146,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
-                android:id="@+id/view_abilities_1_2"
+                android:id="@+id/view_abilities_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
@@ -154,9 +159,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin"
                     android:layout_weight="1"
-                    android:background="@drawable/background"
+                    android:background="@drawable/background_transparent"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 1" />
 
@@ -165,50 +170,27 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/background"
+                    android:background="@drawable/background_transparent"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 2" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/view_abilities_3_4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/textView_ability_3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_weight="1"
-                    android:background="@drawable/background"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Ability 3" />
-
-                <TextView
-                    android:id="@+id/textView_ability_4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/background"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Ability 4" />
-
-            </LinearLayout>
-
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_see_more"
+            android:layout_width="@dimen/button_toolbar_width"
+            android:layout_height="@dimen/button_toolbar_height"
+            android:layout_margin="@dimen/margin"
+            android:gravity="center"
+            android:background="@drawable/background_button"
+            android:text="@string/button_see_more"
+            app:layout_constraintTop_toBottomOf="@+id/view_abilities"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loading"

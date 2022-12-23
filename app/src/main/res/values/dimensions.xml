@@ -14,6 +14,10 @@
         120dp
     </dimen>
 
+    <dimen name="type_size">
+        40dp
+    </dimen>
+
     <dimen name="margin_medium">
         24dp
     </dimen>

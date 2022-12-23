@@ -111,8 +111,6 @@ class DescriptionActivity : AppCompatActivity() {
 
         binding.textViewAbility1.text = api.movesList[0].move.moveName
         binding.textViewAbility2.text = api.movesList[1].move.moveName
-        binding.textViewAbility3.text = api.movesList[2].move.moveName
-        binding.textViewAbility4.text = api.movesList[3].move.moveName
     }
 
     private fun visibilityLayout(loading: Int, information: Int) {
@@ -124,6 +122,7 @@ class DescriptionActivity : AppCompatActivity() {
         binding.textViewDescription.visibility = information
         binding.textViewTitleAbilities.visibility = information
         binding.viewAbilities.visibility = information
+        binding.buttonSeeMore.visibility = information
         binding.loadingText.visibility = loading
         binding.loading.visibility = loading
     }
