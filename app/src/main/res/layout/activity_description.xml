@@ -9,14 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".view.DescriptionActivity"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        tools:context=".view.DescriptionActivity">
 
         <include
             android:id="@+id/toolbar_description"
             layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -145,23 +145,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/textView_ability_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin"
+                    android:layout_weight="1"
                     android:background="@drawable/background"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 1" />
 
                 <TextView
                     android:id="@+id/textView_ability_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/background"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 2" />
@@ -175,23 +180,28 @@
                 android:layout_marginLeft="@dimen/margin"
                 android:layout_marginRight="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/textView_ability_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin"
+                    android:layout_weight="1"
                     android:background="@drawable/background"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 3" />
 
                 <TextView
                     android:id="@+id/textView_ability_4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/background"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size"
                     tools:text="Ability 4" />
@@ -199,6 +209,32 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading"
+            android:layout_width="@dimen/image_loading"
+            android:layout_height="@dimen/image_loading"
+            android:contentDescription="@string/loading_image"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/pokemon_loading" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:gravity="center"
+            android:text="@string/loading_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

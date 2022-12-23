@@ -11,6 +11,9 @@
     <string name="loading_image">
         Spinning Pokeball
     </string>
+    <string name="loading_text">
+        Capturing Pokémon...
+    </string>
 
     <string name="toolbar_title">
         Pokémon
