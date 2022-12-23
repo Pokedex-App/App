@@ -33,12 +33,18 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
         }
     }
 
+    fun getTList(t:ArrayList<PokedexEntries>) {
+        viewModelScope.launch {
+            _listPokedexEntriesLiveData.value = t
+        }
+    }
+
     fun getPokedexTypesList() {
         val typeList = arrayListOf<PokemonTypeEnd>()
         val api = RetrofitObject.createNetworkService<PokemonTypeEndpoint>()
         viewModelScope.launch {
             for (i in 0 until listPokedexEntriesLiveData.value!!.size) {
-                Log.i("DST", i.toString())
+                Log.i("LOADING", i.toString())
                 typeList.add(api.getPokemon(listPokedexEntriesLiveData.value!![i].id.toString()))
 
                 if (i == listPokedexEntriesLiveData.value!!.size - 1) {

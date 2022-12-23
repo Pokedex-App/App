@@ -45,6 +45,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/bugImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:contentDescription="@string/type_bug"
