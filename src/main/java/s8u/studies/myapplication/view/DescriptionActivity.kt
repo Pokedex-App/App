@@ -26,7 +26,7 @@ class DescriptionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
 
-       viewModel.GetPokemonsDescription(intent.getStringExtra("id").toString())
+       viewModel.GetPokemonsDescription(intent.getStringExtra("id"))
 
         viewModel.apiData.observe(this){
             substitute()

@@ -56,7 +56,7 @@ class ListPokedexAdapter(
     }
 
     interface OnListenerPokedex {
-        fun onClickPokedex(pokedexEntries: PokedexEntries)
+        fun onClickPokedex(pokedexEntries: PokedexEntries,pokedexTypes:PokemonTypeEnd)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -70,7 +70,7 @@ class ListPokedexAdapter(
         val pokedexTypes = pokedexEntriesAndType.second!![position]
         holder.bind(pokedexEntries, pokedexTypes, context)
         holder.cardView.setOnClickListener {
-            onListenerPokedex.onClickPokedex(pokedexEntries)
+            onListenerPokedex.onClickPokedex(pokedexEntries,pokedexTypes)
         }
     }
 
