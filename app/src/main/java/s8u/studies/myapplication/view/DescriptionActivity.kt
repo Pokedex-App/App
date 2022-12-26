@@ -11,6 +11,7 @@ import coil.load
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
+import s8u.studies.myapplication.model.ColorBackgroundType
 import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
 class DescriptionActivity : AppCompatActivity() {
@@ -94,7 +95,7 @@ class DescriptionActivity : AppCompatActivity() {
         binding.textViewPrimaryTypePokemon.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(
                 this,
-                viewModel.colorBackgroundType(primaryType)
+                ColorBackgroundType.TYPE.getColor(primaryType)
             )
         )
         binding.textViewSecondaryTypePokemon.visibility = viewModel.visibilitySecondaryType(api.typeList.size)
@@ -104,7 +105,7 @@ class DescriptionActivity : AppCompatActivity() {
             binding.textViewSecondaryTypePokemon.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(
                     this,
-                    viewModel.colorBackgroundType(secondaryType)
+                    ColorBackgroundType.TYPE.getColor(secondaryType)
                 )
             )
         }
