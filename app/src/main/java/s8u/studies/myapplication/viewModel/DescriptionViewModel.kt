@@ -52,9 +52,9 @@ class DescriptionViewModel : ViewModel() {
     }
 
     private fun hideButtons(id: String, firstPokemon:String, lastPokemon:String){
-        when (id.toInt()) {
-            firstPokemon.toInt() -> pokemonLiveData1.postValue(Unit)
-            lastPokemon.toInt() -> pokemonLiveData2.postValue(Unit)
+        when (id) {
+            firstPokemon -> pokemonLiveData1.postValue(Unit)
+            lastPokemon -> pokemonLiveData2.postValue(Unit)
             else -> pokemonLiveData3.postValue(Unit)
         }
     }
