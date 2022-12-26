@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import s8u.studies.myapplication.R
 import s8u.studies.myapplication.api.PokemonDescriptionEndpoint
 import s8u.studies.myapplication.api.PokemonEndpoint
 import s8u.studies.myapplication.di.RetrofitObject
