@@ -5,21 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 import s8u.studies.myapplication.R
-import s8u.studies.myapplication.api.PokedexTypeEndpoint
-import s8u.studies.myapplication.api.PokemonTypeEndpoint
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
-import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
-import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
-import s8u.studies.myapplication.model.Pokedex.PokedexTypes
-import s8u.studies.myapplication.model.Pokedex.PokedexTypesList
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.modules.networkModule
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
@@ -36,7 +28,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         setKoinUp()
         pokedexItemObjects()
         setObserversLoading()
-        listener()
+        setOnClick()
     }
 
     private fun setKoinUp() {
@@ -76,59 +68,121 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         viewModel.listPokedexTypesLiveData.observe(this) {
             val listPokedexEntries = viewModel.listPokedexEntriesLiveData.value
             val typeList = viewModel.listPokedexTypesLiveData.value
-            val EntriesAndTypeList = Pair(listPokedexEntries,typeList)
+            val entriesAndTypeList = Pair(listPokedexEntries, typeList)
             recyclerView.adapter = ListPokedexAdapter(
-                this,EntriesAndTypeList!! , this
+                this, entriesAndTypeList, this
             )
             viewModel.setLoadingState(false)
         }
     }
 
-//    private fun teste() {
-//        val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
-//
-//        val listaFiltrada = arrayListOf<PokedexEntries>()
-//
-//
-//        val ListaPokedex = viewModel.listPokedexEntriesLiveData.value
-//        viewModel.getPokedexFilteredList("7")
-//
-//        viewModel.listPokedexFilteredLiveData.observe(this) {
-//            val listaFiltroPokedex = viewModel.listPokedexFilteredLiveData.value
-//
-//            for (i in 0 until viewModel.listPokedexEntriesLiveData.value!!.size) {
-//
-//                for (j in 0 until viewModel.listPokedexFilteredLiveData.value!!.pokedexSpecies.size) {
-//
-//                    if (ListaPokedex!![i].pokedexSpecies.pokemonName == listaFiltroPokedex!!.pokedexSpecies[j].pokemon.pokemonName) {
-//                        listaFiltrada.add(ListaPokedex!![i])
-//                    }
-//
-//                    if (listaFiltroPokedex.pokedexSpecies.size - 1 == j) {
-//                        viewModel.getTList(listaFiltrada)
-//                    }
-//                }
-//            }
-//        }
-//        viewModel.listPokedexEntriesLiveData.observe(this) {
-//            viewModel.getPokedexTypesList()
-//        }
-//
-//        viewModel.listPokedexTypesLiveData.observe(this) {
-//            recyclerView.adapter!!.notifyDataSetChanged()
-//        }
-//    }
+    private fun filterByType(id:String) {
+        viewModel.setLoadingState(true)
+        val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
+        val listaFiltrada = arrayListOf<PokedexEntries>()
 
-    private fun listener(){
-        val bug = findViewById<ImageView>(R.id.bugImg)
+        val ListaPokedex = viewModel.listPokedexEntriesLiveData.value
+        viewModel.getPokedexFilteredList(id)
 
-        bug.setOnClickListener{
-            //teste()
-            Toast.makeText(this,"Bug",10)
+        viewModel.listPokedexFilteredLiveData.observe(this) {
+            val listaFiltroPokedex = viewModel.listPokedexFilteredLiveData.value
+            Log.i("Teste","$listaFiltroPokedex")
+
+            for(i in 0 until listaFiltroPokedex!!.pokedexSpecies.size) {
+                listaFiltrada.add(viewModel.updateLiveData(listaFiltroPokedex.pokedexSpecies[i].pokemon,i))
+
+                if(i == listaFiltroPokedex.pokedexSpecies.size - 1){
+                     viewModel.setLiveEntries(listaFiltrada)
+                    viewModel.getPokedexTypesList()
+                }
+            }
+
+        }
+
+        viewModel.listPokedexTypesLiveData.observe(this) {
+            recyclerView.adapter!!.notifyDataSetChanged()
+            viewModel.setLoadingState(false)
         }
     }
 
-    override fun onClickPokedex(pokedexEntries: PokedexEntries,pokedexTypes:PokemonTypeEnd) {
+    private fun setOnClick() {
+        val bug = findViewById<ImageView>(R.id.bugImg)
+        val dark = findViewById<ImageView>(R.id.darkImg)
+        val dragon = findViewById<ImageView>(R.id.dragonImg)
+        val eletric = findViewById<ImageView>(R.id.eletricImg)
+        val fighter = findViewById<ImageView>(R.id.fightingImg)
+        val fairy = findViewById<ImageView>(R.id.fairyImg)
+        val fire = findViewById<ImageView>(R.id.fireImg)
+        val flying = findViewById<ImageView>(R.id.flyingImg)
+        val ghost = findViewById<ImageView>(R.id.ghostImg)
+        val grass = findViewById<ImageView>(R.id.grassImg)
+        val ground = findViewById<ImageView>(R.id.groundImg)
+        val ice = findViewById<ImageView>(R.id.iceImg)
+        val normal = findViewById<ImageView>(R.id.normalImg)
+        val poison = findViewById<ImageView>(R.id.poisonImg)
+        val psychic = findViewById<ImageView>(R.id.psychicImg)
+        val rock = findViewById<ImageView>(R.id.rockImg)
+        val steel = findViewById<ImageView>(R.id.steelImg)
+        val water = findViewById<ImageView>(R.id.waterImg)
+
+        bug.setOnClickListener {
+            filterByType("7")
+        }
+        dark.setOnClickListener {
+            filterByType("17")
+        }
+        dragon.setOnClickListener {
+            filterByType("16")
+        }
+        eletric.setOnClickListener {
+            filterByType("13")
+        }
+        fighter.setOnClickListener {
+            filterByType("2")
+        }
+        fire.setOnClickListener {
+            filterByType("10")
+        }
+        flying.setOnClickListener {
+            filterByType("3")
+        }
+        ghost.setOnClickListener {
+            filterByType("8")
+        }
+        grass.setOnClickListener {
+            filterByType("12")
+        }
+        ground.setOnClickListener {
+            filterByType("5")
+        }
+        ice.setOnClickListener {
+            filterByType("15")
+        }
+        normal.setOnClickListener {
+            filterByType("1")
+        }
+        poison.setOnClickListener {
+            filterByType("4")
+        }
+        psychic.setOnClickListener {
+            filterByType("14")
+        }
+        rock.setOnClickListener {
+            filterByType("7")
+        }
+        water.setOnClickListener {
+            filterByType("11")
+        }
+        steel.setOnClickListener {
+            filterByType("9")
+        }
+        fairy.setOnClickListener{
+            filterByType("18")
+        }
+
+    }
+
+    override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokemonTypeEnd) {
         val listPokedex = viewModel.listPokedexEntriesLiveData.value!!
         val typeList = viewModel.listPokedexTypesLiveData.value!!
 

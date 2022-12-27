@@ -10,6 +10,7 @@ import s8u.studies.myapplication.api.PokedexTypeEndpoint
 import s8u.studies.myapplication.api.PokemonTypeEndpoint
 import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
+import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
 import s8u.studies.myapplication.model.Pokedex.PokedexTypes
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.repository.PokedexRepository
@@ -45,6 +46,21 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
             val a = api.getPokemon(id)
             _listPokedexFilteredLiveData.postValue(a)
         }
+    }
+
+    fun updateLiveData(species:PokedexSpecies,id:Int):PokedexEntries{
+
+        return PokedexEntries(
+            id,
+            species
+        )
+
+    }
+
+    fun setLiveEntries(lista:ArrayList<PokedexEntries>){
+
+        _listPokedexEntriesLiveData.value = lista
+
     }
 
     fun getPokedexTypesList() {
