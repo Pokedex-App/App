@@ -53,6 +53,7 @@
                 android:src="@drawable/bug" />
 
             <ImageView
+                android:id="@+id/darkImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -61,6 +62,7 @@
                 android:src="@drawable/dark" />
 
             <ImageView
+                android:id="@+id/dragonImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -69,6 +71,7 @@
                 android:src="@drawable/dragon" />
 
             <ImageView
+                android:id="@+id/eletricImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -77,6 +80,7 @@
                 android:src="@drawable/electric" />
 
             <ImageView
+                android:id="@+id/fairyImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -85,6 +89,7 @@
                 android:src="@drawable/fairy" />
 
             <ImageView
+                android:id="@+id/fightingImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -93,6 +98,7 @@
                 android:src="@drawable/fighting" />
 
             <ImageView
+                android:id="@+id/fireImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -101,6 +107,7 @@
                 android:src="@drawable/fire" />
 
             <ImageView
+                android:id="@+id/flyingImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -109,6 +116,7 @@
                 android:src="@drawable/flying" />
 
             <ImageView
+                android:id="@+id/ghostImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -117,6 +125,7 @@
                 android:src="@drawable/ghost" />
 
             <ImageView
+                android:id="@+id/grassImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -125,6 +134,7 @@
                 android:src="@drawable/grass" />
 
             <ImageView
+                android:id="@+id/groundImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -133,6 +143,7 @@
                 android:src="@drawable/ground" />
 
             <ImageView
+                android:id="@+id/iceImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -141,6 +152,7 @@
                 android:src="@drawable/ice" />
 
             <ImageView
+                android:id="@+id/normalImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -149,6 +161,7 @@
                 android:src="@drawable/normal" />
 
             <ImageView
+                android:id="@+id/poisonImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -157,6 +170,7 @@
                 android:src="@drawable/poison" />
 
             <ImageView
+                android:id="@+id/psychicImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -165,6 +179,7 @@
                 android:src="@drawable/psychic" />
 
             <ImageView
+                android:id="@+id/rockImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -173,6 +188,7 @@
                 android:src="@drawable/rock" />
 
             <ImageView
+                android:id="@+id/steelImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
@@ -181,6 +197,7 @@
                 android:src="@drawable/steel" />
 
             <ImageView
+                android:id="@+id/waterImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"
