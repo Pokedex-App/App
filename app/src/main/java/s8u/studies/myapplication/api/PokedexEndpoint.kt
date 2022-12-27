@@ -4,6 +4,6 @@ import retrofit2.http.GET
 import s8u.studies.myapplication.model.Pokedex.Pokedex
 
 interface PokedexEndpoint {
-    @GET("pokedex/8")
+    @GET("pokedex/2")
     suspend fun getPokedex(): Pokedex
 }

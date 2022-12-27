@@ -1,6 +1,7 @@
 package s8u.studies.myapplication.model.Pokemon
 
 import com.google.gson.annotations.SerializedName
+import s8u.studies.myapplication.model.Pokemon.abilities.PokemonMoves
 
 open class Pokemon(
     @SerializedName("id")

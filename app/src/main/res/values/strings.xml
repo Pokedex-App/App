@@ -5,85 +5,38 @@
     <string name="filter_type">Filter by pokémon type</string>
     <string name="filter_input">Search for name or #code</string>
 
-    <string name="pokemon_image">
-        Picture of a Pokemon.
-    </string>
-    <string name="loading_image">
-        Spinning Pokeball
-    </string>
-    <string name="loading_text">
-        Capturing Pokémon...
-    </string>
+    <string name="pokemon_image">Picture of a Pokemon.</string>
+    <string name="loading_image">Spinning Pokeball</string>
+    <string name="loading_text">Capturing Pokémon...</string>
 
-    <string name="toolbar_title">
-        Pokémon
-    </string>
-    <string name="title_abilities">
-        Abilities
-    </string>
+    <string name="toolbar_title">Pokémon</string>
+    <string name="title_abilities">Abilities</string>
 
-    <string name="toolbar_button_next">
-        Next
-    </string>
-    <string name="toolbar_button_previous">
-        Previous
-    </string>
-    <string name="button_see_more">
-        See more
-    </string>
+    <string name="toolbar_button_next">Next</string>
+    <string name="toolbar_button_previous">Previous</string>
+    <string name="button_see_more">See more</string>
 
-    <string name="type_bug">
-        Bug
-    </string>
-    <string name="type_dark">
-        Dark
-    </string>
-    <string name="type_dragon">
-        Dragon
-    </string>
-    <string name="type_electric">
-        Electric
-    </string>
-    <string name="type_fairy">
-        Fairy
-    </string>
-    <string name="type_fighting">
-        Fighting
-    </string>
-    <string name="type_fire">
-        Fire
-    </string>
-    <string name="type_flying">
-        Flying
-    </string>
-    <string name="type_ghost">
-        Ghost
-    </string>
-    <string name="type_grass">
-        Grass
-    </string>
-    <string name="type_ground">
-        Ground
-    </string>
-    <string name="type_ice">
-        Ice
-    </string>
-    <string name="type_normal">
-        Normal
-    </string>
-    <string name="type_poison">
-        Poison
-    </string>
-    <string name="type_psychic">
-        Psychic
-    </string>
-    <string name="type_rock">
-        Rock
-    </string>
-    <string name="type_steel">
-        Steel
-    </string>
-    <string name="type_water">
-        Water
-    </string>
+    <string name="modal_type">Type</string>
+    <string name="modal_power">Power</string>
+    <string name="modal_damage">Damage</string>
+    <string name="modal_button">Close</string>
+
+    <string name="type_bug">Bug</string>
+    <string name="type_dark">Dark</string>
+    <string name="type_dragon">Dragon</string>
+    <string name="type_electric">Electric</string>
+    <string name="type_fairy">Fairy</string>
+    <string name="type_fighting">Fighting</string>
+    <string name="type_fire">Fire</string>
+    <string name="type_flying">Flying</string>
+    <string name="type_ghost">Ghost</string>
+    <string name="type_grass">Grass</string>
+    <string name="type_ground">Ground</string>
+    <string name="type_ice">Ice</string>
+    <string name="type_normal">Normal</string>
+    <string name="type_poison">Poison</string>
+    <string name="type_psychic">Psychic</string>
+    <string name="type_rock">Rock</string>
+    <string name="type_steel">Steel</string>
+    <string name="type_water">Water</string>
 </resources>

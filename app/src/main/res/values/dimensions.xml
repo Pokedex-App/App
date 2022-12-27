@@ -18,6 +18,9 @@
         40dp
     </dimen>
 
+    <dimen name="margin_max">
+        32dp
+    </dimen>
     <dimen name="margin_medium">
         24dp
     </dimen>

@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import s8u.studies.myapplication.api.PokemonAbilityEndpoint
 import s8u.studies.myapplication.api.PokemonDescriptionEndpoint
 import s8u.studies.myapplication.api.PokemonEndpoint
 import s8u.studies.myapplication.di.RetrofitObject
+import s8u.studies.myapplication.model.Pokemon.abilities.PokemonAbilityInformation
 import s8u.studies.myapplication.model.PokemonData
 
 class DescriptionViewModel : ViewModel() {
@@ -24,12 +26,15 @@ class DescriptionViewModel : ViewModel() {
     private var _loadingPokeballFalse = MutableLiveData<Unit>()
     val loadingPokeballFalse: LiveData<Unit> = _loadingPokeballFalse
 
-    fun getPokemonDescription(id: String,firstPokemon:String,lastPokemon:String){
+    private var _abilityInformationPokemon = MutableLiveData<PokemonAbilityInformation>()
+    val abilityInformationPokemon: LiveData<PokemonAbilityInformation> = _abilityInformationPokemon
+
+    fun getPokemonDescription(id: String, firstPokemon: String, lastPokemon: String) {
         val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()
         val pokemonDescEndpoint = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
 
-        hideButtons(id,firstPokemon,lastPokemon)
-        
+        hideButtons(id, firstPokemon, lastPokemon)
+
         viewModelScope.launch {
             val poke = pokemonEndpoint.getPokemon(id)
             val pokeDesc = pokemonDescEndpoint.getPokemon(id)
@@ -50,7 +55,24 @@ class DescriptionViewModel : ViewModel() {
         }
     }
 
-    private fun hideButtons(id: String, firstPokemon:String, lastPokemon:String){
+    fun getAbilityInformation(nameAbility: String) {
+        viewModelScope.launch {
+            val apiAbility = RetrofitObject
+                .createNetworkService<PokemonAbilityEndpoint>()
+                .getAbility(nameAbility)
+
+            _abilityInformationPokemon.postValue(
+                PokemonAbilityInformation(
+                    apiAbility.flavorTextEntries,
+                    apiAbility.power,
+                    apiAbility.type,
+                    apiAbility.damage
+                )
+            )
+        }
+    }
+
+    private fun hideButtons(id: String, firstPokemon: String, lastPokemon: String) {
         when (id) {
             firstPokemon -> pokemonLiveData1.postValue(Unit)
             lastPokemon -> pokemonLiveData2.postValue(Unit)
@@ -58,14 +80,14 @@ class DescriptionViewModel : ViewModel() {
         }
     }
 
-    fun visibilitySecondaryType(size: Int) : Int {
+    fun visibilitySecondaryType(size: Int): Int {
         return when (size) {
             1 -> View.GONE
             else -> View.VISIBLE
         }
     }
 
-    fun existsSecondaryType(size: Int, behavior: () -> Unit)  {
+    fun existsSecondaryType(size: Int, behavior: () -> Unit) {
         if (size == 2) behavior()
     }
 

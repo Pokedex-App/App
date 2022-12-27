@@ -126,17 +126,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="@dimen/margin_min"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_description">
+            app:layout_constraintTop_toBottomOf="@+id/textView_description"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/textView_title_abilities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
                 android:gravity="center"
                 android:text="@string/title_abilities"
                 android:textColor="@color/white"
@@ -145,52 +146,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/view_abilities_row"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_Abilities"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/textView_ability_1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_transparent"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Ability 1" />
-
-                <TextView
-                    android:id="@+id/textView_ability_2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_transparent"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size"
-                    tools:text="Ability 2" />
-
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_min"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:listitem="@layout/ability_item" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button_see_more"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_toolbar_height"
-            android:gravity="center"
-            android:background="@drawable/background_button"
-            android:textAllCaps="false"
-            android:text="@string/button_see_more"
-            app:layout_constraintTop_toBottomOf="@+id/view_abilities"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loading"

@@ -3,18 +3,25 @@ package s8u.studies.myapplication.view
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
+import s8u.studies.myapplication.databinding.ModalPokemonBinding
 import s8u.studies.myapplication.model.ColorBackgroundType
+import s8u.studies.myapplication.model.Pokemon.abilities.PokemonMoves
+import s8u.studies.myapplication.model.PokemonData
+import s8u.studies.myapplication.recyclerview.adapter.ListAbilitiesAdapter
 import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
-class DescriptionActivity : AppCompatActivity() {
+class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListenerAbility {
     private lateinit var binding: ActivityDescriptionBinding
     private val viewModel = DescriptionViewModel()
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_description)
@@ -23,6 +30,7 @@ class DescriptionActivity : AppCompatActivity() {
     private lateinit var idPokemon:String
     private lateinit var firstPokemon:String
     private lateinit var lastPokemon :String
+    private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,8 +118,42 @@ class DescriptionActivity : AppCompatActivity() {
             )
         }
 
-        binding.textViewAbility1.text = api.movesList[0].move.moveName
-        binding.textViewAbility2.text = api.movesList[1].move.moveName
+        abilityItemObjects(api)
+    }
+
+    private fun abilityItemObjects(api: PokemonData) {
+        val listAbilities = api.movesList
+        val gridLayoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewAbilities.layoutManager = gridLayoutManager
+        binding.recyclerViewAbilities.adapter = ListAbilitiesAdapter(
+            this, listAbilities, this
+        )
+    }
+
+    override fun onClickAbility(ability: PokemonMoves) {
+        showDialogAbility(ability)
+    }
+
+    private fun showDialogAbility(ability: PokemonMoves) {
+        val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
+        val dialogBinding: ModalPokemonBinding = ModalPokemonBinding
+            .inflate(LayoutInflater.from(this))
+
+        dialogBinding.buttonClose.setOnClickListener { dialog.dismiss() }
+        dialogBinding.buttonClose.isClickable = false
+        build.setView(dialogBinding.root)
+        dialog = build.create()
+        dialog.show()
+
+        dialogBinding.textViewTitleNameAbility.text = ability.move.moveName
+        viewModel.getAbilityInformation(ability.move.moveName)
+        viewModel.abilityInformationPokemon.observe(this) {
+            dialogBinding.textViewDescriptionAbility.text = it.flavorTextEntries[0].flavorText
+            dialogBinding.textViewPowerAbility.text = it.power.toString()
+            dialogBinding.textViewTypeAbility.text = it.type.nameType
+            dialogBinding.textViewDamageAbility.text = it.damage.nameDamage
+            dialogBinding.buttonClose.isClickable = true
+        }
     }
 
     private fun visibilityLayout(loading: Int, information: Int) {
@@ -123,7 +165,6 @@ class DescriptionActivity : AppCompatActivity() {
         binding.textViewDescription.visibility = information
         binding.textViewTitleAbilities.visibility = information
         binding.viewAbilities.visibility = information
-        binding.buttonSeeMore.visibility = information
         binding.loadingText.visibility = loading
         binding.loading.visibility = loading
     }
