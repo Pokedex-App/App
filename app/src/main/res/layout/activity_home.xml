@@ -71,7 +71,7 @@
                 android:src="@drawable/dragon" />
 
             <ImageView
-                android:id="@+id/eletricImg"
+                android:id="@+id/electricImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/margin"

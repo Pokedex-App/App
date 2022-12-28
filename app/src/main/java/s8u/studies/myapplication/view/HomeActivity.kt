@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,14 +46,14 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             visibilityLayout(View.INVISIBLE, View.VISIBLE)
         }
         viewModel.listPokedexFilteredLiveData.observe(this) {
-            val listaFiltrada = arrayListOf<PokedexEntries>()
-            val listaFiltroPokedex = viewModel.listPokedexFilteredLiveData.value
+            val listFiltered = arrayListOf<PokedexEntries>()
+            val listFilterPokedex = viewModel.listPokedexFilteredLiveData.value
 
-            for(i in 0 until listaFiltroPokedex!!.pokedexSpecies.size) {
-                listaFiltrada.add(viewModel.updateLiveData(listaFiltroPokedex.pokedexSpecies[i].pokemon,i))
+            for(i in 0 until listFilterPokedex!!.pokedexSpecies.size) {
+                listFiltered.add(viewModel.updateLiveData(listFilterPokedex.pokedexSpecies[i].pokemon,i))
 
-                if(i == listaFiltroPokedex.pokedexSpecies.size - 1){
-                    viewModel.setLiveEntries(listaFiltrada)
+                if(i == listFilterPokedex.pokedexSpecies.size - 1){
+                    viewModel.setLiveEntries(listFiltered)
                     viewModel.getPokedexTypesList()
                 }
             }
@@ -95,98 +94,40 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun filterByType(id:String) {
-        val ListaPokedex = viewModel.listPokedexEntriesLiveData.value
         viewModel.getPokedexFilteredList(id)
         viewModel.setLoadingState(true)
     }
 
     private fun setOnClick() {
-        val bug = findViewById<ImageView>(R.id.bugImg)
-        val dark = findViewById<ImageView>(R.id.darkImg)
-        val dragon = findViewById<ImageView>(R.id.dragonImg)
-        val eletric = findViewById<ImageView>(R.id.eletricImg)
-        val fighter = findViewById<ImageView>(R.id.fightingImg)
-        val fairy = findViewById<ImageView>(R.id.fairyImg)
-        val fire = findViewById<ImageView>(R.id.fireImg)
-        val flying = findViewById<ImageView>(R.id.flyingImg)
-        val ghost = findViewById<ImageView>(R.id.ghostImg)
-        val grass = findViewById<ImageView>(R.id.grassImg)
-        val ground = findViewById<ImageView>(R.id.groundImg)
-        val ice = findViewById<ImageView>(R.id.iceImg)
-        val normal = findViewById<ImageView>(R.id.normalImg)
-        val poison = findViewById<ImageView>(R.id.poisonImg)
-        val psychic = findViewById<ImageView>(R.id.psychicImg)
-        val rock = findViewById<ImageView>(R.id.rockImg)
-        val steel = findViewById<ImageView>(R.id.steelImg)
-        val water = findViewById<ImageView>(R.id.waterImg)
-
-        bug.setOnClickListener {
-            filterByType("7")
-        }
-        dark.setOnClickListener {
-            filterByType("17")
-        }
-        dragon.setOnClickListener {
-            filterByType("16")
-        }
-        eletric.setOnClickListener {
-            filterByType("13")
-        }
-        fighter.setOnClickListener {
-            filterByType("2")
-        }
-        fire.setOnClickListener {
-            filterByType("10")
-        }
-        flying.setOnClickListener {
-            filterByType("3")
-        }
-        ghost.setOnClickListener {
-            filterByType("8")
-        }
-        grass.setOnClickListener {
-            filterByType("12")
-        }
-        ground.setOnClickListener {
-            filterByType("5")
-        }
-        ice.setOnClickListener {
-            filterByType("15")
-        }
-        normal.setOnClickListener {
-            filterByType("1")
-        }
-        poison.setOnClickListener {
-            filterByType("4")
-        }
-        psychic.setOnClickListener {
-            filterByType("14")
-        }
-        rock.setOnClickListener {
-            filterByType("7")
-        }
-        water.setOnClickListener {
-            filterByType("11")
-        }
-        steel.setOnClickListener {
-            filterByType("9")
-        }
-        fairy.setOnClickListener{
-            filterByType("18")
-        }
-
+        binding.bugImg.setOnClickListener { filterByType("7") }
+        binding.darkImg.setOnClickListener { filterByType("17") }
+        binding.dragonImg.setOnClickListener { filterByType("16") }
+        binding.electricImg.setOnClickListener { filterByType("13") }
+        binding.fightingImg.setOnClickListener { filterByType("2") }
+        binding.fairyImg.setOnClickListener { filterByType("18") }
+        binding.fireImg.setOnClickListener { filterByType("10") }
+        binding.flyingImg.setOnClickListener { filterByType("3") }
+        binding.ghostImg.setOnClickListener { filterByType("8") }
+        binding.grassImg.setOnClickListener { filterByType("12") }
+        binding.groundImg.setOnClickListener { filterByType("5") }
+        binding.iceImg.setOnClickListener { filterByType("15") }
+        binding.normalImg.setOnClickListener { filterByType("1") }
+        binding.poisonImg.setOnClickListener { filterByType("4") }
+        binding.psychicImg.setOnClickListener { filterByType("14") }
+        binding.rockImg.setOnClickListener { filterByType("7") }
+        binding.steelImg.setOnClickListener { filterByType("9") }
+        binding.waterImg.setOnClickListener { filterByType("11") }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokemonTypeEnd) {
-        val listPokedex = viewModel.listPokedexEntriesLiveData.value!!
         val typeList = viewModel.listPokedexTypesLiveData.value!!
 
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexTypes.id)
         intent.putExtra("a", typeList[0].id)
-        Log.i("INTENT", "${typeList[0].id}")
+        Log.i("INTENT", typeList[0].id)
         intent.putExtra("b", typeList[typeList.size - 1].id)
-        Log.i("INTENT", "${typeList[typeList.size - 1].id}")
+        Log.i("INTENT", typeList[typeList.size - 1].id)
 
         startActivity(intent)
     }
