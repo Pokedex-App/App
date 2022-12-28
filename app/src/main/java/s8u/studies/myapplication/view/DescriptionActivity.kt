@@ -16,6 +16,7 @@ import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
 import s8u.studies.myapplication.databinding.ModalPokemonBinding
 import s8u.studies.myapplication.model.ColorBackgroundType
+import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.model.Pokemon.abilities.PokemonMoves
 import s8u.studies.myapplication.model.PokemonData
 import s8u.studies.myapplication.recyclerview.adapter.ListAbilitiesAdapter
@@ -27,9 +28,11 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_description)
     private val nextButton: Button get() = findViewById(R.id.button_next)
     private val previousButton: Button get() = findViewById(R.id.button_previous)
-    private lateinit var idPokemon:String
-    private lateinit var firstPokemon:String
-    private lateinit var lastPokemon :String
+    private lateinit var idPokemon: String
+    private lateinit var firstPokemon: String
+    private lateinit var lastPokemon: String
+    private lateinit var orderList: ArrayList<PokemonTypeEnd>
+    private var position: Int = 0
     private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +41,11 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
         setContentView(binding.root)
 
         idPokemon = intent.getStringExtra("id").toString()
-        firstPokemon = intent.getStringExtra("a").toString()
-        lastPokemon = intent.getStringExtra("b").toString()
+        firstPokemon = intent.getStringExtra("firstPokemon").toString()
+        lastPokemon = intent.getStringExtra("lastPokemon").toString()
+        val b = intent.getBundleExtra("listOrder")
+        orderList = b!!.getSerializable("listOrder") as ArrayList<PokemonTypeEnd>
+        position = intent.getIntExtra("position", 0)
         onClick()
         buttonVisibility(idPokemon)
         setObserversLoading()
@@ -61,11 +67,11 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
             onBackPressed()
         }
         nextButton.setOnClickListener {
-            nextPokemon(viewModel.apiData.value!!.id)
+            nextPokemon()
             isClickableButtonToolbar(false)
         }
         previousButton.setOnClickListener {
-            previousPokemon(viewModel.apiData.value!!.id)
+            previousPokemon()
             isClickableButtonToolbar(false)
         }
     }
@@ -93,8 +99,10 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
         val api = viewModel.apiData.value
 
         binding.textViewNamePokemon.text = api!!.name
-        binding.textViewHeight.text = Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m")
-        binding.textViewWeight.text = Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg")
+        binding.textViewHeight.text =
+            Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m")
+        binding.textViewWeight.text =
+            Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg")
         binding.textViewDescription.text = api.descriptionList[0].descricao
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
@@ -106,7 +114,8 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
                 ColorBackgroundType.TYPE.getColor(primaryType)
             )
         )
-        binding.textViewSecondaryTypePokemon.visibility = viewModel.visibilitySecondaryType(api.typeList.size)
+        binding.textViewSecondaryTypePokemon.visibility =
+            viewModel.visibilitySecondaryType(api.typeList.size)
         viewModel.existsSecondaryType(api.typeList.size) {
             val secondaryType = api.typeList[1].type.name
             binding.textViewSecondaryTypePokemon.text = secondaryType
@@ -174,11 +183,13 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
         findViewById<Button>(R.id.button_previous).isClickable = state
     }
 
-    private fun nextPokemon(id: Int) {
-        viewModel.getPokemonDescription((id + 1).toString(),firstPokemon,lastPokemon)
+    private fun nextPokemon() {
+        position++
+        viewModel.getPokemonDescription(orderList[position].id, firstPokemon, lastPokemon)
     }
 
-    private fun previousPokemon(id: Int) {
-        viewModel.getPokemonDescription((id - 1).toString(),firstPokemon,lastPokemon)
+    private fun previousPokemon() {
+        position--
+        viewModel.getPokemonDescription(orderList[position].id, firstPokemon, lastPokemon)
     }
 }

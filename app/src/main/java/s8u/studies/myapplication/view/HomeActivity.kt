@@ -114,7 +114,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         binding.normalImg.setOnClickListener { filterByType("1") }
         binding.poisonImg.setOnClickListener { filterByType("4") }
         binding.psychicImg.setOnClickListener { filterByType("14") }
-        binding.rockImg.setOnClickListener { filterByType("7") }
+        binding.rockImg.setOnClickListener { filterByType("6") }
         binding.steelImg.setOnClickListener { filterByType("9") }
         binding.waterImg.setOnClickListener { filterByType("11") }
     }
@@ -124,9 +124,13 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
 
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexTypes.id)
-        intent.putExtra("a", typeList[0].id)
+        intent.putExtra("firstPokemon", typeList[0].id)
         Log.i("INTENT", typeList[0].id)
-        intent.putExtra("b", typeList[typeList.size - 1].id)
+        val b = Bundle()
+        b.putSerializable("listOrder",typeList)
+        intent.putExtra("listOrder",b)
+        intent.putExtra("position",typeList.indexOf(pokedexTypes))
+        intent.putExtra("lastPokemon", typeList[typeList.size - 1].id)
         Log.i("INTENT", typeList[typeList.size - 1].id)
 
         startActivity(intent)
