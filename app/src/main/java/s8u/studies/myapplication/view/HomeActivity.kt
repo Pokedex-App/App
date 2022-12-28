@@ -29,6 +29,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         pokedexItemObjects()
         setObserversLoading()
         setOnClick()
+
     }
 
     private fun setKoinUp() {
@@ -44,6 +45,23 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         }
         viewModel.loadingPokeballFalse.observe(this) {
             visibilityLayout(View.INVISIBLE, View.VISIBLE)
+        }
+        viewModel.listPokedexFilteredLiveData.observe(this) {
+            val listaFiltrada = arrayListOf<PokedexEntries>()
+            val listaFiltroPokedex = viewModel.listPokedexFilteredLiveData.value
+
+            for(i in 0 until listaFiltroPokedex!!.pokedexSpecies.size) {
+                listaFiltrada.add(viewModel.updateLiveData(listaFiltroPokedex.pokedexSpecies[i].pokemon,i))
+
+                if(i == listaFiltroPokedex.pokedexSpecies.size - 1){
+                    viewModel.setLiveEntries(listaFiltrada)
+                    viewModel.getPokedexTypesList()
+                }
+            }
+        }
+        viewModel.listPokedexTypesLiveData.observe(this) {
+            val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
+            recyclerView.adapter!!.notifyDataSetChanged()
         }
     }
 
@@ -77,32 +95,9 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun filterByType(id:String) {
-        viewModel.setLoadingState(true)
-        val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
-        val listaFiltrada = arrayListOf<PokedexEntries>()
-
         val ListaPokedex = viewModel.listPokedexEntriesLiveData.value
         viewModel.getPokedexFilteredList(id)
-
-        viewModel.listPokedexFilteredLiveData.observe(this) {
-            val listaFiltroPokedex = viewModel.listPokedexFilteredLiveData.value
-            Log.i("Teste","$listaFiltroPokedex")
-
-            for(i in 0 until listaFiltroPokedex!!.pokedexSpecies.size) {
-                listaFiltrada.add(viewModel.updateLiveData(listaFiltroPokedex.pokedexSpecies[i].pokemon,i))
-
-                if(i == listaFiltroPokedex.pokedexSpecies.size - 1){
-                     viewModel.setLiveEntries(listaFiltrada)
-                    viewModel.getPokedexTypesList()
-                }
-            }
-
-        }
-
-        viewModel.listPokedexTypesLiveData.observe(this) {
-            recyclerView.adapter!!.notifyDataSetChanged()
-            viewModel.setLoadingState(false)
-        }
+        viewModel.setLoadingState(true)
     }
 
     private fun setOnClick() {
