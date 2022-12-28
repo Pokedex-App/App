@@ -103,7 +103,7 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
             Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m")
         binding.textViewWeight.text =
             Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg")
-        binding.textViewDescription.text = api.descriptionList[0].descricao
+        binding.textViewDescription.text = api.descriptionList[0].descricao.replace("\n"," ")
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
         val primaryType = api.typeList[0].type.name
@@ -157,7 +157,7 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
         dialogBinding.textViewTitleNameAbility.text = ability.move.moveName
         viewModel.getAbilityInformation(ability.move.moveName)
         viewModel.abilityInformationPokemon.observe(this) {
-            dialogBinding.textViewDescriptionAbility.text = it.flavorTextEntries[0].flavorText
+            dialogBinding.textViewDescriptionAbility.text = it.flavorTextEntries[0].flavorText.replace("\n"," ")
             dialogBinding.textViewPowerAbility.text = it.power.toString()
             dialogBinding.textViewTypeAbility.text = it.type.nameType
             dialogBinding.textViewDamageAbility.text = it.damage.nameDamage

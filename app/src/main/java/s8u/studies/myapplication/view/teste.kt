@@ -4,16 +4,16 @@ import android.util.Log
 import kotlinx.coroutines.runBlocking
 import s8u.studies.myapplication.api.*
 import s8u.studies.myapplication.di.RetrofitObject
+import s8u.studies.myapplication.model.Pokemon.Description.PokemonDescription
+import s8u.studies.myapplication.model.Pokemon.Pokemon
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 
 fun main() {
-    val response = RetrofitObject.createNetworkService<PokemonAbilityEndpoint>()
+    val response = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
 
     runBlocking {
-        val nameAbility = response.getAbility("razor-wind")
-        println(nameAbility.flavorTextEntries[0].flavorText)
-        println(nameAbility.damage.nameDamage)
-        println(nameAbility.power)
-        println(nameAbility.type.nameType)
+        val nameAbility = response.getPokemon("230")
+        println(nameAbility.DescriptionList[0].descricao.replace("\n"," "))
+
     }
 }
