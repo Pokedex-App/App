@@ -125,19 +125,19 @@
             android:id="@+id/view_abilities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="@dimen/margin_min"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_description"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView_description">
 
             <TextView
                 android:id="@+id/textView_title_abilities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:gravity="center"
                 android:text="@string/title_abilities"
                 android:textColor="@color/white"
@@ -150,8 +150,8 @@
                 android:id="@+id/recyclerView_Abilities"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/margin_min"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_min"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintHorizontal_bias="0.0"
                 tools:listitem="@layout/ability_item" />
