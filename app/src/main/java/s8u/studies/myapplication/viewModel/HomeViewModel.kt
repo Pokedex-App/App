@@ -49,18 +49,12 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
     }
 
     fun updateLiveData(species:PokedexSpecies,id:Int):PokedexEntries{
-
-        return PokedexEntries(
-            id,
-            species
-        )
-
+        return PokedexEntries(id,species)
     }
 
     fun setLiveEntries(lista:ArrayList<PokedexEntries>){
 
         _listPokedexEntriesLiveData.value = lista
-
     }
 
     fun getPokedexTypesList() {
