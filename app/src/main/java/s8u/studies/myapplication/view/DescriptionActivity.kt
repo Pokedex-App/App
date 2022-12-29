@@ -100,9 +100,9 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
 
         binding.textViewNamePokemon.text = api!!.name
         binding.textViewHeight.text =
-            Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m")
+            Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m",Html.FROM_HTML_MODE_LEGACY)
         binding.textViewWeight.text =
-            Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg")
+            Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg",Html.FROM_HTML_MODE_LEGACY)
         binding.textViewDescription.text = api.descriptionList[0].descricao.replace("\n", " ")
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
