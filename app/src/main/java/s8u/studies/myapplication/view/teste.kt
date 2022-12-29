@@ -9,11 +9,17 @@ import s8u.studies.myapplication.model.Pokemon.Pokemon
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 
 fun main() {
-    val response = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
+    val response = RetrofitObject.createNetworkService<PokemonAbilityEndpoint>()
 
     runBlocking {
-        val nameAbility = response.getPokemon("230")
-        println(nameAbility.DescriptionList[0].descricao.replace("\n"," "))
+        val nameAbility = response.getAbility("swords-dance")
+        println(nameAbility.power)
+        if (nameAbility.power == null) {
+            nameAbility.power = 0
+        }
+        println(
+            nameAbility.power
+        )
 
     }
 }
