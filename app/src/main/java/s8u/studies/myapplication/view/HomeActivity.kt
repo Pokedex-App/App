@@ -28,7 +28,6 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         pokedexItemObjects()
         setObserversLoading()
         setOnClick()
-
     }
 
     private fun setKoinUp() {
