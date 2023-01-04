@@ -32,6 +32,9 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
     private var _loadingPokeballFalse = MutableLiveData<Unit>()
     val loadingPokeballFalse: LiveData<Unit> = _loadingPokeballFalse
 
+    private var _listNamePokemons = MutableLiveData<ArrayList<String>>()
+    val listNamePokemons: LiveData<ArrayList<String>> = _listNamePokemons
+
 
     fun getPokedexEntriesList() {
         viewModelScope.launch {
@@ -52,23 +55,23 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
         return PokedexEntries(id,species)
     }
 
-    fun setLiveEntries(lista:ArrayList<PokedexEntries>){
-
-        _listPokedexEntriesLiveData.value = lista
+    fun setLiveEntries(list:ArrayList<PokedexEntries>){
+        _listPokedexEntriesLiveData.value = list
     }
 
     fun getPokedexTypesList() {
         val typeList = arrayListOf<PokemonTypeEnd>()
+        val nameList = arrayListOf<String>()
         val api = RetrofitObject.createNetworkService<PokedexTypeEndpoint>()
         viewModelScope.launch {
             for (i in 0 until listPokedexEntriesLiveData.value!!.size) {
                 Log.i("LOADING", i.toString())
                 solveApiProblems(listPokedexEntriesLiveData.value!![i])
-
+                nameList.add(listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName)
                 typeList.add(api.getPokemon(listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName))
-
                 if (i == listPokedexEntriesLiveData.value!!.size - 1) {
                     _listPokedexTypesLiveData.postValue(typeList)
+                    _listNamePokemons.postValue(nameList)
                 }
             }
         }

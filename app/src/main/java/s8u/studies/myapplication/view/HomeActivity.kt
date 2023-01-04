@@ -1,9 +1,14 @@
 package s8u.studies.myapplication.view
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,10 +53,14 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             val listFiltered = arrayListOf<PokedexEntries>()
             val listFilterPokedex = viewModel.listPokedexFilteredLiveData.value
 
-            for(i in 0 until listFilterPokedex!!.pokedexSpecies.size) {
-                listFiltered.add(viewModel.updateLiveData(listFilterPokedex.pokedexSpecies[i].pokemon,i))
-
-                if(i == listFilterPokedex.pokedexSpecies.size - 1){
+            for (i in 0 until listFilterPokedex!!.pokedexSpecies.size) {
+                listFiltered.add(
+                    viewModel.updateLiveData(
+                        listFilterPokedex.pokedexSpecies[i].pokemon,
+                        i
+                    )
+                )
+                if (i == listFilterPokedex.pokedexSpecies.size - 1) {
                     viewModel.setLiveEntries(listFiltered)
                     viewModel.getPokedexTypesList()
                 }
@@ -60,6 +69,10 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         viewModel.listPokedexTypesLiveData.observe(this) {
             val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
             recyclerView.adapter!!.notifyDataSetChanged()
+        }
+        viewModel.listNamePokemons.observe(this) {
+            autoCompleteInput()
+            getValueEditText()
         }
     }
 
@@ -92,7 +105,35 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         }
     }
 
-    private fun filterByType(id:String) {
+    private fun autoCompleteInput() {
+        val adapter: ArrayAdapter<String> =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                viewModel.listNamePokemons.value!!
+            )
+        binding.inputLayout.setAdapter(adapter)
+    }
+
+    private fun getValueEditText() {
+        binding.inputLayout.setOnKeyListener { view, keyCode, keyEvent ->
+            if ((keyCode == KeyEvent.KEYCODE_ENTER) && (keyEvent.action == KeyEvent.ACTION_UP)) {
+                val position = getPositionPokemon(binding.inputLayout.text.toString())
+                if (position != -1) {
+                    onClickPokedex(
+                        viewModel.listPokedexEntriesLiveData.value!![position],
+                        viewModel.listPokedexTypesLiveData.value!![position]
+                    )
+                    return@setOnKeyListener true
+                } else {
+                    println("This Pokémon doesn't exist")
+                }
+            }
+            false
+        }
+    }
+
+    private fun filterByType(id: String) {
         viewModel.getPokedexFilteredList(id)
         viewModel.setLoadingState(true)
     }
@@ -126,12 +167,21 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         intent.putExtra("firstPokemon", typeList[0].id)
         Log.i("INTENT", typeList[0].id)
         val b = Bundle()
-        b.putSerializable("listOrder",typeList)
-        intent.putExtra("listOrder",b)
-        intent.putExtra("position",typeList.indexOf(pokedexTypes))
+        b.putSerializable("listOrder", typeList)
+        intent.putExtra("listOrder", b)
+        intent.putExtra("position", typeList.indexOf(pokedexTypes))
         intent.putExtra("lastPokemon", typeList[typeList.size - 1].id)
         Log.i("INTENT", typeList[typeList.size - 1].id)
 
         startActivity(intent)
+    }
+
+    private fun getPositionPokemon(namePokemon: String): Int {
+        for (i in 0 until viewModel.listPokedexEntriesLiveData.value!!.size) {
+            if (viewModel.listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName == namePokemon) {
+                return i
+            }
+        }
+        return -1
     }
 }
