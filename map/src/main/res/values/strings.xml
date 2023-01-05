@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Map</string>
+    
+    <array name="simple_items">
+        <item>
+            Test1
+        </item>
+        <item>
+            Test2
+        </item>
+    </array>
+    <string name="label">
+        DropDown Menu
+    </string>
+</resources>
