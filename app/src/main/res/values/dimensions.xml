@@ -17,6 +17,9 @@
     <dimen name="type_size">
         40dp
     </dimen>
+    <dimen name="size_16">
+        16dp
+    </dimen>
 
     <dimen name="margin_max">
         32dp

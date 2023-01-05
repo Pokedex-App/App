@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">Pokédex</string>
     <string name="title_list">Pokémons</string>
-    
+    <string name="toolbar_normal">Back to Map</string>
+
+    <string name="subtitle_menu">
+        Which region do you want to see?
+    </string>
+
+    <string name="label">Regions</string>
+
     <string name="filter_type">Filter by pokémon type</string>
     <string name="filter_input">Search for name or #code</string>
 
@@ -39,4 +46,14 @@
     <string name="type_rock">Rock</string>
     <string name="type_steel">Steel</string>
     <string name="type_water">Water</string>
+
+    <array name="list_regions">
+        <item>Kanto</item>
+        <item>Johto</item>
+        <item>Hoenn</item>
+        <item>Sinnoh</item>
+        <item>Unova</item>
+        <item>Kalos</item>
+        <item>Alola</item>
+    </array>
 </resources>
