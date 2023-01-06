@@ -34,7 +34,11 @@
         <entry key="..\:/Users/l.dantas.ribeiro/AndroidStudioProjects/App/app/src/main/res/layout/toolbar.xml" value="0.22" />
         <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/drawable/background_input.xml" value="0.1415" />
         <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/activity_description.xml" value="0.1" />
+        <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/activity_home.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/activity_menu.xml" value="0.1" />
+        <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/connection_error.xml" value="0.264" />
+        <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/timeout_error.xml" value="0.1" />
+        <entry key="..\:/Users/v.santos.barbosa/Desktop/App/app/src/main/res/layout/toolbar.xml" value="0.16576086956521738" />
       </map>
     </option>
   </component>

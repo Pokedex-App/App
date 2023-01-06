@@ -11,7 +11,7 @@ import s8u.studies.myapplication.viewModel.MenuViewModel
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
-    private val viewModel = MenuViewModel()
+//    private val viewModel = MenuViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +25,10 @@ class MenuActivity : AppCompatActivity() {
         val btn = findViewById<Button>(R.id.button_confirm)
 
         btn.setOnClickListener{
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.putExtra("regionID",viewModel.getRegionsId(binding.inputAutocomplete.text.toString()))
-            startActivity(intent)
+//            val intent = Intent(this, HomeActivity::class.java)
+//            intent.putExtra("regionID",viewModel.getRegionsId(binding.inputAutocomplete.text.toString()))
+//            startActivity(intent)
+            setContentView(R.layout.timeout_error)
         }
     }
 }
