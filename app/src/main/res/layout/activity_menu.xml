@@ -61,7 +61,8 @@
             android:inputType="none"
             android:labelFor="@id/menu"
             android:popupBackground="@drawable/background_dropdown"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="LabelFor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +75,9 @@
         android:src="@drawable/snorlax"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu" />
+        app:layout_constraintTop_toBottomOf="@+id/menu"
+        app:layout_constraintBottom_toTopOf="@+id/button_confirm"
+        android:contentDescription="@string/pokemon_image" />
 
     <Button
         android:id="@+id/button_confirm"

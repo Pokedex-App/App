@@ -52,7 +52,7 @@ class HomeViewModel(private val pokedex: PokedexEndpoint) : ViewModel() {
         }
     }
 
-    fun updateLiveData(species:PokedexSpecies,id:Int):PokedexEntries{
+    fun updateLiveData(species:PokedexSpecies,id:Int):PokedexEntries {
         return PokedexEntries(id,species)
     }
 
@@ -109,5 +109,4 @@ class HomeViewModel(private val pokedex: PokedexEndpoint) : ViewModel() {
         if (isVisible) _loadingPokeballTrue.postValue(Unit)
         else _loadingPokeballFalse.postValue(Unit)
     }
-
 }
