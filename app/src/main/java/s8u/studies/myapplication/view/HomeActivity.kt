@@ -4,13 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
-import s8u.studies.myapplication.api.PokedexEndpoint
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
+import s8u.studies.myapplication.databinding.ModalErrorBinding
 import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
@@ -19,14 +22,18 @@ import s8u.studies.myapplication.viewModel.HomeViewModel
 
 class HomeActivity: AppCompatActivity(),
     ListPokedexAdapter.OnListenerPokedex {
+    private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_home)
     private lateinit var viewModel:HomeViewModel
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var dialog: AlertDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = HomeViewModel(RetrofitObject.createNetworkService<PokedexEndpoint>())
-//        setKoinUp()
+
+//      setKoinUp()
+        viewModel = HomeViewModel(RetrofitObject.createNetworkService())
+        binding.removeFilterImg.visibility = View.GONE
         pokedexItemObjects(intent.getIntExtra("regionID",2))
         setObserversLoading()
         setOnClick()
@@ -53,8 +60,7 @@ class HomeActivity: AppCompatActivity(),
             for (i in 0 until listFilterPokedex!!.pokedexSpecies.size) {
                 listFiltered.add(
                     viewModel.updateLiveData(
-                        listFilterPokedex.pokedexSpecies[i].pokemon,
-                        i
+                        listFilterPokedex.pokedexSpecies[i].pokemon, i
                     )
                 )
                 if (i == listFilterPokedex.pokedexSpecies.size - 1) {
@@ -74,6 +80,7 @@ class HomeActivity: AppCompatActivity(),
     }
 
     private fun visibilityLayout(loading: Int, information: Int) {
+        binding.toolbarHome.toolbarNormal.visibility = information
         binding.textViewTitleApp.visibility = information
         binding.textViewTitleFilter.visibility = information
         binding.scrollViewFilter.visibility = information
@@ -113,7 +120,7 @@ class HomeActivity: AppCompatActivity(),
     }
 
     private fun getValueEditText() {
-        binding.inputLayout.setOnKeyListener { view, keyCode, keyEvent ->
+        binding.inputLayout.setOnKeyListener { _, keyCode, keyEvent ->
             if ((keyCode == KeyEvent.KEYCODE_ENTER) && (keyEvent.action == KeyEvent.ACTION_UP)) {
                 val position = getPositionPokemon(binding.inputLayout.text.toString())
                 if (position != -1) {
@@ -123,16 +130,34 @@ class HomeActivity: AppCompatActivity(),
                     )
                     return@setOnKeyListener true
                 } else {
-                    println("This Pokémon doesn't exist")
+                    showErrorModal()
                 }
             }
             false
         }
     }
 
+    private fun showErrorModal() {
+        val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
+        val dialogBinding: ModalErrorBinding = ModalErrorBinding
+            .inflate(LayoutInflater.from(this))
+
+        dialogBinding.textViewTitleError.text = getText(
+            R.string.modal_error_title_pokemonNotFound
+        )
+        dialogBinding.textViewDescriptionError.text = getText(
+            R.string.modal_error_description_pokemonNotFound
+        )
+        dialogBinding.buttonClose.setOnClickListener { dialog.dismiss() }
+        build.setView(dialogBinding.root)
+        dialog = build.create()
+        dialog.show()
+    }
+
     private fun filterByType(id: String) {
         viewModel.getPokedexFilteredList(id)
         viewModel.setLoadingState(true)
+        binding.removeFilterImg.visibility = View.VISIBLE
     }
 
     private fun setOnClick() {
@@ -154,6 +179,8 @@ class HomeActivity: AppCompatActivity(),
         binding.rockImg.setOnClickListener { filterByType("6") }
         binding.steelImg.setOnClickListener { filterByType("9") }
         binding.waterImg.setOnClickListener { filterByType("11") }
+        binding.removeFilterImg.setOnClickListener { recreate() }
+        toolbar.setNavigationOnClickListener { stopKoin() ; onBackPressed() }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokemonTypeEnd) {

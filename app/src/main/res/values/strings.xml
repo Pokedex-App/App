@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Pokédex</string>
     <string name="title_list">Pokémons</string>
-    <string name="toolbar_normal">Back to Map</string>
+    <string name="toolbar_normal">Back</string>
 
     <string name="subtitle_menu">
         Which region do you want to see?
@@ -15,7 +15,7 @@
 
     <string name="pokemon_image">Picture of a Pokemon.</string>
     <string name="loading_image">Spinning Pokeball</string>
-    <string name="loading_text">Capturing Pokémon...</string>
+    <string name="loading_text">Capturing Pokémon…</string>
 
     <string name="toolbar_title">Pokémon</string>
     <string name="title_abilities">Abilities</string>
@@ -29,6 +29,12 @@
     <string name="modal_damage">Damage</string>
     <string name="modal_button">Close</string>
 
+    <string name="modal_error_title_pokemonNotFound">Ops…</string>
+    <string name="modal_error_description_pokemonNotFound">
+        This Pokemon was not found or does not exist.
+    </string>
+
+    <string name="type_remove_filter">Remove Filter</string>
     <string name="type_bug">Bug</string>
     <string name="type_dark">Dark</string>
     <string name="type_dragon">Dragon</string>
