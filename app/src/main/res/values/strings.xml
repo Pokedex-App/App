@@ -8,6 +8,7 @@
     </string>
 
     <string name="label">Regions</string>
+    <string name="button_confirm">Confirm</string>
 
     <string name="filter_type">Filter by pokémon type</string>
     <string name="filter_input">Search for name or #code</string>
