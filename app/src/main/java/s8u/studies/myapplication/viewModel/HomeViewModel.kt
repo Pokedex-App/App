@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import s8u.studies.myapplication.api.PokedexEndpoint
 import s8u.studies.myapplication.api.PokedexTypeEndpoint
 import s8u.studies.myapplication.api.PokemonTypeEndpoint
 import s8u.studies.myapplication.di.RetrofitObject
@@ -13,9 +14,9 @@ import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
 import s8u.studies.myapplication.model.Pokedex.PokedexTypes
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
-import s8u.studies.myapplication.repository.PokedexRepository
+//import s8u.studies.myapplication.repository.PokedexRepository
 
-class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
+class HomeViewModel(private val pokedex: PokedexEndpoint) : ViewModel() {
     private var _listPokedexEntriesLiveData = MutableLiveData<ArrayList<PokedexEntries>>()
     val listPokedexEntriesLiveData: LiveData<ArrayList<PokedexEntries>> =
         _listPokedexEntriesLiveData
@@ -36,9 +37,9 @@ class HomeViewModel(private val pokedex: PokedexRepository) : ViewModel() {
     val listNamePokemons: LiveData<ArrayList<String>> = _listNamePokemons
 
 
-    fun getPokedexEntriesList() {
+    fun getPokedexEntriesList(regionId:Int) {
         viewModelScope.launch {
-            _listPokedexEntriesLiveData.postValue(pokedex.getPokedex().entriesList)
+            _listPokedexEntriesLiveData.postValue(pokedex.getPokedex(regionId.toString()).entriesList)
         }
     }
 

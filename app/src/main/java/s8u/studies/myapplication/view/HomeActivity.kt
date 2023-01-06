@@ -1,45 +1,42 @@
 package s8u.studies.myapplication.view
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.startKoin
 import s8u.studies.myapplication.R
+import s8u.studies.myapplication.api.PokedexEndpoint
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
+import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
-import s8u.studies.myapplication.modules.networkModule
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
 
-class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
+class HomeActivity: AppCompatActivity(),
+    ListPokedexAdapter.OnListenerPokedex {
+    private lateinit var viewModel:HomeViewModel
     private lateinit var binding: ActivityHomeBinding
-    private val viewModel: HomeViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setKoinUp()
-        pokedexItemObjects()
+        viewModel = HomeViewModel(RetrofitObject.createNetworkService<PokedexEndpoint>())
+//        setKoinUp()
+        pokedexItemObjects(intent.getIntExtra("regionID",2))
         setObserversLoading()
         setOnClick()
     }
 
-    private fun setKoinUp() {
-        startKoin {
-            modules(networkModule)
-        }
-    }
+//    private fun setKoinUp() {
+//        startKoin {
+//            modules(networkModule)
+//        }
+//    }
 
     private fun setObserversLoading() {
         viewModel.setLoadingState(true)
@@ -86,9 +83,9 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         binding.loading.visibility = loading
     }
 
-    private fun pokedexItemObjects() {
+    private fun pokedexItemObjects(regionID:Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
-        viewModel.getPokedexEntriesList()
+        viewModel.getPokedexEntriesList(regionID)
 
         viewModel.listPokedexEntriesLiveData.observe(this) {
             viewModel.getPokedexTypesList()
