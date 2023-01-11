@@ -12,6 +12,7 @@
 
     <string name="filter_type">Filter by pokémon type</string>
     <string name="filter_input">Search for name or #code</string>
+    <string name="clean_filter">Clean filter</string>
 
     <string name="pokemon_image">Picture of a Pokemon.</string>
     <string name="loading_image">Spinning Pokeball</string>

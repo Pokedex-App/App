@@ -105,6 +105,10 @@ class HomeViewModel(private val pokedex: PokedexEndpoint) : ViewModel() {
         }
     }
 
+    fun isFiltered(counter: Int, behavior: () -> Unit) {
+        if (counter > 0) behavior()
+    }
+
     fun setLoadingState(isVisible: Boolean) {
         if (isVisible) _loadingPokeballTrue.postValue(Unit)
         else _loadingPokeballFalse.postValue(Unit)

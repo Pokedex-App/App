@@ -62,7 +62,7 @@
             android:labelFor="@id/menu"
             android:popupBackground="@drawable/background_dropdown"
             android:textColor="@color/white"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
@@ -20,12 +21,13 @@ import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
 
-class HomeActivity: AppCompatActivity(),
+class HomeActivity : AppCompatActivity(),
     ListPokedexAdapter.OnListenerPokedex {
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_home)
-    private lateinit var viewModel:HomeViewModel
+    private lateinit var viewModel: HomeViewModel
     private lateinit var binding: ActivityHomeBinding
     private lateinit var dialog: AlertDialog
+    private var inFilter = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -33,8 +35,8 @@ class HomeActivity: AppCompatActivity(),
 
 //      setKoinUp()
         viewModel = HomeViewModel(RetrofitObject.createNetworkService())
-        binding.removeFilterImg.visibility = View.GONE
-        pokedexItemObjects(intent.getIntExtra("regionID",2))
+        binding.removeFilter.visibility = View.GONE
+        pokedexItemObjects(intent.getIntExtra("regionID", 2))
         setObserversLoading()
         setOnClick()
     }
@@ -66,6 +68,7 @@ class HomeActivity: AppCompatActivity(),
                 if (i == listFilterPokedex.pokedexSpecies.size - 1) {
                     viewModel.setLiveEntries(listFiltered)
                     viewModel.getPokedexTypesList()
+                    inFilter++
                 }
             }
         }
@@ -87,10 +90,14 @@ class HomeActivity: AppCompatActivity(),
         binding.inputLayout.visibility = information
         binding.titleListPokemon.visibility = information
         binding.RecyclerView.visibility = information
+        viewModel.isFiltered(inFilter) {
+            binding.removeFilter.visibility = information
+            inFilter--
+        }
         binding.loading.visibility = loading
     }
 
-    private fun pokedexItemObjects(regionID:Int) {
+    private fun pokedexItemObjects(regionID: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
         viewModel.getPokedexEntriesList(regionID)
 
@@ -157,7 +164,6 @@ class HomeActivity: AppCompatActivity(),
     private fun filterByType(id: String) {
         viewModel.getPokedexFilteredList(id)
         viewModel.setLoadingState(true)
-        binding.removeFilterImg.visibility = View.VISIBLE
     }
 
     private fun setOnClick() {
@@ -179,8 +185,8 @@ class HomeActivity: AppCompatActivity(),
         binding.rockImg.setOnClickListener { filterByType("6") }
         binding.steelImg.setOnClickListener { filterByType("9") }
         binding.waterImg.setOnClickListener { filterByType("11") }
-        binding.removeFilterImg.setOnClickListener { recreate() }
-        toolbar.setNavigationOnClickListener { stopKoin() ; onBackPressed() }
+        binding.removeFilter.setOnClickListener { recreate() }
+        toolbar.setNavigationOnClickListener { stopKoin(); onBackPressed() }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokemonTypeEnd) {
