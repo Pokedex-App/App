@@ -34,6 +34,9 @@
     <string name="modal_error_description_pokemonNotFound">
         This Pokemon was not found or does not exist.
     </string>
+    <string name="modal_error_description_regionNotSelected">
+        No region has been selected, please select a region.
+    </string>
 
     <string name="type_remove_filter">Remove Filter</string>
     <string name="type_bug">Bug</string>

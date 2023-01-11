@@ -16,4 +16,8 @@ class MenuViewModel:ViewModel() {
         }
     }
 
+    fun checkContent(nameRegion: String, behavior: () -> Unit, behaviorElse: () -> Unit) {
+        if (nameRegion == "") behavior()
+        else behaviorElse()
+    }
 }
