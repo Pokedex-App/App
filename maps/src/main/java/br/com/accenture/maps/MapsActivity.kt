@@ -81,7 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .title("My Position")
                 )!!
                     .setIcon(
-                        BitmapDescriptorFactory.fromResource(R.drawable.rede)
+                        BitmapDescriptorFactory.fromResource(R.drawable.red)
                     )
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLong))
 
