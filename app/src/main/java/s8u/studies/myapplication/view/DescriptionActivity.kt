@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
@@ -24,7 +25,7 @@ import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
 class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListenerAbility {
     private lateinit var binding: ActivityDescriptionBinding
-    private val viewModel = DescriptionViewModel()
+    private val viewModel: DescriptionViewModel by viewModel()
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_description)
     private val nextButton: Button get() = findViewById(R.id.button_next)
     private val previousButton: Button get() = findViewById(R.id.button_previous)
