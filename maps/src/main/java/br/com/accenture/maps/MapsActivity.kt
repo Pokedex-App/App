@@ -3,11 +3,13 @@ package br.com.accenture.maps
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
 import android.os.Bundle
+import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import br.com.accenture.maps.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -15,10 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import java.net.URL
+import kotlin.random.Random
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -36,6 +37,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -77,11 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .title("My Position")
                 )!!
                     .setIcon(
-                        BitMapHelper.vectorToBitMap(
-                            this,
-                            R.drawable.icons,
-                            ContextCompat.getColor(this, R.color.black)
-                        )
+                        BitmapDescriptorFactory.fromResource(R.drawable.rede)
                     )
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLong))
 
@@ -96,7 +96,47 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
+                spawnPokemons(currentLatLong)
             }
         }
+    }
+
+    private fun spawnPokemons(location: LatLng) {
+
+        var latitude = 0.0
+        var longitude = 0.0
+
+        var randomGenerator = Random(System.currentTimeMillis())
+
+        latitude = if (randomGenerator.nextBoolean()) {
+            location.latitude - 0.0007
+        } else {
+            location.latitude + 0.0007
+        }
+
+        longitude = if (randomGenerator.nextBoolean()) {
+            location.longitude - 0.0007
+        } else {
+            location.longitude + 0.0007
+        }
+
+        val randomPokemon = randomGenerator.nextInt(1, 650)
+
+        val nextLocation = LatLng(latitude, longitude)
+
+        mMap.addMarker(
+            MarkerOptions()
+                .position(nextLocation)
+                .title("Random Pokemon")
+        )!!
+            .setIcon(
+                BitmapDescriptorFactory.fromBitmap(
+                    bpmConvertor("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomPokemon}.png"))
+            )
+    }
+
+    private fun bpmConvertor(url: String): Bitmap {
+        val urla: URL = URL(url)
+        return BitmapFactory.decodeStream(urla.openConnection().getInputStream())
     }
 }
