@@ -6,14 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import s8u.studies.myapplication.api.PokemonAbilityEndpoint
-import s8u.studies.myapplication.api.PokemonDescriptionEndpoint
-import s8u.studies.myapplication.api.PokemonEndpoint
-import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokemon.abilities.PokemonAbilityInformation
 import s8u.studies.myapplication.model.PokemonData
+import s8u.studies.myapplication.repository.DescriptionRepository
 
-class DescriptionViewModel : ViewModel() {
+class DescriptionViewModel (private val repository: DescriptionRepository) : ViewModel() {
     private val _apiData = MutableLiveData<PokemonData>()
     val apiData: LiveData<PokemonData> = _apiData
     val pokemonLiveData1 = MutableLiveData<Unit>()
@@ -30,15 +27,10 @@ class DescriptionViewModel : ViewModel() {
     val abilityInformationPokemon: LiveData<PokemonAbilityInformation> = _abilityInformationPokemon
 
     fun getPokemonDescription(id: String, firstPokemon: String, lastPokemon: String) {
-        val pokemonEndpoint = RetrofitObject.createNetworkService<PokemonEndpoint>()
-        val pokemonDescEndpoint = RetrofitObject.createNetworkService<PokemonDescriptionEndpoint>()
-
         hideButtons(id, firstPokemon, lastPokemon)
-
         viewModelScope.launch {
-            val poke = pokemonEndpoint.getPokemon(id)
-            val pokeDesc = pokemonDescEndpoint.getPokemon(id)
-
+            val poke = repository.getPokemon(id)
+            val pokeDesc = repository.getPokemonDesc(id)
             _apiData.postValue(
                 PokemonData(
                     poke.id,
@@ -57,10 +49,7 @@ class DescriptionViewModel : ViewModel() {
 
     fun getAbilityInformation(nameAbility: String) {
         viewModelScope.launch {
-            val apiAbility = RetrofitObject
-                .createNetworkService<PokemonAbilityEndpoint>()
-                .getAbility(nameAbility)
-
+            val apiAbility = repository.getPokemonAbility(nameAbility)
             _abilityInformationPokemon.postValue(
                 PokemonAbilityInformation(
                     apiAbility.flavorTextEntries,

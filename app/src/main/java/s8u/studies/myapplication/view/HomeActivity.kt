@@ -9,22 +9,20 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
 import s8u.studies.myapplication.databinding.ModalErrorBinding
-import s8u.studies.myapplication.di.RetrofitObject
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
 
-class HomeActivity : AppCompatActivity(),
-    ListPokedexAdapter.OnListenerPokedex {
+class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_home)
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding: ActivityHomeBinding
     private lateinit var dialog: AlertDialog
     private var inFilter = 0
@@ -33,19 +31,11 @@ class HomeActivity : AppCompatActivity(),
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//      setKoinUp()
-        viewModel = HomeViewModel(RetrofitObject.createNetworkService())
         binding.removeFilter.visibility = View.GONE
         pokedexItemObjects(intent.getIntExtra("regionID", 2))
         setObserversLoading()
         setOnClick()
     }
-
-//    private fun setKoinUp() {
-//        startKoin {
-//            modules(networkModule)
-//        }
-//    }
 
     private fun setObserversLoading() {
         viewModel.setLoadingState(true)

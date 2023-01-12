@@ -3,18 +3,18 @@ package s8u.studies.myapplication.modules
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import s8u.studies.myapplication.di.RetrofitObject
-import s8u.studies.myapplication.repository.PokedexRepository
-import s8u.studies.myapplication.viewModel.HomeViewModel
+import s8u.studies.myapplication.repository.DescriptionRepository
+import s8u.studies.myapplication.viewModel.DescriptionViewModel
 
-val networkModule = module {
+val descriptionModule = module{
     factory {
-        PokedexRepository(
+        DescriptionRepository(
             RetrofitObject.createNetworkService(),
             RetrofitObject.createNetworkService(),
             RetrofitObject.createNetworkService()
         )
     }
     viewModel {
-        HomeViewModel(get())
+        DescriptionViewModel(get())
     }
 }

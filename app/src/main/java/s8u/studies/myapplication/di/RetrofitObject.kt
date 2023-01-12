@@ -16,13 +16,8 @@ import javax.net.ssl.X509TrustManager
 
 object RetrofitObject {
     inline fun <reified T> createNetworkService(): T {
-
         val log = LoggingInterceptor().getInterceptor()
-
-
-
         val client = getOkHttpBuilder()
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .client(client.build())
@@ -46,12 +41,16 @@ object RetrofitObject {
             val trustAllCerts: Array<TrustManager> = arrayOf(
                 object : X509TrustManager {
                     @Throws(CertificateException::class)
-                    override fun checkClientTrusted(chain: Array<X509Certificate?>?,
-                                                    authType: String?) = Unit
+                    override fun checkClientTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) = Unit
 
                     @Throws(CertificateException::class)
-                    override fun checkServerTrusted(chain: Array<X509Certificate?>?,
-                                                    authType: String?) = Unit
+                    override fun checkServerTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) = Unit
 
                     override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
                 }
@@ -62,12 +61,13 @@ object RetrofitObject {
             // Create an ssl socket factory with our all-trusting manager
             val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
             val builder = OkHttpClient.Builder()
-            builder.sslSocketFactory(sslSocketFactory,
-                trustAllCerts[0] as X509TrustManager)
+            builder.sslSocketFactory(
+                sslSocketFactory,
+                trustAllCerts[0] as X509TrustManager
+            )
             builder.hostnameVerifier { _, _ -> true }
             builder
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
-
 }
