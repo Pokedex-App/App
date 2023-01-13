@@ -4,21 +4,18 @@ import android.util.Log
 import kotlinx.coroutines.runBlocking
 import s8u.studies.myapplication.api.*
 import s8u.studies.myapplication.di.RetrofitObject
+import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokemon.Description.PokemonDescription
 import s8u.studies.myapplication.model.Pokemon.Pokemon
 import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
 
 fun main() {
-    val response = RetrofitObject.createNetworkService<PokemonAbilityEndpoint>()
+    val response = RetrofitObject.createNetworkService<PokedexEndpoint>()
 
     runBlocking {
-        val nameAbility = response.getAbility("swords-dance")
-        println(nameAbility.power)
-        if (nameAbility.power == null) {
-            nameAbility.power = 0
-        }
+        val list = response.getPokedex("1")
         println(
-            nameAbility.power
+            list.entriesList[0]
         )
 
     }
