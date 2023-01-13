@@ -13,24 +13,27 @@ import androidx.core.app.ActivityCompat
 import br.com.accenture.maps.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import java.net.URL
+import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.random.Random
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var currentLocation: Location
 
+    private var pokemonPopulation = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapsInitializer.initialize(this, MapsInitializer.Renderer.LATEST) {
+            println(it.name)
+        }
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -96,7 +99,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
-                spawnPokemons(currentLatLong)
+
+                Timer().schedule(10000, 10000) {
+                    spawnPokemons(currentLatLong)
+                }
             }
         }
     }
@@ -108,31 +114,40 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         var randomGenerator = Random(System.currentTimeMillis())
 
-        latitude = if (randomGenerator.nextBoolean()) {
-            location.latitude - 0.0007
+        if (randomGenerator.nextBoolean()) {
+            latitude = location.latitude - randomGenerator.nextDouble(0.0005, 0.001)
         } else {
-            location.latitude + 0.0007
+            latitude = location.latitude + randomGenerator.nextDouble(0.0005, 0.001)
         }
 
-        longitude = if (randomGenerator.nextBoolean()) {
-            location.longitude - 0.0007
+        if (randomGenerator.nextBoolean()) {
+            longitude = location.longitude - randomGenerator.nextDouble(0.0005, 0.001)
         } else {
-            location.longitude + 0.0007
+            longitude = location.longitude + randomGenerator.nextDouble(0.0005, 0.001)
         }
 
-        val randomPokemon = randomGenerator.nextInt(1, 650)
+        val randomPokemon = randomGenerator.nextInt(1, 150)
 
-        val nextLocation = LatLng(latitude, longitude)
+        var nextLocation = LatLng(latitude, longitude)
 
-        mMap.addMarker(
-            MarkerOptions()
-                .position(nextLocation)
-                .title("Random Pokemon")
-        )!!
-            .setIcon(
-                BitmapDescriptorFactory.fromBitmap(
-                    bpmConvertor("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomPokemon}.png"))
-            )
+        runOnUiThread {
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(nextLocation)
+            )!!
+                .setIcon(
+                    BitmapDescriptorFactory.fromBitmap(
+                        bpmConvertor("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomPokemon}.png")
+                    )
+                )
+
+            pokemonPopulation++
+
+            if (pokemonPopulation >= 3) {
+
+            }
+
+        }
     }
 
     private fun bpmConvertor(url: String): Bitmap {
