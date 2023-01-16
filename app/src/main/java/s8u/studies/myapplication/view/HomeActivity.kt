@@ -16,7 +16,7 @@ import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
 import s8u.studies.myapplication.databinding.ModalErrorBinding
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
-import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
+import s8u.studies.myapplication.model.Pokemon.PokedexTypes
 import s8u.studies.myapplication.recyclerview.adapter.ListPokedexAdapter
 import s8u.studies.myapplication.viewModel.HomeViewModel
 
@@ -179,7 +179,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         toolbar.setNavigationOnClickListener { stopKoin(); onBackPressed() }
     }
 
-    override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokemonTypeEnd) {
+    override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokedexTypes) {
         val typeList = viewModel.listPokedexTypesLiveData.value!!
 
         val intent = Intent(this, DescriptionActivity::class.java)

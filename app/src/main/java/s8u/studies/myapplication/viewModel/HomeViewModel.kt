@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
-import s8u.studies.myapplication.model.Pokedex.PokedexTypes
-import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
+import s8u.studies.myapplication.model.Pokedex.PokemonTypes
+import s8u.studies.myapplication.model.Pokemon.PokedexTypes
 import s8u.studies.myapplication.repository.PokedexRepository
 
 class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
@@ -17,11 +17,11 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     val listPokedexEntriesLiveData: LiveData<ArrayList<PokedexEntries>> =
         _listPokedexEntriesLiveData
 
-    private var _listPokedexTypesLiveData = MutableLiveData<ArrayList<PokemonTypeEnd>>()
-    val listPokedexTypesLiveData: LiveData<ArrayList<PokemonTypeEnd>> = _listPokedexTypesLiveData
+    private var _listPokedexTypesLiveData = MutableLiveData<ArrayList<PokedexTypes>>()
+    val listPokedexTypesLiveData: LiveData<ArrayList<PokedexTypes>> = _listPokedexTypesLiveData
 
-    private var _listPokedexFilteredLiveData = MutableLiveData<PokedexTypes>()
-    val listPokedexFilteredLiveData: LiveData<PokedexTypes> = _listPokedexFilteredLiveData
+    private var _listPokedexFilteredLiveData = MutableLiveData<PokemonTypes>()
+    val listPokedexFilteredLiveData: LiveData<PokemonTypes> = _listPokedexFilteredLiveData
 
     private var _loadingPokeballTrue = MutableLiveData<Unit>()
     val loadingPokeballTrue: LiveData<Unit> = _loadingPokeballTrue
@@ -52,7 +52,7 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     }
 
     fun getPokedexTypesList() {
-        val typeList = arrayListOf<PokemonTypeEnd>()
+        val typeList = arrayListOf<PokedexTypes>()
         val nameList = arrayListOf<String>()
         viewModelScope.launch {
             for (i in 0 until listPokedexEntriesLiveData.value!!.size) {

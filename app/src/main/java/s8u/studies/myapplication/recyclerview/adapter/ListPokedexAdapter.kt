@@ -13,11 +13,11 @@ import s8u.studies.myapplication.R
 import s8u.studies.myapplication.model.ColorBackgroundType
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokemon.Pokemon
-import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
+import s8u.studies.myapplication.model.Pokemon.PokedexTypes
 
 class ListPokedexAdapter(
     private val context: Context,
-    private val pokedexEntriesAndType: Pair<ArrayList<PokedexEntries>?, ArrayList<PokemonTypeEnd>?>,
+    private val pokedexEntriesAndType: Pair<ArrayList<PokedexEntries>?, ArrayList<PokedexTypes>?>,
     private val onListenerPokedex: OnListenerPokedex,
 ) : RecyclerView.Adapter<ListPokedexAdapter.ViewHolder>() {
 
@@ -25,7 +25,7 @@ class ListPokedexAdapter(
         val cardView: ConstraintLayout = itemView.findViewById(R.id.container_view)
         lateinit var api: Pokemon
 
-        fun bind(pokedexEntries: PokedexEntries, typeList: PokemonTypeEnd, context: Context) {
+        fun bind(pokedexEntries: PokedexEntries, typeList: PokedexTypes, context: Context) {
             val id = itemView.findViewById<TextView>(R.id.pokedex_id)
             id.text = "#${pokedexEntries.id}"
             val name = itemView.findViewById<TextView>(R.id.pokedex_name)
@@ -56,7 +56,7 @@ class ListPokedexAdapter(
     }
 
     interface OnListenerPokedex {
-        fun onClickPokedex(pokedexEntries: PokedexEntries,pokedexTypes:PokemonTypeEnd)
+        fun onClickPokedex(pokedexEntries: PokedexEntries,pokedexTypes:PokedexTypes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

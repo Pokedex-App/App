@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import s8u.studies.myapplication.api.PokedexEndpoint
 import s8u.studies.myapplication.api.PokedexTypeEndpoint
 import s8u.studies.myapplication.api.PokemonTypeEndpoint
-import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.repository.PokedexRepository
 import s8u.studies.myapplication.viewModel.HomeViewModel
 import io.mockk.*
@@ -22,8 +21,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import s8u.studies.myapplication.model.Pokedex.Pokedex
-import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
+import s8u.studies.myapplication.model.Pokedex.*
 
 class HomeViewModelTest {
     @get:Rule
@@ -35,6 +33,7 @@ class HomeViewModelTest {
     private lateinit var repository: PokedexRepository
     private lateinit var viewModel: HomeViewModel
     private lateinit var observerEntries: Observer<ArrayList<PokedexEntries>>
+    private lateinit var observerTypes: Observer<PokemonTypes>
     private val dispatcher = TestCoroutineDispatcher()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,6 +49,7 @@ class HomeViewModelTest {
         )
         viewModel = HomeViewModel(repository)
         observerEntries = mockk(relaxed = true)
+        observerTypes = mockk(relaxed = true)
         Dispatchers.setMain(dispatcher)
     }
 
@@ -89,6 +89,57 @@ class HomeViewModelTest {
                 )
             )
         }
+    }
+
+    @Test
+    fun `When click on a type of Pokemon, should return a list of filtered pokemons`() {
+        viewModel.listPokedexFilteredLiveData.observeForever(observerTypes)
+        coEvery { repository.getPokemonType("1") } returns PokemonTypes(
+            "normal",
+            arrayListOf(
+                PokedexTypes(
+                    PokedexSpecies(
+                        "pidgey",
+                        "https://pokeapi.co/api/v2/pokemon/16/"
+                    )
+                )
+            )
+        )
+
+        viewModel.getPokedexFilteredList("1")
+
+        coVerify {
+            observerTypes.onChanged(
+                PokemonTypes(
+                    "normal",
+                    arrayListOf(
+                        PokedexTypes(
+                            PokedexSpecies(
+                                "pidgey",
+                                "https://pokeapi.co/api/v2/pokemon/16/"
+                            )
+                        )
+                    )
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `When receiving a Pokemon and its type, should return a pokedexEntries`() {
+        val pokemonIn = PokedexSpecies(
+            "pidgey",
+            "https://pokeapi.co/api/v2/pokemon/16/"
+        )
+        val pokemonOut = PokedexSpecies(
+            "pidgey",
+            "https://pokeapi.co/api/v2/pokemon/16/"
+        )
+
+        assertEquals(
+            viewModel.updateLiveData(pokemonIn, 16),
+            PokedexEntries(16, pokemonOut)
+        )
     }
 
     @Test
