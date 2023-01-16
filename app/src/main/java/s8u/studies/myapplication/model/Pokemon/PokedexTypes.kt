@@ -3,7 +3,7 @@ package s8u.studies.myapplication.model.Pokemon
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-open class PokemonTypeEnd(
+open class PokedexTypes(
     @SerializedName("types")
     var typeList: ArrayList<PokemonTypes>,
     @SerializedName("id")

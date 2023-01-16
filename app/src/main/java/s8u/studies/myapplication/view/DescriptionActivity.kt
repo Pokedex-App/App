@@ -17,7 +17,7 @@ import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
 import s8u.studies.myapplication.databinding.ModalPokemonBinding
 import s8u.studies.myapplication.model.ColorBackgroundType
-import s8u.studies.myapplication.model.Pokemon.PokemonTypeEnd
+import s8u.studies.myapplication.model.Pokemon.PokedexTypes
 import s8u.studies.myapplication.model.Pokemon.abilities.PokemonMoves
 import s8u.studies.myapplication.model.PokemonData
 import s8u.studies.myapplication.recyclerview.adapter.ListAbilitiesAdapter
@@ -32,7 +32,7 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
     private lateinit var idPokemon: String
     private lateinit var firstPokemon: String
     private lateinit var lastPokemon: String
-    private lateinit var orderList: ArrayList<PokemonTypeEnd>
+    private lateinit var orderList: ArrayList<PokedexTypes>
     private var position: Int = 0
     private lateinit var dialog: AlertDialog
 
@@ -45,7 +45,7 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
         firstPokemon = intent.getStringExtra("firstPokemon").toString()
         lastPokemon = intent.getStringExtra("lastPokemon").toString()
         val b = intent.getBundleExtra("listOrder")
-        orderList = b!!.getSerializable("listOrder") as ArrayList<PokemonTypeEnd>
+        orderList = b!!.getSerializable("listOrder") as ArrayList<PokedexTypes>
         position = intent.getIntExtra("position", 0)
         onClick()
         buttonVisibility(idPokemon)
