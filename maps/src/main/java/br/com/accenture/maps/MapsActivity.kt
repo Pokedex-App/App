@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.scale
 import br.com.accenture.maps.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -100,7 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
 
-                Timer().schedule(10000, 10000) {
+                Timer().schedule(15000, 10000) {
                     spawnPokemons(currentLatLong)
                 }
             }
@@ -143,8 +144,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             pokemonPopulation++
 
-            if (pokemonPopulation >= 3) {
-
+            if (pokemonPopulation >= 4) {
+                mMap.clear()
+                mMap.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(location.latitude,location.longitude))
+                        .title("My Position")
+                )!!
+                    .setIcon(
+                        BitmapDescriptorFactory.fromResource(R.drawable.red)
+                    )
+                pokemonPopulation = 0
             }
 
         }
@@ -152,6 +162,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun bpmConvertor(url: String): Bitmap {
         val urla: URL = URL(url)
-        return BitmapFactory.decodeStream(urla.openConnection().getInputStream())
+
+        var img = BitmapFactory.decodeStream(urla.openConnection().getInputStream()).scale(300,300,false)
+
+        return img
     }
 }
