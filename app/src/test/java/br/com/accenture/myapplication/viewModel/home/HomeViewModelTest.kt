@@ -9,6 +9,8 @@ import s8u.studies.myapplication.api.PokedexTypeEndpoint
 import s8u.studies.myapplication.api.PokemonTypeEndpoint
 import s8u.studies.myapplication.repository.PokedexRepository
 import s8u.studies.myapplication.viewModel.HomeViewModel
+import s8u.studies.myapplication.model.Pokemon.PokedexTypes as PokedexTypesFromPokemon
+import s8u.studies.myapplication.model.Pokemon.PokemonTypes as PokemonTypesFromPokemon
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +18,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import s8u.studies.myapplication.model.Pokedex.*
+import s8u.studies.myapplication.model.Pokemon.PokemonTypeList
 
 class HomeViewModelTest {
     @get:Rule
@@ -34,6 +38,7 @@ class HomeViewModelTest {
     private lateinit var viewModel: HomeViewModel
     private lateinit var observerEntries: Observer<ArrayList<PokedexEntries>>
     private lateinit var observerTypes: Observer<PokemonTypes>
+    private lateinit var observerTypesList: Observer<ArrayList<PokedexTypesFromPokemon>>
     private val dispatcher = TestCoroutineDispatcher()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,6 +55,7 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(repository)
         observerEntries = mockk(relaxed = true)
         observerTypes = mockk(relaxed = true)
+        observerTypesList = mockk(relaxed = true)
         Dispatchers.setMain(dispatcher)
     }
 
@@ -143,7 +149,94 @@ class HomeViewModelTest {
     }
 
     @Test
+    fun `When you receive a list of Pokemons, should insert the list in livedata`() {
+        val listPokemonsIn = arrayListOf(
+            PokedexEntries(
+                16,
+                PokedexSpecies(
+                    "pidgey",
+                    "https://pokeapi.co/api/v2/pokemon/16/"
+                )
+            )
+        )
+
+        val listPokemonsOut = arrayListOf(
+            PokedexEntries(
+                16,
+                PokedexSpecies(
+                    "pidgey",
+                    "https://pokeapi.co/api/v2/pokemon/16/"
+                )
+            )
+        )
+
+        viewModel.setLiveEntries(listPokemonsIn)
+
+        assertEquals(viewModel.listPokedexEntriesLiveData.value, listPokemonsOut)
+    }
+
+    @Test
+    fun `When I Cry`() = runBlockingTest {
+        viewModel.listPokedexTypesLiveData.observeForever(observerTypesList)
+
+        coEvery { arrayListOf(repository.getPokedexType("1")) } returns
+                arrayListOf(
+                    PokedexTypesFromPokemon(
+                        arrayListOf(
+                            PokemonTypesFromPokemon(
+                                PokemonTypeList(
+                                    "bulbassaur"
+                                )
+                            )
+                        ),
+                        "1"
+                    )
+                )
+
+        viewModel.getPokedexTypesList()
+
+        coVerify {
+            observerTypesList.onChanged(
+                arrayListOf(
+                    PokedexTypesFromPokemon(
+                        arrayListOf(
+                            PokemonTypesFromPokemon(
+                                PokemonTypeList(
+                                    "bulbassaur"
+                                )
+                            )
+                        ),
+                        "1"
+                    )
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `When a certain API name is pulled, if you enter the conditional, should change the name`() {
+        val pokemonName = "tornadus-incarnate"
+        val pokemon = PokedexEntries(
+            id = 641,
+            PokedexSpecies(
+                pokemonName = "tornadus",
+                url = "https://pokeapi.co/api/v2/pokemon/641"
+            )
+        )
+
+        viewModel.solveApiProblems(pokemon)
+
+        assertEquals(pokemon.pokedexSpecies.pokemonName, pokemonName)
+    }
+
+    @Test
     fun `When showing the list, should validate if it is a filtered list`() {
+        var enteredLambda = 0
+        viewModel.isFiltered(1) {
+            enteredLambda = 1
+        }
+
+        assertEquals(enteredLambda, 1)
     }
 
     @Test
