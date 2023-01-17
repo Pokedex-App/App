@@ -94,7 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val cameraPosition = CameraPosition.builder()
                         .target(currentLatLong)
                         .zoom(18.5f)
-                        .bearing(270f)
+                        .bearing(90f)
                         .tilt(70f)
                         .build()
 
@@ -144,7 +144,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             pokemonPopulation++
 
-            if (pokemonPopulation >= 4) {
+            if (pokemonPopulation > 3) {
                 mMap.clear()
                 mMap.addMarker(
                     MarkerOptions()
