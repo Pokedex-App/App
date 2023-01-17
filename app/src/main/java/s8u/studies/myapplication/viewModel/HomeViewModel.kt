@@ -56,27 +56,20 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         val nameList = arrayListOf<String>()
         viewModelScope.launch {
             for (i in 0 until listPokedexEntriesLiveData.value!!.size) {
-                Log.i("LOADING", i.toString())
-                solveApiProblems(
-                    listPokedexEntriesLiveData.value!![i]
-                )
-                nameList.add(
-                    listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName
-                )
-                typeList.add(
-                    repository.getPokedexType(
-                        listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName
-                    )
-                )
+                val pokemon = listPokedexEntriesLiveData.value!![i]
+                solveApiProblems(pokemon)
+                nameList.add(pokemon.pokedexSpecies.pokemonName)
+                typeList.add(repository.getPokedexType(pokemon.pokedexSpecies.pokemonName))
                 if (i == listPokedexEntriesLiveData.value!!.size - 1) {
                     _listPokedexTypesLiveData.postValue(typeList)
                     _listNamePokemons.postValue(nameList)
                 }
+                Log.i("LOADING", i.toString())
             }
         }
     }
 
-    private fun solveApiProblems(entries: PokedexEntries) {
+    fun solveApiProblems(entries: PokedexEntries) {
         when (entries.pokedexSpecies.pokemonName) {
             "tornadus", "thundurus", "landorus" -> entries.pokedexSpecies.pokemonName += "-incarnate"
             "meowstic", "indeedee" -> entries.pokedexSpecies.pokemonName += "-male"
