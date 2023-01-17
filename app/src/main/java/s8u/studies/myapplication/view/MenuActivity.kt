@@ -27,13 +27,24 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun onClicks() {
+        var b = true
         binding.buttonConfirm.setOnClickListener {
             val nameRegion = binding.inputAutocomplete.text.toString()
             viewModel.checkContent(nameRegion, { showErrorModal() }, { goToList(nameRegion) })
         }
-        // set image invisible
-        binding.inputAutocomplete.setOnDismissListener {
+        binding.inputAutocomplete.setOnClickListener {
+            if (b) {
+                binding.imageMenu.visibility = View.INVISIBLE
+                b = false
+            } else {
+                binding.imageMenu.visibility = View.VISIBLE
+                b = true
+            }
+        }
+// set image invisible
+        binding.inputAutocomplete.setOnItemClickListener { _, _, _, _ ->
             binding.imageMenu.visibility = View.VISIBLE
+            b = true
         }
     }
 
