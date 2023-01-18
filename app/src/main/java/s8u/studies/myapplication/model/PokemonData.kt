@@ -20,4 +20,19 @@ class PokemonData(
     weight = weight,
     typeList = typeList,
     imgList = imgList,
-    movesList = moveList)
+    movesList = moveList) {
+    override fun toString(): String {
+        return String.format(
+            """
+                id: %d
+                name: %s
+                height: %s
+                weight: %s
+                typeList: %s
+                image: %s
+                moves: %s
+            """.trimIndent(),
+            id, name, height, weight, typeList, imgList, movesList
+        )
+    }
+}

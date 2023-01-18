@@ -104,7 +104,7 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
             Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m",Html.FROM_HTML_MODE_LEGACY)
         binding.textViewWeight.text =
             Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg",Html.FROM_HTML_MODE_LEGACY)
-        binding.textViewDescription.text = api.descriptionList[0].descricao.replace("\n", " ")
+        binding.textViewDescription.text = api.descriptionList[0].description.replace("\n", " ")
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
         val primaryType = api.typeList[0].type.name

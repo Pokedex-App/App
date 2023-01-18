@@ -61,7 +61,7 @@ class DescriptionViewModel (private val repository: DescriptionRepository) : Vie
         }
     }
 
-    private fun hideButtons(id: String, firstPokemon: String, lastPokemon: String) {
+    fun hideButtons(id: String, firstPokemon: String, lastPokemon: String) {
         when (id) {
             firstPokemon -> pokemonLiveData1.postValue(Unit)
             lastPokemon -> pokemonLiveData2.postValue(Unit)
