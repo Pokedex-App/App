@@ -17,6 +17,10 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     val listPokedexEntriesLiveData: LiveData<ArrayList<PokedexEntries>> =
         _listPokedexEntriesLiveData
 
+    private var _ActualListEntriesLiveData = MutableLiveData<ArrayList<PokedexEntries>>()
+    val ActualListEntriesLiveData: LiveData<ArrayList<PokedexEntries>> =
+        _ActualListEntriesLiveData
+
     private var _listPokedexTypesLiveData = MutableLiveData<ArrayList<PokedexTypes>>()
     val listPokedexTypesLiveData: LiveData<ArrayList<PokedexTypes>> = _listPokedexTypesLiveData
 
@@ -38,6 +42,9 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
             _listPokedexEntriesLiveData.postValue(repository.getPokedex(regionId.toString()).entriesList)
         }
     }
+    fun getActualEntriesList(){
+        _ActualListEntriesLiveData.postValue(listPokedexEntriesLiveData.value)
+    }
 
     fun getPokedexFilteredList(id: String) {
         viewModelScope.launch { _listPokedexFilteredLiveData.postValue(repository.getPokemonType(id)) }
@@ -48,19 +55,19 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     }
 
     fun setLiveEntries(list: ArrayList<PokedexEntries>) {
-        _listPokedexEntriesLiveData.value = list
+        _ActualListEntriesLiveData.value = list
     }
 
     fun getPokedexTypesList() {
         val typeList = arrayListOf<PokedexTypes>()
         val nameList = arrayListOf<String>()
         viewModelScope.launch {
-            for (i in 0 until listPokedexEntriesLiveData.value!!.size) {
-                val pokemon = listPokedexEntriesLiveData.value!![i]
+            for (i in 0 until ActualListEntriesLiveData.value!!.size) {
+                val pokemon = ActualListEntriesLiveData.value!![i]
                 solveApiProblems(pokemon)
                 nameList.add(pokemon.pokedexSpecies.pokemonName)
                 typeList.add(repository.getPokedexType(pokemon.pokedexSpecies.pokemonName))
-                if (i == listPokedexEntriesLiveData.value!!.size - 1) {
+                if (i == ActualListEntriesLiveData.value!!.size - 1) {
                     _listPokedexTypesLiveData.postValue(typeList)
                     _listNamePokemons.postValue(nameList)
                 }
@@ -103,5 +110,9 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     fun setLoadingState(isVisible: Boolean) {
         if (isVisible) _loadingPokeballTrue.postValue(Unit)
         else _loadingPokeballFalse.postValue(Unit)
+    }
+
+     fun unfilterList(){
+      _ActualListEntriesLiveData.value = listPokedexEntriesLiveData.value
     }
 }
