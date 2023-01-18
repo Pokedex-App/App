@@ -1,15 +1,19 @@
 package s8u.studies.myapplication.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
@@ -58,7 +62,6 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
                 if (i == listFilterPokedex.pokedexSpecies.size - 1) {
                     viewModel.setLiveEntries(listFiltered)
                     viewModel.getPokedexTypesList()
-                    inFilter++
                 }
             }
         }
@@ -82,7 +85,6 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         binding.RecyclerView.visibility = information
         viewModel.isFiltered(inFilter) {
             binding.removeFilter.visibility = information
-            inFilter--
         }
         binding.loading.visibility = loading
     }
@@ -92,13 +94,16 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         viewModel.getPokedexEntriesList(regionID)
 
         viewModel.listPokedexEntriesLiveData.observe(this) {
+            viewModel.getActualEntriesList()
+        }
+        viewModel.ActualListEntriesLiveData.observe(this){
             viewModel.getPokedexTypesList()
         }
 
         viewModel.listPokedexTypesLiveData.observe(this) {
-            val listPokedexEntries = viewModel.listPokedexEntriesLiveData.value
+            val actualListPokedexEntries = viewModel.ActualListEntriesLiveData.value
             val typeList = viewModel.listPokedexTypesLiveData.value
-            val entriesAndTypeList = Pair(listPokedexEntries, typeList)
+            val entriesAndTypeList = Pair(actualListPokedexEntries, typeList)
             recyclerView.adapter = ListPokedexAdapter(
                 this, entriesAndTypeList, this
             )
@@ -122,7 +127,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
                 val position = getPositionPokemon(binding.inputLayout.text.toString())
                 if (position != -1) {
                     onClickPokedex(
-                        viewModel.listPokedexEntriesLiveData.value!![position],
+                        viewModel.ActualListEntriesLiveData.value!![position],
                         viewModel.listPokedexTypesLiveData.value!![position]
                     )
                     return@setOnKeyListener true
@@ -152,7 +157,9 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun filterByType(id: String) {
+        closeKeyBoard()
         viewModel.getPokedexFilteredList(id)
+        inFilter = 1
         viewModel.setLoadingState(true)
     }
 
@@ -175,13 +182,24 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         binding.rockImg.setOnClickListener { filterByType("6") }
         binding.steelImg.setOnClickListener { filterByType("9") }
         binding.waterImg.setOnClickListener { filterByType("11") }
-        binding.removeFilter.setOnClickListener { recreate() }
-        toolbar.setNavigationOnClickListener { stopKoin(); onBackPressed() }
+        binding.removeFilter.setOnClickListener {
+            inFilter = 0
+            binding.removeFilter.visibility = View.INVISIBLE
+            viewModel.unfilterList()
+            viewModel.setLoadingState(true)
+            binding.RecyclerView.adapter!!.notifyDataSetChanged()
+            Handler().postDelayed({
+                viewModel.setLoadingState(false)
+            }, 7500)
+       }
+        toolbar.setNavigationOnClickListener { onBackPressed();recreate() }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokedexTypes) {
         val typeList = viewModel.listPokedexTypesLiveData.value!!
 
+
+         closeKeyBoard()
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexTypes.id)
         intent.putExtra("firstPokemon", typeList[0].id)
@@ -197,11 +215,21 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun getPositionPokemon(namePokemon: String): Int {
-        for (i in 0 until viewModel.listPokedexEntriesLiveData.value!!.size) {
-            if (viewModel.listPokedexEntriesLiveData.value!![i].pokedexSpecies.pokemonName == namePokemon) {
+        for (i in 0 until viewModel.ActualListEntriesLiveData.value!!.size) {
+            if (viewModel.ActualListEntriesLiveData.value!![i].pokedexSpecies.pokemonName == namePokemon) {
                 return i
             }
         }
         return -1
     }
+
+    private fun closeKeyBoard() {
+        val view: View? = currentFocus
+        view?.let {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+
 }
