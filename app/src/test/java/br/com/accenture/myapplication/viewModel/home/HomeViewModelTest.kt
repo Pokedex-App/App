@@ -16,10 +16,7 @@ import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -39,6 +36,7 @@ class HomeViewModelTest {
     private lateinit var observerEntries: Observer<ArrayList<PokedexEntries>>
     private lateinit var observerTypes: Observer<PokemonTypes>
     private lateinit var observerTypesList: Observer<ArrayList<PokedexTypesFromPokemon>>
+    private lateinit var observerNameList: Observer<ArrayList<String>>
     private val dispatcher = TestCoroutineDispatcher()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -56,6 +54,7 @@ class HomeViewModelTest {
         observerEntries = mockk(relaxed = true)
         observerTypes = mockk(relaxed = true)
         observerTypesList = mockk(relaxed = true)
+        observerNameList = mockk(relaxed = true)
         Dispatchers.setMain(dispatcher)
     }
 
@@ -175,39 +174,40 @@ class HomeViewModelTest {
         assertEquals(viewModel.listPokedexEntriesLiveData.value, listPokemonsOut)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `When I Cry`() = runBlockingTest {
+    fun `When requesting a list of pokemon types, should insert the name of the pokemon in a livedata and in another livedata the type of that pokemon`() = runBlockingTest {
+        // When running the test, comment the HomeViewModel's Log.i
         viewModel.listPokedexTypesLiveData.observeForever(observerTypesList)
+        viewModel.listNamePokemons.observeForever(observerNameList)
 
-        coEvery { arrayListOf(repository.getPokedexType("1")) } returns
-                arrayListOf(
-                    PokedexTypesFromPokemon(
-                        arrayListOf(
-                            PokemonTypesFromPokemon(
-                                PokemonTypeList(
-                                    "bulbassaur"
-                                )
-                            )
-                        ),
-                        "1"
-                    )
-                )
+        val pokemonName = "bulbasaur"
+        val firstPokemon = arrayListOf(
+            PokedexEntries(
+                1,
+                PokedexSpecies(pokemonName, "https://pokeapi.co/api/v2/pokemon-species/1/")
+            )
+        )
+        val pokemonType = PokedexTypesFromPokemon(
+            arrayListOf(PokemonTypesFromPokemon(PokemonTypeList(pokemonName))),
+            "1"
+        )
 
+        coEvery { repository.getPokedexType(pokemonName) } returns pokemonType
+
+        viewModel.setLiveEntries(firstPokemon)
         viewModel.getPokedexTypesList()
 
         coVerify {
+            observerNameList.onChanged(
+                arrayListOf(
+                    pokemonName
+                )
+            )
+
             observerTypesList.onChanged(
                 arrayListOf(
-                    PokedexTypesFromPokemon(
-                        arrayListOf(
-                            PokemonTypesFromPokemon(
-                                PokemonTypeList(
-                                    "bulbassaur"
-                                )
-                            )
-                        ),
-                        "1"
-                    )
+                    pokemonType
                 )
             )
         }

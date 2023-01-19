@@ -13,9 +13,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
 import s8u.studies.myapplication.databinding.ModalErrorBinding
@@ -96,12 +94,12 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         viewModel.listPokedexEntriesLiveData.observe(this) {
             viewModel.getActualEntriesList()
         }
-        viewModel.ActualListEntriesLiveData.observe(this){
+        viewModel.actualListEntriesLiveData.observe(this){
             viewModel.getPokedexTypesList()
         }
 
         viewModel.listPokedexTypesLiveData.observe(this) {
-            val actualListPokedexEntries = viewModel.ActualListEntriesLiveData.value
+            val actualListPokedexEntries = viewModel.actualListEntriesLiveData.value
             val typeList = viewModel.listPokedexTypesLiveData.value
             val entriesAndTypeList = Pair(actualListPokedexEntries, typeList)
             recyclerView.adapter = ListPokedexAdapter(
@@ -127,7 +125,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
                 val position = getPositionPokemon(binding.inputLayout.text.toString())
                 if (position != -1) {
                     onClickPokedex(
-                        viewModel.ActualListEntriesLiveData.value!![position],
+                        viewModel.actualListEntriesLiveData.value!![position],
                         viewModel.listPokedexTypesLiveData.value!![position]
                     )
                     return@setOnKeyListener true
@@ -215,8 +213,8 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun getPositionPokemon(namePokemon: String): Int {
-        for (i in 0 until viewModel.ActualListEntriesLiveData.value!!.size) {
-            if (viewModel.ActualListEntriesLiveData.value!![i].pokedexSpecies.pokemonName == namePokemon) {
+        for (i in 0 until viewModel.actualListEntriesLiveData.value!!.size) {
+            if (viewModel.actualListEntriesLiveData.value!![i].pokedexSpecies.pokemonName == namePokemon) {
                 return i
             }
         }

@@ -8,4 +8,13 @@ open class PokedexTypes(
     var typeList: ArrayList<PokemonTypes>,
     @SerializedName("id")
     var id: String
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return String.format(
+            """
+                id: %s | type: %s
+            """.trimIndent(),
+            id, typeList
+        )
+    }
+}
