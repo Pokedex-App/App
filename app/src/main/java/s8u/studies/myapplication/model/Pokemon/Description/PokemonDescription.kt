@@ -5,7 +5,7 @@ import s8u.studies.myapplication.model.Pokemon.PokemonEvolutions
 
 data class PokemonDescription(
     @SerializedName("flavor_text_entries")
-    var DescriptionList: ArrayList<PokemonDescriptionOfficial>,
+    var descriptionList: ArrayList<PokemonDescriptionOfficial>,
     @SerializedName("evolves_from_species")
     var pastEvolution: PokemonEvolutions?
 )

@@ -1,6 +1,7 @@
 package s8u.studies.myapplication.model
 
 import s8u.studies.myapplication.model.Pokemon.*
+import s8u.studies.myapplication.model.Pokemon.Description.PokemonDescription
 import s8u.studies.myapplication.model.Pokemon.Description.PokemonDescriptionOfficial
 import s8u.studies.myapplication.model.Pokemon.abilities.PokemonMoves
 
@@ -31,8 +32,10 @@ class PokemonData(
                 typeList: %s
                 image: %s
                 moves: %s
+                pastEvolution: %s
+                description: %s
             """.trimIndent(),
-            id, name, height, weight, typeList, imgList, movesList
+            id, name, height, weight, typeList, imgList, movesList, pastEvolution, descriptionList
         )
     }
 }

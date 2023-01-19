@@ -41,7 +41,7 @@ class DescriptionViewModel (private val repository: DescriptionRepository) : Vie
                     poke.imgList,
                     poke.movesList,
                     pokeDesc.pastEvolution,
-                    pokeDesc.DescriptionList
+                    pokeDesc.descriptionList
                 )
             )
         }

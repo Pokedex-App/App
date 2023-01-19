@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import junit.framework.Assert
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -96,12 +95,11 @@ class DescriptionViewModelTest {
         )
 
         coEvery { repository.getPokemon("1") } returns poke
-
         coEvery { repository.getPokemonDesc("1") } returns pokeDesc
 
         viewModel.getPokemonDescription("1", "1", "151")
 
-        verify {
+        coVerify {
             observerPokemon.onChanged(
                 PokemonData(
                     poke.id,
@@ -112,7 +110,7 @@ class DescriptionViewModelTest {
                     poke.imgList,
                     poke.movesList,
                     pokeDesc.pastEvolution,
-                    pokeDesc.DescriptionList
+                    pokeDesc.descriptionList
                 )
             )
         }
