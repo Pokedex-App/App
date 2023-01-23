@@ -42,7 +42,7 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         }
     }
 
-    fun getActualEntriesList(){
+    fun getActualEntriesList() {
         _actualListEntriesLiveData.postValue(listPokedexEntriesLiveData.value)
     }
 
@@ -112,7 +112,7 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         else _loadingPokeballFalse.postValue(Unit)
     }
 
-     fun unfilterList(){
-      _actualListEntriesLiveData.value = listPokedexEntriesLiveData.value
+    fun unFilterList() {
+        _actualListEntriesLiveData.value = listPokedexEntriesLiveData.value
     }
 }
