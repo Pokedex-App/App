@@ -13,6 +13,9 @@
     <dimen name="image_loading">
         120dp
     </dimen>
+    <dimen name="image_filter">
+        50dp
+    </dimen>
 
     <dimen name="type_size">
         40dp

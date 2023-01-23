@@ -56,6 +56,10 @@
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_bug"
                 android:scaleType="fitCenter"
+                android:background="@drawable/highlight"
+                android:elevation="40dp"
+                android:outlineSpotShadowColor="@color/red"
+                android:outlineAmbientShadowColor="@color/red"
                 android:src="@drawable/bug" />
 
             <ImageView

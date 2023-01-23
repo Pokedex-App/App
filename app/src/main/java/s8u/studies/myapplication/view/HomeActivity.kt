@@ -3,17 +3,18 @@ package s8u.studies.myapplication.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier._q
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
 import s8u.studies.myapplication.databinding.ModalErrorBinding
@@ -63,10 +64,6 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
                 }
             }
         }
-        viewModel.listPokedexTypesLiveData.observe(this) {
-            val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
-            recyclerView.adapter!!.notifyDataSetChanged()
-        }
         viewModel.listNamePokemons.observe(this) {
             autoCompleteInput()
             getValueEditText()
@@ -94,7 +91,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         viewModel.listPokedexEntriesLiveData.observe(this) {
             viewModel.getActualEntriesList()
         }
-        viewModel.actualListEntriesLiveData.observe(this){
+        viewModel.actualListEntriesLiveData.observe(this) {
             viewModel.getPokedexTypesList()
         }
 
@@ -162,42 +159,64 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun setOnClick() {
-        binding.bugImg.setOnClickListener { filterByType("7") }
-        binding.darkImg.setOnClickListener { filterByType("17") }
-        binding.dragonImg.setOnClickListener { filterByType("16") }
-        binding.electricImg.setOnClickListener { filterByType("13") }
-        binding.fightingImg.setOnClickListener { filterByType("2") }
-        binding.fairyImg.setOnClickListener { filterByType("18") }
-        binding.fireImg.setOnClickListener { filterByType("10") }
-        binding.flyingImg.setOnClickListener { filterByType("3") }
-        binding.ghostImg.setOnClickListener { filterByType("8") }
-        binding.grassImg.setOnClickListener { filterByType("12") }
-        binding.groundImg.setOnClickListener { filterByType("5") }
-        binding.iceImg.setOnClickListener { filterByType("15") }
-        binding.normalImg.setOnClickListener { filterByType("1") }
-        binding.poisonImg.setOnClickListener { filterByType("4") }
-        binding.psychicImg.setOnClickListener { filterByType("14") }
-        binding.rockImg.setOnClickListener { filterByType("6") }
-        binding.steelImg.setOnClickListener { filterByType("9") }
-        binding.waterImg.setOnClickListener { filterByType("11") }
+        binding.bugImg.setOnClickListener { filterByType("7");highLight(binding.bugImg) }
+        binding.darkImg.setOnClickListener { filterByType("17");highLight(binding.darkImg) }
+        binding.dragonImg.setOnClickListener { filterByType("16");highLight(binding.dragonImg) }
+        binding.electricImg.setOnClickListener { filterByType("13");highLight(binding.electricImg) }
+        binding.fightingImg.setOnClickListener { filterByType("2");highLight(binding.fightingImg) }
+        binding.fairyImg.setOnClickListener { filterByType("18");highLight(binding.fairyImg) }
+        binding.fireImg.setOnClickListener { filterByType("10");highLight(binding.fireImg) }
+        binding.flyingImg.setOnClickListener { filterByType("3");highLight(binding.flyingImg) }
+        binding.ghostImg.setOnClickListener { filterByType("8");highLight(binding.ghostImg) }
+        binding.grassImg.setOnClickListener { filterByType("12");highLight(binding.grassImg) }
+        binding.groundImg.setOnClickListener { filterByType("5");highLight(binding.groundImg) }
+        binding.iceImg.setOnClickListener { filterByType("15");highLight(binding.iceImg) }
+        binding.normalImg.setOnClickListener { filterByType("1");highLight(binding.normalImg) }
+        binding.poisonImg.setOnClickListener { filterByType("4");highLight(binding.poisonImg) }
+        binding.psychicImg.setOnClickListener { filterByType("14");highLight(binding.psychicImg) }
+        binding.rockImg.setOnClickListener { filterByType("6");highLight(binding.rockImg) }
+        binding.steelImg.setOnClickListener { filterByType("9");highLight(binding.steelImg) }
+        binding.waterImg.setOnClickListener { filterByType("11");highLight(binding.waterImg) }
         binding.removeFilter.setOnClickListener {
             inFilter = 0
             binding.removeFilter.visibility = View.INVISIBLE
-            viewModel.unfilterList()
+            highLight(null)
+            viewModel.unFilterList()
             viewModel.setLoadingState(true)
-            binding.RecyclerView.adapter!!.notifyDataSetChanged()
-            Handler().postDelayed({
-                viewModel.setLoadingState(false)
-            }, 7500)
-       }
+        }
         toolbar.setNavigationOnClickListener { onBackPressed();recreate() }
+    }
+
+    private fun highLight(image: ImageView?) {
+        val list = arrayListOf(
+            binding.bugImg,
+            binding.darkImg,
+            binding.dragonImg,
+            binding.electricImg,
+            binding.fightingImg,
+            binding.fairyImg,
+            binding.fireImg,
+            binding.flyingImg,
+            binding.ghostImg,
+            binding.grassImg,
+            binding.groundImg,
+            binding.iceImg,
+            binding.normalImg,
+            binding.poisonImg,
+            binding.psychicImg,
+            binding.rockImg,
+            binding.steelImg,
+            binding.waterImg
+        )
+        for (i in 0 until list.size) {
+            if (list[i] != image) list[i].setBackgroundResource(0)
+            else list[i].setBackgroundResource(R.drawable.highlight)
+        }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokedexTypes) {
         val typeList = viewModel.listPokedexTypesLiveData.value!!
-
-
-         closeKeyBoard()
+        closeKeyBoard()
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexTypes.id)
         intent.putExtra("firstPokemon", typeList[0].id)
@@ -228,6 +247,4 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-
-
 }
