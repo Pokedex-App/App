@@ -14,7 +14,10 @@
         120dp
     </dimen>
     <dimen name="image_filter">
-        50dp
+        58dp
+    </dimen>
+    <dimen name="image_filter_padding">
+        16dp
     </dimen>
 
     <dimen name="type_size">

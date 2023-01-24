@@ -101,9 +101,15 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
 
         binding.textViewNamePokemon.text = api!!.name
         binding.textViewHeight.text =
-            Html.fromHtml("<b>Height</b> ${(api.height.toDouble() / 10)} m",Html.FROM_HTML_MODE_LEGACY)
+            Html.fromHtml(
+                "<b>Height</b> ${(api.height.toDouble() / 10)} m",
+                Html.FROM_HTML_MODE_LEGACY
+            )
         binding.textViewWeight.text =
-            Html.fromHtml("<b>Weight</b> ${(api.weight.toDouble() / 10)} kg",Html.FROM_HTML_MODE_LEGACY)
+            Html.fromHtml(
+                "<b>Weight</b> ${(api.weight.toDouble() / 10)} kg",
+                Html.FROM_HTML_MODE_LEGACY
+            )
         binding.textViewDescription.text = api.descriptionList[0].description.replace("\n", " ")
         binding.imageView.load(api.imgList.imgList.type.urlImg)
 
@@ -141,21 +147,22 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
     }
 
     override fun onClickAbility(ability: PokemonMoves) {
-        showDialogAbility(ability)
+        val dialogBinding: ModalPokemonBinding =
+            ModalPokemonBinding.inflate(LayoutInflater.from(this))
+        showDialogAbility(dialogBinding, ability)
+        visibilityModal(dialogBinding, View.VISIBLE, View.INVISIBLE)
     }
 
-    private fun showDialogAbility(ability: PokemonMoves) {
+    private fun showDialogAbility(dialogBinding: ModalPokemonBinding, ability: PokemonMoves) {
         val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
-        val dialogBinding: ModalPokemonBinding = ModalPokemonBinding
-            .inflate(LayoutInflater.from(this))
 
         dialogBinding.buttonClose.setOnClickListener { dialog.dismiss() }
         dialogBinding.buttonClose.isClickable = false
+        dialogBinding.textViewTitleNameAbility.text = ability.move.moveName
         build.setView(dialogBinding.root)
         dialog = build.create()
         dialog.show()
 
-        dialogBinding.textViewTitleNameAbility.text = ability.move.moveName
         viewModel.getAbilityInformation(ability.move.moveName)
         viewModel.abilityInformationPokemon.observe(this) {
             if (it.power == null) it.power = 0
@@ -165,7 +172,23 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
             dialogBinding.textViewTypeAbility.text = it.type.nameType
             dialogBinding.textViewDamageAbility.text = it.damage.nameDamage
             dialogBinding.buttonClose.isClickable = true
+            visibilityModal(dialogBinding, View.INVISIBLE, View.VISIBLE)
         }
+    }
+
+    private fun visibilityModal(
+        dialogBinding: ModalPokemonBinding,
+        loading: Int,
+        information: Int
+    ) {
+        dialogBinding.textViewLabelType.visibility = information
+        dialogBinding.textViewTypeAbility.visibility = information
+        dialogBinding.textViewLabelPower.visibility = information
+        dialogBinding.textViewPowerAbility.visibility = information
+        dialogBinding.textViewLabelDamage.visibility = information
+        dialogBinding.textViewDamageAbility.visibility = information
+        dialogBinding.textViewDescriptionAbility.visibility = information
+        dialogBinding.progressBar.visibility = loading
     }
 
     private fun visibilityLayout(loading: Int, information: Int) {
