@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier._q
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityHomeBinding
 import s8u.studies.myapplication.databinding.ModalErrorBinding
@@ -38,6 +37,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
         pokedexItemObjects(intent.getIntExtra("regionID", 2))
         setObserversLoading()
         setOnClick()
+        highLight(null)
     }
 
     private fun setObserversLoading() {
@@ -60,7 +60,6 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
                 )
                 if (i == listFilterPokedex.pokedexSpecies.size - 1) {
                     viewModel.setLiveEntries(listFiltered)
-                    viewModel.getPokedexTypesList()
                 }
             }
         }
@@ -152,10 +151,10 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
     }
 
     private fun filterByType(id: String) {
-        closeKeyBoard()
-        viewModel.getPokedexFilteredList(id)
         inFilter = 1
+        viewModel.getPokedexFilteredList(id)
         viewModel.setLoadingState(true)
+        closeKeyBoard()
     }
 
     private fun setOnClick() {
@@ -181,14 +180,14 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             inFilter = 0
             binding.removeFilter.visibility = View.INVISIBLE
             highLight(null)
-            viewModel.unFilterList()
+            viewModel.getActualEntriesList()
             viewModel.setLoadingState(true)
         }
         toolbar.setNavigationOnClickListener { onBackPressed();recreate() }
     }
 
     private fun highLight(image: ImageView?) {
-        val list = arrayListOf(
+        val listImageView = arrayListOf(
             binding.bugImg,
             binding.darkImg,
             binding.dragonImg,
@@ -208,26 +207,27 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             binding.steelImg,
             binding.waterImg
         )
-        for (i in 0 until list.size) {
-            if (list[i] != image) list[i].setBackgroundResource(0)
-            else list[i].setBackgroundResource(R.drawable.highlight)
+        for (i in 0 until listImageView.size) {
+            if (listImageView[i] != image) listImageView[i].setBackgroundResource(0)
+            else listImageView[i].setBackgroundResource(R.drawable.highlight)
         }
     }
 
     override fun onClickPokedex(pokedexEntries: PokedexEntries, pokedexTypes: PokedexTypes) {
         val typeList = viewModel.listPokedexTypesLiveData.value!!
-        closeKeyBoard()
         val intent = Intent(this, DescriptionActivity::class.java)
         intent.putExtra("id", pokedexTypes.id)
         intent.putExtra("firstPokemon", typeList[0].id)
-        Log.i("INTENT", typeList[0].id)
         val b = Bundle()
         b.putSerializable("listOrder", typeList)
         intent.putExtra("listOrder", b)
         intent.putExtra("position", typeList.indexOf(pokedexTypes))
         intent.putExtra("lastPokemon", typeList[typeList.size - 1].id)
+
+        Log.i("INTENT", typeList[0].id)
         Log.i("INTENT", typeList[typeList.size - 1].id)
 
+        closeKeyBoard()
         startActivity(intent)
     }
 

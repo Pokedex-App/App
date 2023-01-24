@@ -111,8 +111,4 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         if (isVisible) _loadingPokeballTrue.postValue(Unit)
         else _loadingPokeballFalse.postValue(Unit)
     }
-
-    fun unFilterList() {
-        _actualListEntriesLiveData.value = listPokedexEntriesLiveData.value
-    }
 }

@@ -34,6 +34,7 @@ class HomeViewModelTest {
     private lateinit var repository: PokedexRepository
     private lateinit var viewModel: HomeViewModel
     private lateinit var observerEntries: Observer<ArrayList<PokedexEntries>>
+    private lateinit var observerActualList: Observer<ArrayList<PokedexEntries>>
     private lateinit var observerTypes: Observer<PokemonTypes>
     private lateinit var observerTypesList: Observer<ArrayList<PokedexTypesFromPokemon>>
     private lateinit var observerNameList: Observer<ArrayList<String>>
@@ -52,6 +53,7 @@ class HomeViewModelTest {
         )
         viewModel = HomeViewModel(repository)
         observerEntries = mockk(relaxed = true)
+        observerActualList = mockk(relaxed = true)
         observerTypes = mockk(relaxed = true)
         observerTypesList = mockk(relaxed = true)
         observerNameList = mockk(relaxed = true)
@@ -94,6 +96,37 @@ class HomeViewModelTest {
                 )
             )
         }
+    }
+
+    @Test
+    fun `When the function get Actual Entries List is called, should store in a livedata the list of another livedata`() {
+        val entries = Pokedex(
+            arrayListOf(
+                PokedexEntries(
+                    1,
+                    PokedexSpecies(
+                        "bulbassaur",
+                        "https://pokeapi.co/api/v2/pokemon-species/1/"
+                    )
+                )
+            )
+        )
+        val actual = arrayListOf(
+            PokedexEntries(
+                1,
+                PokedexSpecies(
+                    "bulbassaur",
+                    "https://pokeapi.co/api/v2/pokemon-species/1/"
+                )
+            )
+        )
+
+        coEvery { repository.getPokedex("1") } returns entries
+
+        viewModel.getPokedexEntriesList(1)
+        viewModel.getActualEntriesList()
+
+        assertEquals(viewModel.actualListEntriesLiveData.value, actual)
     }
 
     @Test
@@ -176,46 +209,46 @@ class HomeViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `When requesting a list of pokemon types, should insert the name of the pokemon in a livedata and in another livedata the type of that pokemon`() = runBlockingTest {
-        // When running the test, comment the HomeViewModel's Log.i
-        viewModel.listPokedexTypesLiveData.observeForever(observerTypesList)
-        viewModel.listNamePokemons.observeForever(observerNameList)
+    fun `When requesting a list of pokemon types, should insert the name of the pokemon in a livedata and in another livedata the type of that pokemon`() =
+        runBlockingTest {
+            // When running the test, comment the HomeViewModel's Log.i
+            viewModel.listPokedexTypesLiveData.observeForever(observerTypesList)
+            viewModel.listNamePokemons.observeForever(observerNameList)
 
-        val pokemonName = "bulbasaur"
-        val firstPokemon = arrayListOf(
-            PokedexEntries(
-                1,
-                PokedexSpecies(pokemonName, "https://pokeapi.co/api/v2/pokemon-species/1/")
-            )
-        )
-        val pokemonType = PokedexTypesFromPokemon(
-            arrayListOf(PokemonTypesFromPokemon(PokemonTypeList(pokemonName))),
-            "1"
-        )
-
-        coEvery { repository.getPokedexType(pokemonName) } returns pokemonType
-
-        viewModel.setLiveEntries(firstPokemon)
-        viewModel.getPokedexTypesList()
-
-        coVerify {
-            observerNameList.onChanged(
-                arrayListOf(
-                    pokemonName
+            val pokemonName = "bulbasaur"
+            val firstPokemon = arrayListOf(
+                PokedexEntries(
+                    1,
+                    PokedexSpecies(pokemonName, "https://pokeapi.co/api/v2/pokemon-species/1/")
                 )
             )
-
-            observerTypesList.onChanged(
-                arrayListOf(
-                    pokemonType
-                )
+            val pokemonType = PokedexTypesFromPokemon(
+                arrayListOf(PokemonTypesFromPokemon(PokemonTypeList(pokemonName))),
+                "1"
             )
+
+            coEvery { repository.getPokedexType(pokemonName) } returns pokemonType
+
+            viewModel.setLiveEntries(firstPokemon)
+            viewModel.getPokedexTypesList()
+
+            coVerify {
+                observerNameList.onChanged(
+                    arrayListOf(
+                        pokemonName
+                    )
+                )
+
+                observerTypesList.onChanged(
+                    arrayListOf(
+                        pokemonType
+                    )
+                )
+            }
         }
-    }
 
     @Test
     fun `When a certain API name is pulled, if you enter the conditional, should change the name`() {
-        val pokemonName = "tornadus-incarnate"
         val pokemon = PokedexEntries(
             id = 641,
             PokedexSpecies(
@@ -223,6 +256,7 @@ class HomeViewModelTest {
                 url = "https://pokeapi.co/api/v2/pokemon/641"
             )
         )
+        val pokemonName = "tornadus-incarnate"
 
         viewModel.solveApiProblems(pokemon)
 
