@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import s8u.studies.myapplication.R
@@ -208,8 +209,9 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             binding.waterImg
         )
         for (i in 0 until listImageView.size) {
-            if (listImageView[i] != image) listImageView[i].setBackgroundResource(0)
-            else listImageView[i].setBackgroundResource(R.drawable.highlight)
+            if (listImageView[i] != image) {
+                listImageView[i].setBackgroundResource(0);listImageView[i].setPadding(0)
+            } else listImageView[i].setBackgroundResource(R.drawable.highlight)
         }
     }
 
