@@ -41,31 +41,29 @@
     <HorizontalScrollView
         android:id="@+id/scrollView_filter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:layout_margin="@dimen/margin"
         app:layout_constraintTop_toBottomOf="@+id/textView_title_filter">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="64dp"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/bugImg"
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
-                android:background="@drawable/highlight"
                 android:contentDescription="@string/type_bug"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
-                android:src="@drawable/bug" />
+                android:scaleType="fitCenter"
+                android:background="@drawable/highlight"
+                android:src="@drawable/bug"/>
 
             <ImageView
                 android:id="@+id/darkImg"
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_dark"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/dark" />
 
@@ -74,18 +72,14 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_dragon"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
-                android:src="@drawable/dragon" />
+                android:src="@drawable/dragon"/>
 
             <ImageView
                 android:id="@+id/electricImg"
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_electric"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/electric" />
 
@@ -94,8 +88,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_fairy"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/fairy" />
 
@@ -104,8 +96,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_fighting"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/fighting" />
 
@@ -114,8 +104,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_fire"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/fire" />
 
@@ -124,8 +112,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_flying"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flying" />
 
@@ -134,8 +120,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_ghost"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ghost" />
 
@@ -144,8 +128,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_grass"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/grass" />
 
@@ -154,8 +136,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_ground"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ground" />
 
@@ -164,8 +144,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_ice"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ice" />
 
@@ -174,8 +152,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_normal"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/normal" />
 
@@ -184,8 +160,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_poison"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/poison" />
 
@@ -194,8 +168,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_psychic"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/psychic" />
 
@@ -204,8 +176,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_rock"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/rock" />
 
@@ -214,8 +184,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_steel"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/steel" />
 
@@ -224,8 +192,6 @@
                 android:layout_width="@dimen/image_filter"
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_water"
-                android:paddingStart="@dimen/image_filter_padding"
-                android:paddingEnd="@dimen/image_filter_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/water" />
 
