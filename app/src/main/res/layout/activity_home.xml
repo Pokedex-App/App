@@ -56,7 +56,6 @@
                 android:layout_height="@dimen/image_filter"
                 android:contentDescription="@string/type_bug"
                 android:scaleType="fitCenter"
-                android:background="@drawable/highlight"
                 android:src="@drawable/bug"/>
 
             <ImageView
