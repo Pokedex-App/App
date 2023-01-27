@@ -1,8 +1,13 @@
 package br.com.accenture.maps.viewModel
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import androidx.core.graphics.scale
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.GoogleMap
@@ -15,20 +20,16 @@ class MapsViewModel() : ViewModel() {
     var pokemonPopulation = 0
 
     fun randomNearLocation(location: LatLng,randomGenerator:Random):LatLng {
-
-        var latitude = 0.0
-        var longitude = 0.0
-
-        if (randomGenerator.nextBoolean()) {
-            latitude = location.latitude - randomGenerator.nextDouble(0.0005, 0.001)
+        var latitude = if (randomGenerator.nextBoolean()) {
+            location.latitude - randomGenerator.nextDouble(0.0005, 0.001)
         } else {
-            latitude = location.latitude + randomGenerator.nextDouble(0.0005, 0.001)
+            location.latitude + randomGenerator.nextDouble(0.0005, 0.001)
         }
 
-        if (randomGenerator.nextBoolean()) {
-            longitude = location.longitude - randomGenerator.nextDouble(0.0005, 0.001)
+        var longitude = if (randomGenerator.nextBoolean()) {
+            location.longitude - randomGenerator.nextDouble(0.0005, 0.001)
         } else {
-            longitude = location.longitude + randomGenerator.nextDouble(0.0005, 0.001)
+            location.longitude + randomGenerator.nextDouble(0.0005, 0.001)
         }
 
         return LatLng(latitude, longitude)
@@ -38,13 +39,29 @@ class MapsViewModel() : ViewModel() {
         return randomGenerator.nextInt(1, 150)
     }
 
-     fun bpmConvertor(url: String): Bitmap {
+    fun bpmConvertor(url: String): Bitmap {
         val urla = URL(url)
 
-        var img = BitmapFactory.decodeStream(urla.openConnection().getInputStream())
+        return BitmapFactory.decodeStream(urla.openConnection().getInputStream())
             .scale(300, 300, false)
+    }
 
-        return img
+    fun verifyPermission(permissionFine: Int, permissionCoarse: Int, permissionGranted: Int, behavior: () -> Unit) {
+        if (permissionFine != permissionGranted && permissionCoarse != permissionGranted) behavior()
+    }
+
+    fun verifyLocation(location: Location, behavior: () -> Unit) {
+        if (location != null) behavior()
+    }
+
+    fun verifyPopulation(size: Int, behavior: () -> Unit, elseBehavior: () -> Unit) {
+        if (size > 3) behavior()
+        else elseBehavior()
+    }
+
+    fun wasClicked(isClicked: Boolean, behavior: () -> Unit, elseBehavior: () -> Unit) {
+        if (isClicked) behavior()
+        else elseBehavior()
     }
 }
 

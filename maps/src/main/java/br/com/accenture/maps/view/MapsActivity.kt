@@ -1,12 +1,16 @@
 package br.com.accenture.maps.view
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.StrictMode
+import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import br.com.accenture.maps.R
@@ -19,10 +23,6 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
-import java.util.*
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
 import kotlin.random.Random
 
 
@@ -51,6 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+        onClickFloatingButton()
     }
 
     private fun setKoinUp() {
@@ -72,38 +73,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun setUpMap() {
-
         val task = fusedLocationProviderClient.lastLocation
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
+        viewModel.verifyPermission(
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION),
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION),
+            PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 101
             )
-            return
+            return@verifyPermission
         }
         mMap.isMyLocationEnabled = true
 
         task.addOnSuccessListener(this) {
-            if (it != null) {
+            viewModel.verifyLocation(it) {
                 currentLocation = it
                 val currentLatLong = LatLng(it.latitude, it.longitude)
                 mMap.addMarker(
                     MarkerOptions()
                         .position(currentLatLong)
                         .title("My Position")
-                )!!
-                    .setIcon(
-                        BitmapDescriptorFactory.fromResource(R.drawable.red)
-                    )
+                )!!.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.red))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLong))
-
-
                 mMap.setOnMapLoadedCallback {
                     val cameraPosition = CameraPosition.builder()
                         .target(currentLatLong)
@@ -111,16 +106,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .bearing(90f)
                         .tilt(70f)
                         .build()
-
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
-                 val handler = Handler()
-                handler.postDelayed(object:Runnable{
-                    override fun run(){
-                            setUpPoke(currentLatLong)
-                            handler.postDelayed(this,randomGenerator.nextLong(3000,20000))
+                val handler = Handler()
+                handler.postDelayed(object : Runnable {
+                    override fun run() {
+                        setUpPoke(currentLatLong)
+                        handler.postDelayed(this, randomGenerator.nextLong(3000, 20000))
                     }
-                },0)
+                }, 0)
             }
         }
 
@@ -128,31 +122,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun setUpPoke(currentLatLong: LatLng) {
         runOnUiThread {
-            if (viewModel.pokemonPopulation > 3) {
-                viewModel.pokemonPopulation = 0
-
-                mMap.clear()
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(currentLatLong)
-                        .title("My Position")
-                )!!
-                    .setIcon(
-                        BitmapDescriptorFactory.fromResource(R.drawable.red)
-                    )
-            } else {
-                viewModel.pokemonPopulation ++
-
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(
+            viewModel.verifyPopulation(
+                viewModel.pokemonPopulation,
+                {
+                    viewModel.pokemonPopulation = 0
+                    mMap.clear()
+                    mMap.addMarker(
+                        MarkerOptions()
+                            .position(currentLatLong)
+                            .title("My Position")
+                    )!!.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.red))
+                },
+                {
+                    viewModel.pokemonPopulation++
+                    mMap.addMarker(
+                        MarkerOptions().position(
                             viewModel.randomNearLocation(
                                 currentLatLong,
                                 randomGenerator
                             )
                         )
-                )!!
-                    .setIcon(
+                    )!!.setIcon(
                         BitmapDescriptorFactory.fromBitmap(
                             viewModel.bpmConvertor(
                                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
@@ -163,7 +153,50 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                         )
                     )
-            }
+                }
+            )
+        }
+    }
+
+    private var flag = false
+    private fun onClickFloatingButton() {
+        binding.floatingActionButtonMenu.setOnClickListener {
+            flag = !flag
+            viewModel.wasClicked(
+                flag,
+                {
+                    binding.floatingActionButtonPokedex.apply {
+                        alpha = 0f
+                        visibility = View.VISIBLE
+                        animate()
+                            .alpha(1f)
+                            .setDuration(300)
+                            .setListener(null)
+                    }
+                    binding.floatingActionButtonMenu.animate()
+                        .rotation(45f)
+                        .withLayer()
+                        .setDuration(400)
+                        .setInterpolator(OvershootInterpolator())
+                        .start()
+                },
+                {
+                    binding.floatingActionButtonPokedex.animate()
+                        .alpha(0F)
+                        .setDuration(300)
+                        .setListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                binding.floatingActionButtonPokedex.visibility = View.GONE
+                            }
+                        })
+                    binding.floatingActionButtonMenu.animate()
+                        .rotation(0f)
+                        .withLayer()
+                        .setDuration(400)
+                        .setInterpolator(OvershootInterpolator())
+                        .start()
+                }
+            )
         }
     }
 }
