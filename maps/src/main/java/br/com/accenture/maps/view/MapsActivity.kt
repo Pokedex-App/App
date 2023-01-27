@@ -21,6 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.Task
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 import kotlin.random.Random
@@ -62,31 +63,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isCompassEnabled = false
+        mMap.uiSettings.isZoomControlsEnabled = false
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
         mMap.setMaxZoomPreference(20f)
-        mMap.setMinZoomPreference(17f)
+        mMap.setMinZoomPreference(19f)
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.custom_map))
         setUpMap()
     }
 
     @SuppressLint("MissingPermission")
     private fun setUpMap() {
-        val task = fusedLocationProviderClient.lastLocation
-
         viewModel.verifyPermission(
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION),
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION),
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                101
-            )
-            return@verifyPermission
-        }
+            PackageManager.PERMISSION_GRANTED,
+            {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    101
+                )
+                return@verifyPermission
+            }, { configScreen() }
+        )
+    }
+
+    private fun configScreen() {
+        val task = fusedLocationProviderClient.lastLocation
         mMap.isMyLocationEnabled = true
 
         task.addOnSuccessListener(this) {
@@ -117,7 +121,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }, 0)
             }
         }
-
     }
 
     fun setUpPoke(currentLatLong: LatLng) {

@@ -46,8 +46,15 @@ class MapsViewModel() : ViewModel() {
             .scale(300, 300, false)
     }
 
-    fun verifyPermission(permissionFine: Int, permissionCoarse: Int, permissionGranted: Int, behavior: () -> Unit) {
+    fun verifyPermission(
+        permissionFine: Int,
+        permissionCoarse: Int,
+        permissionGranted: Int,
+        behavior: () -> Unit,
+        elseBehavior: () -> Unit
+    ) {
         if (permissionFine != permissionGranted && permissionCoarse != permissionGranted) behavior()
+        else elseBehavior()
     }
 
     fun verifyLocation(location: Location, behavior: () -> Unit) {
