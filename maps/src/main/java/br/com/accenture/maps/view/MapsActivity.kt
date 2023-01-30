@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -21,7 +22,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.Task
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 import kotlin.random.Random
@@ -175,6 +175,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             .alpha(1f)
                             .setDuration(300)
                             .setListener(null)
+                        setOnClickListener {
+                            val intent = Intent()
+                            intent.setClassName(this@MapsActivity, "s8u.studies.myapplication.view.MenuActivity")
+                            startActivity(intent)
+                        }
                     }
                     binding.floatingActionButtonMenu.animate()
                         .rotation(45f)
@@ -185,7 +190,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 },
                 {
                     binding.floatingActionButtonPokedex.animate()
-                        .alpha(0F)
+                        .alpha(0f)
                         .setDuration(300)
                         .setListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator) {
