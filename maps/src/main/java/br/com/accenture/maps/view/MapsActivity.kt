@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -175,11 +176,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             .alpha(1f)
                             .setDuration(300)
                             .setListener(null)
-                        setOnClickListener {
-                            val intent = Intent()
-                            intent.setClassName(this@MapsActivity, "s8u.studies.myapplication.view.MenuActivity")
-                            startActivity(intent)
-                        }
                     }
                     binding.floatingActionButtonMenu.animate()
                         .rotation(45f)
@@ -205,6 +201,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .start()
                 }
             )
+        }
+        binding.floatingActionButtonPokedex.setOnClickListener{
+                val intent = Intent(Intent.ACTION_MAIN)
+                 intent.setComponent(ComponentName("s8u.studies.myapplication","s8u.studies.myapplication.view.MenuActivity"))
+                startActivity(intent)
         }
     }
 }

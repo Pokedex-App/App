@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.stopKoin
 import s8u.studies.myapplication.R
 import s8u.studies.myapplication.databinding.ActivityDescriptionBinding
 import s8u.studies.myapplication.databinding.ModalPokemonBinding
@@ -64,7 +63,6 @@ class DescriptionActivity : AppCompatActivity(), ListAbilitiesAdapter.OnListener
 
     private fun onClick() {
         toolbar.setNavigationOnClickListener {
-            stopKoin()
             onBackPressed()
         }
         nextButton.setOnClickListener {
