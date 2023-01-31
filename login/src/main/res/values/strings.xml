@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Login</string>
+    <string name="image_logo">Logo Pokeball</string>
+    <string name="title_login">Log in</string>
+    <string name="title_signUp">Create account</string>
+    <string name="subtitle_login">And keeping capturing</string>
+    <string name="subtitle_signUp">And start playing</string>
+
+    <string name="input_email">Email</string>
+    <string name="input_password">Password</string>
+    <string name="input_confirm_password">Confirm password</string>
+    <string name="input_name">Full name</string>
+    <string name="input_character_gender">Character gender</string>
+
+    <array name="character_gender">
+        <item>Female</item>
+        <item>Male</item>
+    </array>
+
+    <string name="new_account">Need an account? <b>sign up</b></string>
+    <string name="has_account">Already has an account? <b>Log in</b></string>
+
+    <string name="input_error">Must be at least 8 characters</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_size">40sp</dimen>
+    <dimen name="subtitle_size">16sp</dimen>
+    <dimen name="button_size">16sp</dimen>
+
+    <dimen name="corners_input">16dp</dimen>
+
+    <dimen name="margin_input">24dp</dimen>
+    <dimen name="padding_item">8dp</dimen>
+</resources>

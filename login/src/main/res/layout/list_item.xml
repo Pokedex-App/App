@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:padding="@dimen/padding_item"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
+    android:textColor="@color/black"
+    android:textSize="@dimen/subtitle_size"
+    android:textStyle="bold" />
