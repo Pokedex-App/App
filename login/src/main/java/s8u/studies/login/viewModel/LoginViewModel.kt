@@ -5,6 +5,7 @@ import com.google.android.material.textfield.TextInputEditText
 import s8u.studies.login.repository.LoginRepository
 
 class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
+
     suspend fun verifyEmailPassword(
         email: String,
         password: String,
