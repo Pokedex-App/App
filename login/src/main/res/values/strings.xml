@@ -20,5 +20,8 @@
     <string name="new_account">Need an account? <b>sign up</b></string>
     <string name="has_account">Already has an account? <b>Log in</b></string>
 
-    <string name="input_error">Must be at least 8 characters</string>
+    <string name="input_error_email">Enter email in format email@example.com</string>
+    <string name="input_error_password">Must be at least 8 characters</string>
+    <string name="input_error_email_api">Sorry, no account found for this email. Retry, or sign up</string>
+    <string name="input_error_password_api">Incorrect password. Retry</string>
 </resources>
