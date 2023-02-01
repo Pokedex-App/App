@@ -1,12 +1,12 @@
 package s8u.studies.login.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import s8u.studies.login.R
 import s8u.studies.login.databinding.ActivityLoginBinding
@@ -36,32 +36,32 @@ class LoginActivity : AppCompatActivity() {
             validateFieldOnClick(binding.editTextEmail)
             validateFieldOnClick(binding.editTextPassword)
             viewModel.lastValidation(lastValidationField) {
-                validateInformation()
+                runBlocking {
+                    validateApiInformation(
+                        binding.editTextEmail.text.toString(),
+                        binding.editTextPassword.text.toString()
+                    )
+                }
             }
         }
     }
 
-    private fun validateInformation() {
-        // Aqui deverá ter a validação por parte da API
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
-    }
-
     private fun validateFieldOnClick(editText: TextInputEditText) {
-        viewModel.validateAmountCharacters (
-            editText.text.toString(),
+        viewModel.verifyField(editText,
             {
-                val layout = findViewById<TextInputLayout>(viewModel.verifyField(editText))
-                layout.error = getString(R.string.input_error)
-                viewModel.verifyField(editText,
-                    {lastValidationField[0] = false},
-                    {lastValidationField[1] = false}
+                viewModel.validateEmailFormat(editText.text.toString(),
+                    {
+                        binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email)
+                        lastValidationField[0] = false
+                    }, { lastValidationField[0] = true }
                 )
             },
             {
-                viewModel.verifyField(editText,
-                    {lastValidationField[0] = true},
-                    {lastValidationField[1] = true}
+                viewModel.validateAmountCharacters(editText.text.toString(),
+                    {
+                        binding.outlinedTextFieldPassword.error = getString(R.string.input_error_password)
+                        lastValidationField[1] = false
+                    }, { lastValidationField[1] = true }
                 )
             }
         )
@@ -109,6 +109,17 @@ class LoginActivity : AppCompatActivity() {
                     )
                 }
             }
+        )
+    }
+
+    private suspend fun validateApiInformation(email: String, password: String) {
+        viewModel.verifyEmailPassword(email, password,
+            {
+                val intent = Intent(this, SignUpActivity::class.java)
+                startActivity(intent)
+            },
+            { binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email_api) },
+            { binding.outlinedTextFieldPassword.error = getString(R.string.input_error_password_api) }
         )
     }
 

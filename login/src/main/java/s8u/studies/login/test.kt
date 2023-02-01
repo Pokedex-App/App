@@ -10,8 +10,8 @@ fun main() {
     runBlocking {
         val users = RetrofitObject.createNetworkService<Login>().getUser()
         var counter = 0
-        val email = "JohnMarston@orkut.com"
-        val password = "123456"
+        val email = "kleber@gmail.com"
+        val password = "12345678"
 
         for (i in 0 until users.size) {
             if (users[i].email == email && users[i].password == password) {
