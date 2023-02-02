@@ -17,7 +17,7 @@ import javax.net.ssl.X509TrustManager
 object RetrofitObject {
     inline fun <reified T> createNetworkService(): T {
         val log = LoggingInterceptor().getInterceptor()
-        val client = getOkHttpBuilder()
+        val client = getOkHttpBuilder().addInterceptor(log)
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .client(client.build())

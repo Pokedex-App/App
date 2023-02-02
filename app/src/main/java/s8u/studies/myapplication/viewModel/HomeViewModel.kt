@@ -5,7 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import s8u.studies.myapplication.di.Resource
+import s8u.studies.myapplication.di.Status
+import s8u.studies.myapplication.model.Pokedex.Pokedex
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
 import s8u.studies.myapplication.model.Pokedex.PokemonTypes
@@ -38,7 +42,14 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
 
     fun getPokedexEntriesList(regionId: Int) {
         viewModelScope.launch {
-            _listPokedexEntriesLiveData.postValue(repository.getPokedex(regionId.toString()).entriesList)
+            var response = repository.getPokedex(regionId.toString())
+            if(response.status == Status.SUCCESS){
+            _listPokedexEntriesLiveData.postValue(response.data!!.entriesList)
+            }
+            else if(response.status == Status.ERROR){
+                println(response.message)
+
+            }
         }
     }
 

@@ -13,7 +13,7 @@ import s8u.studies.myapplication.databinding.ModalErrorBinding
 import s8u.studies.myapplication.viewModel.MenuViewModel
 
 class MenuActivity : AppCompatActivity() {
-    private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_home)
+    private val toolbar: androidx.appcompat.widget.Toolbar get() = findViewById(R.id.toolbar_menu)
     private lateinit var binding: ActivityMenuBinding
     private val viewModel = MenuViewModel()
     private lateinit var dialog: AlertDialog
