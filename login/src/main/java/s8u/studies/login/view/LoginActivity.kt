@@ -1,11 +1,16 @@
 package s8u.studies.login.view
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import s8u.studies.login.R
@@ -25,6 +30,13 @@ class LoginActivity : AppCompatActivity() {
 
         validateFieldsRealTime()
         onClick()
+        binding.buttonLogin.isClickable = false
+    }
+
+    private fun visibilityButton(viewLoading: Int, viewButton: Int, isClickAble: Boolean) {
+        binding.gifLoading.visibility = viewLoading
+        binding.buttonLogin.visibility = viewButton
+        binding.buttonLogin.isClickable = isClickAble
     }
 
     private fun onClick() {
@@ -36,7 +48,9 @@ class LoginActivity : AppCompatActivity() {
             validateFieldOnClick(binding.editTextEmail)
             validateFieldOnClick(binding.editTextPassword)
             viewModel.lastValidation(lastValidationField) {
-                runBlocking {
+                visibilityButton(View.VISIBLE, View.INVISIBLE, false)
+                MainScope().launch {
+                    delay(100)
                     validateApiInformation(
                         binding.editTextEmail.text.toString(),
                         binding.editTextPassword.text.toString()
@@ -44,6 +58,25 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private suspend fun validateApiInformation(email: String, password: String) {
+        viewModel.verifyEmailPassword(email, password,
+            {
+                visibilityButton(View.INVISIBLE, View.VISIBLE, true)
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.component = ComponentName("br.com.accenture.maps", "br.com.accenture.maps.view.MapsActivity")
+                startActivity(intent)
+            },
+            {
+                binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email_api)
+                visibilityButton(View.INVISIBLE, View.VISIBLE, true)
+            },
+            {
+                binding.outlinedTextFieldPassword.error = getString(R.string.input_error_password_api)
+                visibilityButton(View.INVISIBLE, View.VISIBLE, true)
+            }
+        )
     }
 
     private fun validateFieldOnClick(editText: TextInputEditText) {
@@ -109,17 +142,6 @@ class LoginActivity : AppCompatActivity() {
                     )
                 }
             }
-        )
-    }
-
-    private suspend fun validateApiInformation(email: String, password: String) {
-        viewModel.verifyEmailPassword(email, password,
-            {
-                val intent = Intent(this, SignUpActivity::class.java)
-                startActivity(intent)
-            },
-            { binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email_api) },
-            { binding.outlinedTextFieldPassword.error = getString(R.string.input_error_password_api) }
         )
     }
 

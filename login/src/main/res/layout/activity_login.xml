@@ -96,6 +96,18 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ProgressBar
+            android:id="@+id/gif_loading"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/button_login"
+            app:layout_constraintEnd_toEndOf="@+id/button_login"
+            app:layout_constraintStart_toStartOf="@+id/button_login"
+            app:layout_constraintTop_toTopOf="@+id/button_login" />
+
         <Button
             android:id="@+id/button_login"
             android:layout_width="match_parent"

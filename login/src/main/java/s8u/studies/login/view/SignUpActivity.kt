@@ -41,10 +41,10 @@ class SignUpActivity : AppCompatActivity() {
         onClick()
     }
 
-    private fun visibilityButton(viewLoading: Int, viewButton: Int, buttonClick: Boolean) {
+    private fun visibilityButton(viewLoading: Int, viewButton: Int, isClickAble: Boolean) {
         binding.gifLoading.visibility = viewLoading
         binding.buttonSignUp.visibility = viewButton
-        binding.buttonSignUp.isClickable = buttonClick
+        binding.buttonSignUp.isClickable = isClickAble
     }
 
 
@@ -94,7 +94,6 @@ class SignUpActivity : AppCompatActivity() {
             {
                 viewModel.validateEmailFormat(editText.text.toString(),
                     {
-                        visibilityButton(View.INVISIBLE, View.VISIBLE, true)
                         binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email)
                         lastValidationField[0] = false
                     }, { lastValidationField[0] = true }
@@ -103,7 +102,6 @@ class SignUpActivity : AppCompatActivity() {
             {
                 viewModel.validateAmountCharacters(editText.text.toString(),
                     {
-                        visibilityButton(View.INVISIBLE, View.VISIBLE, true)
                         binding.outlinedTextFieldPassword.error =
                             getString(R.string.input_error_password)
                         lastValidationField[1] = false
