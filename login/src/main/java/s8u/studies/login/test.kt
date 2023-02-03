@@ -13,12 +13,12 @@ fun main() {
         val email = "kleber@gmail.com"
         val password = "12345678"
 
-        for (i in 0 until users.size) {
+        for (i in users.indices) {
             if (users[i].email == email && users[i].password == password) {
                 counter++
                 if (i == users.size - 1) {
                     if (counter == 1) {
-                        println("Player ${users[i].name}  personagem Masculino - ${users[i].isCharacterMale}")
+                        println("Player ${users[i].name}  personagem Masculino - ${users[i].characterGender}")
                     } else {
                         println("Mais de um Usuário com mesmo login e senha")
                     }
@@ -30,11 +30,10 @@ fun main() {
         println(
             RetrofitObject.createNetworkService<Register>().register(
                 User(
-                    "John",
-                    "JohnMarston@orkut.com",
-                    "123456",
-                    false
-
+                    "Endryl",
+                    "endryl@gmail.com",
+                    "12345678",
+                    "Male"
                 )
             )
         )

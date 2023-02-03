@@ -8,7 +8,10 @@ import s8u.studies.login.viewModel.SignUpViewModel
 
 val signUpModule = module {
     factory {
-        SignUpRepository(RetrofitObject.createNetworkService())
+        SignUpRepository(
+            RetrofitObject.createNetworkService(),
+            RetrofitObject.createNetworkService()
+        )
     }
     viewModel {
         SignUpViewModel(get())

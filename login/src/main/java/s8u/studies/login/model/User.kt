@@ -9,6 +9,6 @@ data class User(
     var email: String,
     @SerializedName("password")
     var password: String,
-    @SerializedName("character")
-    var isCharacterMale: Boolean
+    @SerializedName("characterGender")
+    var characterGender: String
 )

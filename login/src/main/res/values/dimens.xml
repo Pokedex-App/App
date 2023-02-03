@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="title_size">40sp</dimen>
+    <dimen name="title_size_modal">32sp</dimen>
     <dimen name="subtitle_size">16sp</dimen>
     <dimen name="button_size">16sp</dimen>
 
@@ -8,4 +9,10 @@
 
     <dimen name="margin_input">24dp</dimen>
     <dimen name="padding_item">8dp</dimen>
+    <dimen name="margin_bottom_button">32dp</dimen>
+    <dimen name="margin_top_button">24dp</dimen>
+    <dimen name="margin_title">24dp</dimen>
+    <dimen name="margin_sides">16dp</dimen>
+
+    <dimen name="image_size">100dp</dimen>
 </resources>

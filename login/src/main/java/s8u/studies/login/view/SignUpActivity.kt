@@ -4,14 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import s8u.studies.login.R
 import s8u.studies.login.databinding.ActivitySignUpBinding
+import s8u.studies.login.databinding.ModalSuccessBinding
 import s8u.studies.login.viewModel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
@@ -19,15 +25,28 @@ class SignUpActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by viewModel()
     private var buttonVerifies = arrayListOf(false, false, false, false)
     private var lastValidationField = arrayListOf(false, false)
+    private lateinit var dialog: AlertDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUp()
+        binding.buttonSignUp.isClickable = false
+    }
+
+    private fun setUp() {
         autoCompleteConfig()
         validateFieldsRealTime()
         onClick()
     }
+
+    private fun visibilityButton(viewLoading: Int, viewButton: Int, buttonClick: Boolean) {
+        binding.gifLoading.visibility = viewLoading
+        binding.buttonSignUp.visibility = viewButton
+        binding.buttonSignUp.isClickable = buttonClick
+    }
+
 
     private fun onClick() {
         binding.textViewHasAccount.setOnClickListener {
@@ -38,24 +57,36 @@ class SignUpActivity : AppCompatActivity() {
             validateFieldsOnClick(binding.editTextEmail)
             validateFieldsOnClick(binding.editTextPassword)
             viewModel.lastValidation(lastValidationField) {
-                runBlocking {
-                    viewModel.createAccount(
-                        binding.editTextName.text.toString(),
-                        binding.editTextEmail.text.toString(),
-                        binding.editTextPassword.text.toString(),
-                        binding.autoCompleteCharacterGender.text.toString()
-                    )
+                visibilityButton(View.VISIBLE, View.INVISIBLE, false)
+                MainScope().launch {
+                    delay(100)
+                    verifyApiData()
                 }
-                startActivity(Intent(this, LoginActivity::class.java))
-                Log.i(
-                    "Register",
-                    "\nName: ${binding.editTextName.text}" +
-                            "\nEmail: ${binding.editTextEmail.text}" +
-                            "\nPassword: ${binding.editTextPassword.text}" +
-                            "\nGender: ${binding.autoCompleteCharacterGender.text}"
-                )
             }
         }
+    }
+
+    private fun verifyApiData() = runBlocking {
+        viewModel.verifyEmailExist(
+            binding.editTextEmail.text.toString(),
+            {
+                binding.outlinedTextFieldEmail.error = getString(R.string.input_email_exist)
+                visibilityButton(View.INVISIBLE, View.VISIBLE, true)
+            },
+            {
+                sendingApiData()
+                modalSuccessCreateAccount()
+            }
+        )
+    }
+
+    private fun sendingApiData() = runBlocking {
+        viewModel.createAccount(
+            binding.editTextName.text.toString(),
+            binding.editTextEmail.text.toString(),
+            binding.editTextPassword.text.toString(),
+            binding.autoCompleteCharacterGender.text.toString()
+        )
     }
 
     private fun validateFieldsOnClick(editText: TextInputEditText) {
@@ -63,6 +94,7 @@ class SignUpActivity : AppCompatActivity() {
             {
                 viewModel.validateEmailFormat(editText.text.toString(),
                     {
+                        visibilityButton(View.INVISIBLE, View.VISIBLE, true)
                         binding.outlinedTextFieldEmail.error = getString(R.string.input_error_email)
                         lastValidationField[0] = false
                     }, { lastValidationField[0] = true }
@@ -71,7 +103,9 @@ class SignUpActivity : AppCompatActivity() {
             {
                 viewModel.validateAmountCharacters(editText.text.toString(),
                     {
-                        binding.outlinedTextFieldPassword.error = getString(R.string.input_error_password)
+                        visibilityButton(View.INVISIBLE, View.VISIBLE, true)
+                        binding.outlinedTextFieldPassword.error =
+                            getString(R.string.input_error_password)
                         lastValidationField[1] = false
                     }, { lastValidationField[1] = true }
                 )
@@ -164,6 +198,19 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun modalSuccessCreateAccount() {
+        val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
+        val dialogBinding: ModalSuccessBinding = ModalSuccessBinding
+            .inflate(LayoutInflater.from(this))
+
+        val intent = Intent(this, LoginActivity::class.java)
+        dialogBinding.buttonClose.setOnClickListener { dialog.dismiss(); startActivity(intent) }
+        build.setView(dialogBinding.root)
+        dialog = build.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
     }
 
     private fun buttonState() {
