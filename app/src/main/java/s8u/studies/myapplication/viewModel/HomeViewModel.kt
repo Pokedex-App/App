@@ -1,15 +1,16 @@
 package s8u.studies.myapplication.viewModel
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import s8u.studies.myapplication.di.Resource
 import s8u.studies.myapplication.di.Status
-import s8u.studies.myapplication.model.Pokedex.Pokedex
 import s8u.studies.myapplication.model.Pokedex.PokedexEntries
 import s8u.studies.myapplication.model.Pokedex.PokedexSpecies
 import s8u.studies.myapplication.model.Pokedex.PokemonTypes
@@ -40,14 +41,26 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     private var _listNamePokemons = MutableLiveData<ArrayList<String>>()
     val listNamePokemons: LiveData<ArrayList<String>> = _listNamePokemons
 
-    fun getPokedexEntriesList(regionId: Int) {
+    fun getPokedexEntriesList(regionId: Int, context: Context) {
         viewModelScope.launch {
-            var response = repository.getPokedex(regionId.toString())
-            if(response.status == Status.SUCCESS){
-            _listPokedexEntriesLiveData.postValue(response.data!!.entriesList)
-            }
-            else if(response.status == Status.ERROR){
-                println(response.message)
+            val response = repository.getPokedex(regionId.toString())
+            if (response.status == Status.SUCCESS) {
+                _listPokedexEntriesLiveData.postValue(response.data!!.entriesList)
+            } else if (response.status == Status.ERROR) {
+                val intent = Intent(Intent.ACTION_MAIN)
+                if (response.message == "Timeout") {
+                    intent.component = ComponentName(
+                        "s8u.studies.myapplication",
+                        "s8u.studies.myapplication.view.TimeOutActivity"
+                    )
+                    startActivity(context, intent, null)
+                } else if (response.message == "Something went wrong") {
+                    intent.component = ComponentName(
+                        "s8u.studies.myapplication",
+                        "s8u.studies.myapplication.view.ErrorActivity"
+                    )
+                    startActivity(context, intent, null)
+                }
 
             }
         }
@@ -57,8 +70,31 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         _actualListEntriesLiveData.postValue(listPokedexEntriesLiveData.value)
     }
 
-    fun getPokedexFilteredList(id: String) {
-        viewModelScope.launch { _listPokedexFilteredLiveData.postValue(repository.getPokemonType(id)) }
+    fun getPokedexFilteredList(id: String, context: Context) {
+        viewModelScope.launch {
+            val response = repository.getPokemonType(id)
+
+            if (response.status == Status.SUCCESS) {
+                _listPokedexFilteredLiveData.postValue(response.data!!)
+            } else if (response.status == Status.ERROR) {
+                val intent = Intent(Intent.ACTION_MAIN)
+                if (response.message == "Timeout") {
+                    intent.component = ComponentName(
+                        "s8u.studies.myapplication",
+                        "s8u.studies.myapplication.view.TimeOutActivity"
+                    )
+                    startActivity(context, intent, null)
+                } else if (response.message == "Something went wrong") {
+                    intent.component = ComponentName(
+                        "s8u.studies.myapplication",
+                        "s8u.studies.myapplication.view.ErrorActivity"
+                    )
+                    startActivity(context, intent, null)
+                }
+
+            }
+        }
+
     }
 
     fun updateLiveData(species: PokedexSpecies, id: Int): PokedexEntries {
@@ -69,7 +105,7 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
         _actualListEntriesLiveData.value = list
     }
 
-    fun getPokedexTypesList() {
+    fun getPokedexTypesList(context: Context) {
         val typeList = arrayListOf<PokedexTypes>()
         val nameList = arrayListOf<String>()
         viewModelScope.launch {
@@ -77,7 +113,27 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
                 val pokemon = actualListEntriesLiveData.value!![i]
                 solveApiProblems(pokemon)
                 nameList.add(pokemon.pokedexSpecies.pokemonName)
-                typeList.add(repository.getPokedexType(pokemon.pokedexSpecies.pokemonName))
+
+                val response = repository.getPokedexType(pokemon.pokedexSpecies.pokemonName)
+
+                if (response.status == Status.SUCCESS) {
+                    typeList.add(response.data!!)
+                } else if (response.status == Status.ERROR) {
+                    val intent = Intent(Intent.ACTION_MAIN)
+                    if (response.message == "Timeout") {
+                        intent.component = ComponentName(
+                            "s8u.studies.myapplication",
+                            "s8u.studies.myapplication.view.TimeOutActivity"
+                        )
+                        startActivity(context, intent, null)
+                    } else if (response.message == "Something went wrong") {
+                        intent.component = ComponentName(
+                            "s8u.studies.myapplication",
+                            "s8u.studies.myapplication.view.ErrorActivity"
+                        )
+                        startActivity(context, intent, null)
+                    }
+                }
                 if (i == actualListEntriesLiveData.value!!.size - 1) {
                     _listPokedexTypesLiveData.postValue(typeList)
                     _listNamePokemons.postValue(nameList)
