@@ -1,5 +1,6 @@
 package s8u.studies.myapplication.view
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -86,13 +87,13 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
 
     private fun pokedexItemObjects(regionID: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView)
-        viewModel.getPokedexEntriesList(regionID)
+        viewModel.getPokedexEntriesList(regionID,this)
 
         viewModel.listPokedexEntriesLiveData.observe(this) {
             viewModel.getActualEntriesList()
         }
         viewModel.actualListEntriesLiveData.observe(this) {
-            viewModel.getPokedexTypesList()
+            viewModel.getPokedexTypesList(this)
         }
 
         viewModel.listPokedexTypesLiveData.observe(this) {
@@ -153,7 +154,7 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
 
     private fun filterByType(id: String) {
         inFilter = 1
-        viewModel.getPokedexFilteredList(id)
+        viewModel.getPokedexFilteredList(id,this)
         viewModel.setLoadingState(true)
         closeKeyBoard()
     }
@@ -184,7 +185,13 @@ class HomeActivity : AppCompatActivity(), ListPokedexAdapter.OnListenerPokedex {
             viewModel.getActualEntriesList()
             viewModel.setLoadingState(true)
         }
-        toolbar.setNavigationOnClickListener { onBackPressed();recreate() }
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.component = ComponentName(
+                "s8u.studies.myapplication",
+                "s8u.studies.myapplication.view.MenuActivity")
+            startActivity(intent)
+        }
     }
 
     private fun highLight(image: ImageView?) {

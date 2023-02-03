@@ -1,5 +1,6 @@
 package s8u.studies.myapplication.view
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,7 +48,13 @@ class MenuActivity : AppCompatActivity() {
             binding.imageMenu.visibility = View.VISIBLE
             b = true
         }
-        toolbar.setNavigationOnClickListener{onBackPressed()}
+        toolbar.setNavigationOnClickListener{
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.component = ComponentName(
+                "br.com.accenture.maps",
+                "br.com.accenture.maps.view.MapsActivity")
+            startActivity(intent)
+        }
     }
 
     private fun goToList(nameRegion: String) {

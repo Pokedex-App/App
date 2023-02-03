@@ -32,6 +32,12 @@
         <activity
             android:name=".view.HomeActivity"
             android:exported="false"/>
+        <activity
+            android:name=".view.TimeOutActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.ErrorActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
