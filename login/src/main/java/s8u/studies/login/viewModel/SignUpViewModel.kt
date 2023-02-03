@@ -7,23 +7,45 @@ import s8u.studies.login.repository.SignUpRepository
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     suspend fun createAccount(name: String, email: String, password: String, gender: String) {
-        val booleanGender = gender == "Male"
         repository.setUser(
             User(
-               name = name,
-               email = email,
-               password = password,
-               isCharacterMale = booleanGender
+                name = name,
+                email = email,
+                password = password,
+                characterGender = gender
             )
         )
     }
 
+    suspend fun verifyEmailExist(
+        email: String,
+        emailExist: () -> Unit,
+        emailDoesNotExist: () -> Unit
+    ) {
+        val user = repository.getUser()
+        if (user.isEmpty()) { emailDoesNotExist() }
+        else {
+            for (i in user.indices) {
+                if (user[i].email == email) {
+                    emailExist(); break
+                } else {
+                    if (i == user.size - 1) emailDoesNotExist()
+                    else continue
+                }
+            }
+        }
+    }
+
     fun validatesText(text: String, behavior: () -> Unit, elseBehavior: () -> Unit) {
-        if (text.isNotEmpty())  behavior()
+        if (text.isNotEmpty()) behavior()
         else elseBehavior()
     }
 
-    fun validatesButtonState(buttonCheck: ArrayList<Boolean>, behavior: () -> Unit, elseBehavior: () -> Unit) {
+    fun validatesButtonState(
+        buttonCheck: ArrayList<Boolean>,
+        behavior: () -> Unit,
+        elseBehavior: () -> Unit
+    ) {
         val buttonToCompare = arrayListOf(true, true, true, true)
         if (buttonCheck == buttonToCompare) behavior()
         else elseBehavior()

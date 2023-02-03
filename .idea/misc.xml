@@ -22,12 +22,17 @@
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/activity_home.xml" value="0.38755020080321284" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/list_item.xml" value="0.15760869565217392" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/modal_error.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/modal_pokemon.xml" value="0.14628623188405798" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/pokedex_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/test.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/toolbar.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/app/src/main/res/layout/toolbar_title.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/login/src/main/res/drawable/background_button.xml" value="0.1" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/login/src/main/res/drawable/background_modal.xml" value="0.1" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/login/src/main/res/layout/activity_login.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/login/src/main/res/layout/activity_sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/login/src/main/res/layout/modal_success.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/map/src/main/res/drawable/background_dropdown.xml" value="0.1" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/map/src/main/res/layout/activity_map.xml" value="0.1" />
         <entry key="..\:/Users/endryl.c.fiorotti/AndroidStudioProjects/App/maps/src/main/res/drawable/ic_baseline_add.xml" value="0.1" />

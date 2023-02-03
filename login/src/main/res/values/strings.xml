@@ -2,7 +2,7 @@
     <string name="app_name">Login</string>
     <string name="image_logo">Logo Pokeball</string>
     <string name="title_login">Log in</string>
-    <string name="title_signUp">Create account</string>
+    <string name="title_signUp">Create an account</string>
     <string name="subtitle_login">And keeping capturing</string>
     <string name="subtitle_signUp">And start playing</string>
 
@@ -18,10 +18,17 @@
     </array>
 
     <string name="new_account">Need an account? <b>sign up</b></string>
-    <string name="has_account">Already has an account? <b>Log in</b></string>
+    <string name="has_account">Already have an account? <b>Log in</b></string>
 
     <string name="input_error_email">Enter email in format email@example.com</string>
     <string name="input_error_password">Must be at least 8 characters</string>
     <string name="input_error_email_api">Sorry, no account found for this email. Retry, or sign up</string>
     <string name="input_error_password_api">Incorrect password. Retry</string>
+    <string name="input_email_exist">This email is already in use</string>
+    
+    <string name="Title_success_modal">Success!</string>
+    <string name="description_success_modal">Your account has been created!</string>
+    <string name="button_success_modal">Continue</string>
+
+    <string name="loading_button">Loading…</string>
 </resources>

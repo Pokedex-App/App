@@ -18,7 +18,7 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
         for (i in user.indices) {
             if (email == user[i].email) {
                 if (password == user[i].password) behavior()
-                else behaviorPassword()
+                else behaviorPassword();break
             } else {
                 if (i == user.size - 1) behaviorEmail()
                 else continue
