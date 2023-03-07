@@ -29,8 +29,8 @@ class DescriptionViewModel (private val repository: DescriptionRepository) : Vie
     fun getPokemonDescription(id: String, firstPokemon: String, lastPokemon: String) {
         hideButtons(id, firstPokemon, lastPokemon)
         viewModelScope.launch {
-            val poke = repository.getPokemon(id)
-            val pokeDesc = repository.getPokemonDesc(id)
+            val poke = repository.getPokemon(id).data!!
+            val pokeDesc = repository.getPokemonDesc(id).data!!
             _apiData.postValue(
                 PokemonData(
                     poke.id,
@@ -49,7 +49,7 @@ class DescriptionViewModel (private val repository: DescriptionRepository) : Vie
 
     fun getAbilityInformation(nameAbility: String) {
         viewModelScope.launch {
-            val apiAbility = repository.getPokemonAbility(nameAbility)
+            val apiAbility = repository.getPokemonAbility(nameAbility).data!!
             _abilityInformationPokemon.postValue(
                 PokemonAbilityInformation(
                     apiAbility.flavorTextEntries,
