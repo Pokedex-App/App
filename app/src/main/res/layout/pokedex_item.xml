@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin"
+    android:layout_marginEnd="@dimen/margin"
+    android:layout_marginBottom="@dimen/margin"
+    android:background="@color/background"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/view_name_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_min"
+        android:background="@drawable/background_transparent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/pokedex_name"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            tools:text="Pokemon" />
+
+        <TextView
+            android:id="@+id/pokedex_id"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            tools:text="#0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_types"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_min"
+        android:foregroundGravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_name_id"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/pokedex_type1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:text="Psychic"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_min"/>
+
+        <TextView
+            android:id="@+id/pokedex_type2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_min"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:text="Fighting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_min"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_modal">
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_title"
+        android:gravity="center"
+        android:text="@string/Title_success_modal"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_size_modal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/gif_success"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/gif_success"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_marginBottom="@dimen/margin_bottom_button"
+        android:contentDescription="@string/Title_success_modal"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/textView_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/tick_interaction_to_show_success" />
+
+    <TextView
+        android:id="@+id/textView_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/description_success_modal"
+        android:textColor="@color/black"
+        android:textSize="@dimen/subtitle_size"
+        app:layout_constraintBottom_toTopOf="@+id/button_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gif_success" />
+
+    <Button
+        android:id="@+id/button_close"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_sides"
+        android:layout_marginTop="@dimen/margin_top_button"
+        android:layout_marginEnd="@dimen/margin_sides"
+        android:layout_marginBottom="@dimen/margin_bottom_button"
+        android:background="@drawable/background_button"
+        android:gravity="center"
+        android:text="@string/button_success_modal"
+        android:textColor="@color/white"
+        android:theme="@style/ThemeCustomDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

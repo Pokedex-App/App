@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        tools:context=".view.DescriptionActivity">
+
+        <include
+            android:id="@+id/toolbar_description"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/image_pokemon"
+            android:layout_height="@dimen/image_pokemon"
+            android:layout_margin="@dimen/margin"
+            android:contentDescription="@string/pokemon_image"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_description"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/textView_name_pokemon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="Name Pokemon" />
+
+        <LinearLayout
+            android:id="@+id/view_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_name_pokemon">
+
+            <TextView
+                android:id="@+id/textView_primary_type_pokemon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size"
+                tools:text="primary" />
+
+            <TextView
+                android:id="@+id/textView_secondary_type_pokemon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/background"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size"
+                tools:text="secondary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_height_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_types">
+
+            <TextView
+                android:id="@+id/textView_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size"
+                tools:text="Height ** m" />
+
+            <TextView
+                android:id="@+id/textView_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size"
+                tools:text="Weight *** kg" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_height_weight"
+            tools:text="LiveData considers that an observer, which is represented by the class Observer, is in an active state if its lifecycle is in the state or RESUMED. LiveData only notifies active watchers of updates. Inactive observers registered to observe objects Live Data are not notified of changes." />
+
+        <LinearLayout
+            android:id="@+id/view_abilities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_min"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_description">
+
+            <TextView
+                android:id="@+id/textView_title_abilities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:gravity="center"
+                android:text="@string/title_abilities"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_Abilities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_min"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:listitem="@layout/ability_item" />
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading"
+            android:layout_width="@dimen/image_loading"
+            android:layout_height="@dimen/image_loading"
+            android:contentDescription="@string/loading_image"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/pokemon_loading" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:gravity="center"
+            android:text="@string/loading_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/loading" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

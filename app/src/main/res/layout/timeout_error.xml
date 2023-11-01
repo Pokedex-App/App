@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/swamblu"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="100dp"
+        android:contentDescription="Swamblu gif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="2"
+        app:lottie_rawRes="@raw/swablu" />
+
+    <TextView
+        android:id="@+id/title_connection_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:text="Oops, TimeOut..."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swamblu" />
+
+    <TextView
+        android:id="@+id/desc_connection_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="The request you sent took too \n long to answer try again or go back to the start"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_connection_error" />
+
+    <Button
+        android:id="@+id/btn_try_again"
+        android:layout_width="245dp"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/button_toolbar"
+        android:gravity="center"
+        android:text="Try Again"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc_connection_error" />
+
+    <Button
+        android:id="@+id/btn_back_to_start"
+        android:layout_width="245dp"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/button_toolbar"
+        android:gravity="center"
+
+        android:text="Back to Start"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_try_again" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

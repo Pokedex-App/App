@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_toolbar_width">
+        100dp
+    </dimen>
+    <dimen name="button_toolbar_height">
+        40dp
+    </dimen>
+    <dimen name="image_pokemon">
+        200dp
+    </dimen>
+
+    <dimen name="image_loading">
+        120dp
+    </dimen>
+    <dimen name="image_filter">
+        58dp
+    </dimen>
+    <dimen name="image_filter_padding">
+        16dp
+    </dimen>
+
+    <dimen name="type_size">
+        40dp
+    </dimen>
+    <dimen name="size_16">
+        16dp
+    </dimen>
+
+    <dimen name="margin_max">
+        32dp
+    </dimen>
+    <dimen name="margin_medium">
+        24dp
+    </dimen>
+    <dimen name="margin">
+        16dp
+    </dimen>
+    <dimen name="margin_min">
+        8dp
+    </dimen>
+
+    <dimen name="padding_input">
+        16dp
+    </dimen>
+
+    <dimen name="text_size_title">
+        32sp
+    </dimen>
+    <dimen name="text_size_medium">
+        24sp
+    </dimen>
+    <dimen name="text_size">
+        16sp
+    </dimen>
+    <dimen name="text_size_min">
+        14sp
+    </dimen>
+</resources>

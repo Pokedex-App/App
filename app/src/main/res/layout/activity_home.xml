@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".view.HomeActivity">
+
+    <include
+        android:id="@+id/toolbar_home"
+        layout="@layout/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView_title_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home" />
+
+    <TextView
+        android:id="@+id/textView_title_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/filter_type"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title_app" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView_filter"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_margin="@dimen/margin"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title_filter">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/bugImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_bug"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bug"/>
+
+            <ImageView
+                android:id="@+id/darkImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dark" />
+
+            <ImageView
+                android:id="@+id/dragonImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_dragon"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dragon"/>
+
+            <ImageView
+                android:id="@+id/electricImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_electric"
+                android:scaleType="fitCenter"
+                android:src="@drawable/electric" />
+
+            <ImageView
+                android:id="@+id/fairyImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_fairy"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fairy" />
+
+            <ImageView
+                android:id="@+id/fightingImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_fighting"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fighting" />
+
+            <ImageView
+                android:id="@+id/fireImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_fire"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fire" />
+
+            <ImageView
+                android:id="@+id/flyingImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_flying"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flying" />
+
+            <ImageView
+                android:id="@+id/ghostImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_ghost"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ghost" />
+
+            <ImageView
+                android:id="@+id/grassImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_grass"
+                android:scaleType="fitCenter"
+                android:src="@drawable/grass" />
+
+            <ImageView
+                android:id="@+id/groundImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_ground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ground" />
+
+            <ImageView
+                android:id="@+id/iceImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_ice"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ice" />
+
+            <ImageView
+                android:id="@+id/normalImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_normal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/normal" />
+
+            <ImageView
+                android:id="@+id/poisonImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_poison"
+                android:scaleType="fitCenter"
+                android:src="@drawable/poison" />
+
+            <ImageView
+                android:id="@+id/psychicImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_psychic"
+                android:scaleType="fitCenter"
+                android:src="@drawable/psychic" />
+
+            <ImageView
+                android:id="@+id/rockImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_rock"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rock" />
+
+            <ImageView
+                android:id="@+id/steelImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_steel"
+                android:scaleType="fitCenter"
+                android:src="@drawable/steel" />
+
+            <ImageView
+                android:id="@+id/waterImg"
+                android:layout_width="@dimen/image_filter"
+                android:layout_height="@dimen/image_filter"
+                android:contentDescription="@string/type_water"
+                android:scaleType="fitCenter"
+                android:src="@drawable/water" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/removeFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:gravity="center"
+        android:weightSum="3"
+        app:layout_constraintBottom_toTopOf="@+id/input_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_filter">
+
+        <ImageView
+            android:id="@+id/icon_x"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/type_remove_filter"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_remove" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_min"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/clean_filter"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/input_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_max"
+        android:layout_marginEnd="@dimen/margin"
+        android:autofillHints=""
+        android:background="@drawable/background_input"
+        android:completionThreshold="1"
+        android:hint="@string/filter_input"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/normal_gray"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_filter" />
+
+    <TextView
+        android:id="@+id/title_List_Pokemon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/title_list"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="@dimen/image_loading"
+        android:layout_height="@dimen/image_loading"
+        android:contentDescription="@string/loading_image"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/pokemon_loading" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_List_Pokemon"
+        tools:listitem="@layout/pokedex_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
